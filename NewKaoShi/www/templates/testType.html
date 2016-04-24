@@ -1,0 +1,34 @@
+<!--
+	作者：1085463652@qq.com
+	时间：2016-04-24
+	描述：考试类型
+-->
+<ion-view view-title="考试分类">
+	<ion-nav-buttons side="left">
+		<button class="button button-icon ion-ios-arrow-back" ng-click="showPop($event)">
+		</button>
+	</ion-nav-buttons>
+	<ion-content>
+		<ion-list>
+			<ion-item ng-repeat="item in testTypes" class="typeitem">
+				<a class="button button-full icon-right ion-chevron-right " href="#/typeItem/{{item.id}}/{{item.name}}">
+					<div class="row row-wrap" style="width: 90%;">
+						<div class="col col-33 itemMain">
+							<span>{{item.name}}</span>
+						</div>
+						<div class="col col-33 itemText">
+							<span>
+								会计从业资格
+							</span>
+						</div>
+						<div class="col col-33 itemText">
+							<span>
+								价格鉴定师
+							</span>
+						</div>
+					</div>
+				</a>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>

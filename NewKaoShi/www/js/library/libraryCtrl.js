@@ -1,0 +1,37 @@
+libraryModule
+.controller('LibraryCtrl',['$scope','LibraryServ',function($scope,LibraryServ){
+	$scope.selectindex=0;
+	$scope.ChangeType=ChangeType;
+	function ChangeType(index){
+		$scope.selectindex=index;
+	}
+	$scope.papers=[{
+		id:0,
+		type:0,//是否为vip，0表示是，1表示否
+		Name:'2013年上半年银行从业资格考试《公共基础》真题及答案',
+		Number:6000,//已做题人数
+		Updatetime:"2016-09-10",//最近一次更新时间
+		IsDownload:0//是否已下载，0已下载，1未下载
+	},{
+		id:1,
+		type:1,//是否为vip，0表示是，1表示否
+		Name:'2013年上半年银行从业资格考试《公共基础》真题及答案',
+		Number:6000,//已做题人数
+		Updatetime:"2016-09-10",//最近一次更新时间
+		IsDownload:1//是否已下载，0已下载，1未下载
+	},{
+		id:2,
+		type:0,//是否为vip，0表示是，1表示否
+		Name:'2013年上半年银行从业资格考试《公共基础》真题及答案',
+		Number:6000,//已做题人数
+		Updatetime:"2016-09-10",//最近一次更新时间
+		IsDownload:1//是否已下载，0已下载，1未下载
+	},{
+		id:2,
+		type:0,//是否为vip，0表示是，1表示否
+		Name:'2013年上半年银行从业资格考试《公共基础》真题及答案',
+		Number:6000,//已做题人数
+		Updatetime:"2016-09-10",//最近一次更新时间
+		IsDownload:1//是否已下载，0已下载，1未下载
+	},]
+}])

@@ -1,0 +1,17 @@
+<!--
+	作者：1085463652@qq.com
+	时间：2016-04-24
+	描述：资格考试分类
+-->
+<ion-view view-title="{{typeItemName}}">
+	
+	<ion-content>
+		<ion-list>
+			<ion-item ng-repeat="item in qualifications" class="typeitem">
+				<a class="button button-full icon-right ion-chevron-right itemMain" href="#/tab/home/{{item.id}}">
+					<span>{{item.name}}</span>
+				</a>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>

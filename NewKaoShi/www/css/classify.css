@@ -1,0 +1,26 @@
+.searchInput{
+	width: 80%;
+	margin: auto;
+}
+.typeitem{
+	margin: 0px;
+	text-align:left;
+	border-top-width:0px ;
+	border-left-width:0px ;
+	border-right-width:0px ;
+}
+.typeitem .row,.typeitem .col{
+	margin: 0px;
+	padding: 0px;
+}
+.typeitem .itemMain{
+	text-align: left;
+	font-size: 1rem;
+    color: #000000;
+}
+.typeitem .itemText{
+	text-align: center;
+	font-size: 0.6rem;
+    color: #999999;
+}
+

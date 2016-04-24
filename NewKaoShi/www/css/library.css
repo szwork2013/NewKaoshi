@@ -1,0 +1,39 @@
+.library{
+	
+}
+.library .row,.home .col{
+	margin: 0px;
+	padding: 0px;
+} 
+.library .title{
+	text-align: center;
+	line-height: 2.5rem;
+}
+.library .title a{
+	color: #000000;
+	border-bottom: solid 2px #000000;
+}
+.library .title .selected{
+	border-color: #EF473A;
+	color: #EF473A;
+}
+.library .testcontent {
+	
+}
+.library .testcontent .papername{
+	display: block;
+	margin-bottom: 1rem;
+}
+.library .testcontent .papernumber{
+	font-size: 0.6rem;
+    display: block;
+    float: left;
+    width: 40%;
+    color: #999999;
+}
+.library .testcontent .papernumber .number{
+	color:#EF473A
+}
+.library .testcontent .papertime{
+	 font-size: 0.6rem;
+}

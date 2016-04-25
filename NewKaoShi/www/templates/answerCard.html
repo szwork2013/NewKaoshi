@@ -1,0 +1,25 @@
+<ion-view >
+	<ion-header-bar align-title="center">
+		<button class="button button-icon ion-ios-arrow-back" ng-click="showPop($event)">
+		</button>
+		<span class="title"> 答题卡</span>
+		<button class="button  button-clear " ng-click="ConfirmAssignment()">
+			<span class='assignment'>确定交卷</span>
+		</button>
+	</ion-header-bar>
+	<ion-content class="answercard">
+		<div class="title">
+			共<span class="number">100</span>题,已答<span class="number">50</span>题,用时<span class="number">20</span>分钟
+		</div>
+		<div class="content">
+			<div ng-repeat="items in paper">
+				<span class="itemtitle">{{items.title}}</span>
+				<div class="row row-wrap">
+					<a ng-repeat="item in items.answer" class="col col-20 answer" >
+						<span ng-class="{'haveAnswer':item.isAnswer==1,'noAnswer':item.isAnswer==0}">{{$index+1}}</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

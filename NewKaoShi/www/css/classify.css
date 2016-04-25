@@ -1,19 +1,27 @@
-.searchInput{
-	width: 80%;
+
+.ioncontent{
+	width: 96%;
 	margin: auto;
 }
 .typeitem{
 	margin: 0px;
+	padding: 0px;
 	text-align:left;
 	border-top-width:0px ;
 	border-left-width:0px ;
 	border-right-width:0px ;
+}
+.typeitem .typeitema{
+	margin: 0px;
+	padding: 0px;
 }
 .typeitem .row,.typeitem .col{
 	margin: 0px;
 	padding: 0px;
 }
 .typeitem .itemMain{
+	margin: 0px;
+	padding: 0px;
 	text-align: left;
 	font-size: 1rem;
     color: #000000;

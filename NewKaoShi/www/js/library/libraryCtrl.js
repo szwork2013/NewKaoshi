@@ -1,9 +1,13 @@
 libraryModule
-.controller('LibraryCtrl',['$scope','LibraryServ',function($scope,LibraryServ){
+.controller('LibraryCtrl',['$scope','LibraryServ','$state',function($scope,LibraryServ,$state){
 	$scope.selectindex=0;
 	$scope.ChangeType=ChangeType;
+	$scope.GoPaperDetail=GoPaperDetail;
 	function ChangeType(index){
 		$scope.selectindex=index;
+	}
+	function GoPaperDetail(id){
+		$state.go('paperDetail');
 	}
 	$scope.papers=[{
 		id:0,

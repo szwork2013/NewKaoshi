@@ -3,9 +3,14 @@
 	时间：2016-04-24
 	描述：具体类型细项
 -->
-<ion-view view-title="{{typeName}}">
-	
-	<ion-content>
+<ion-view >
+	<ion-header-bar align-title="center" >
+		<button class="button button-icon ion-ios-arrow-back" ng-click="showPop($event)">
+		</button>
+		<span class="title"> {{typeName}}</span>
+		
+	</ion-header-bar>
+	<ion-content class="ioncontent">
 		<ion-list>
 			<ion-item ng-repeat="item in typeItems" class="typeitem">
 				<a class="button button-full icon-right ion-chevron-right itemMain" href="#/qualification/{{item.id}}/{{item.name}}">

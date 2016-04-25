@@ -1,4 +1,9 @@
-<ion-view view-title="公共基础">
+<ion-view >
+	<ion-header-bar align-title="center">
+		
+		<span class="title"> 公共基础</span>
+		
+	</ion-header-bar>
   <ion-content class="library" scroll=false>
   	<div class="row row-wrap title">
   		<a class="col col-33" ng-class="{'selected':selectindex==0}" ng-click="ChangeType(0)">
@@ -13,7 +18,7 @@
   	</div>
   	<ion-scroll>
   		<div class="testcontent">
-  			<a ng-repeat="paper in papers" class="row row-wrap paperitem" ng-show="paper.testType==selectindex">
+  			<a ng-repeat="paper in papers" class="row row-wrap paperitem" ng-show="paper.testType==selectindex" ng-click="GoPaperDetail()">
   				<div class="col col-80">
   					<span class="papername">
   						{{paper.Name}}

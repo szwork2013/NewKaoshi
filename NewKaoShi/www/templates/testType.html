@@ -3,15 +3,18 @@
 	时间：2016-04-24
 	描述：考试类型
 -->
-<ion-view view-title="考试分类">
-	<ion-nav-buttons side="left">
+<ion-view >
+	<ion-header-bar align-title="center" >
 		<button class="button button-icon ion-ios-arrow-back" ng-click="showPop($event)">
 		</button>
-	</ion-nav-buttons>
-	<ion-content>
+		<span class="title"> 考试分类</span>
+		
+	</ion-header-bar>
+	
+	<ion-content class="ioncontent">
 		<ion-list>
 			<ion-item ng-repeat="item in testTypes" class="typeitem">
-				<a class="button button-full icon-right ion-chevron-right " href="#/typeItem/{{item.id}}/{{item.name}}">
+				<a class="button button-full icon-right ion-chevron-right typeitema" href="#/typeItem/{{item.id}}/{{item.name}}">
 					<div class="row row-wrap" style="width: 90%;">
 						<div class="col col-33 itemMain">
 							<span>{{item.name}}</span>

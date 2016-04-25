@@ -155,7 +155,35 @@ angular.module('NewKaoShi', ['ionic','ClassifyModule','HomeModule','LibraryModul
         controller: 'AccountCtrl'
       }
     }
-  });
+  })
+   //试卷详细
+		.state('paperDetail', {
+			url: '/paperDetail',
+			cache: false,
+			templateUrl: 'templates/paperDetail.html',
+			controller: 'PaperDetailCtrl'
+		})
+		//考试
+		.state('kaoshi', {
+			url: '/kaoshi',
+			cache: false,
+			templateUrl: 'templates/kaoshi.html',
+			controller: 'KaoshiCtrl'
+		})
+		//答题卡
+		.state('answerCard', {
+			url: '/answerCard',
+			cache: false,
+			templateUrl: 'templates/answerCard.html',
+			controller: 'AnswerCardCtrl'
+		})
+		//结果
+		.state('result', {
+			url: '/result',
+			cache: false,
+			templateUrl: 'templates/result.html',
+			controller: 'ResultCtrl'
+		});
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/testType');

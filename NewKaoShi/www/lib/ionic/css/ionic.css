@@ -3,7 +3,7 @@
  * Copyright 2015 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.3.0
+ * Ionic, v1.2.1
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -3335,8 +3335,7 @@ body,
   color: #000;
   word-wrap: break-word;
   font-size: 14px;
-  font-family: -apple-system;
-  font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
   line-height: 20px;
   text-rendering: optimizeLegibility;
   -webkit-backface-visibility: hidden;
@@ -3494,9 +3493,6 @@ ion-infinite-scroll {
   bottom: 0;
   left: 0;
   position: absolute; }
-  .overflow-scroll.pane {
-    overflow-x: hidden;
-    overflow-y: scroll; }
   .overflow-scroll .scroll {
     position: static;
     height: 100%;
@@ -3592,7 +3588,7 @@ h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   color: #000;
   font-weight: 500;
-  font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
   line-height: 1.2; }
   h1 small, h2 small, h3 small, h4 small, h5 small, h6 small,
   .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small {
@@ -4960,81 +4956,45 @@ ion-tabs.tabs-color-active-light .tab-item {
   ion-tabs.tabs-color-active-light .tab-item.tab-item-active, ion-tabs.tabs-color-active-light .tab-item.active, ion-tabs.tabs-color-active-light .tab-item.activated {
     color: #fff; }
 
-ion-tabs.tabs-striped.tabs-color-active-light .tab-item.tab-item-active, ion-tabs.tabs-striped.tabs-color-active-light .tab-item.active, ion-tabs.tabs-striped.tabs-color-active-light .tab-item.activated {
-  border-color: #fff;
-  color: #fff; }
-
 ion-tabs.tabs-color-active-stable .tab-item {
   color: #444; }
   ion-tabs.tabs-color-active-stable .tab-item.tab-item-active, ion-tabs.tabs-color-active-stable .tab-item.active, ion-tabs.tabs-color-active-stable .tab-item.activated {
     color: #f8f8f8; }
-
-ion-tabs.tabs-striped.tabs-color-active-stable .tab-item.tab-item-active, ion-tabs.tabs-striped.tabs-color-active-stable .tab-item.active, ion-tabs.tabs-striped.tabs-color-active-stable .tab-item.activated {
-  border-color: #f8f8f8;
-  color: #f8f8f8; }
 
 ion-tabs.tabs-color-active-positive .tab-item {
   color: #444; }
   ion-tabs.tabs-color-active-positive .tab-item.tab-item-active, ion-tabs.tabs-color-active-positive .tab-item.active, ion-tabs.tabs-color-active-positive .tab-item.activated {
     color: #387ef5; }
 
-ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active, ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.active, ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.activated {
-  border-color: #387ef5;
-  color: #387ef5; }
-
 ion-tabs.tabs-color-active-calm .tab-item {
   color: #444; }
   ion-tabs.tabs-color-active-calm .tab-item.tab-item-active, ion-tabs.tabs-color-active-calm .tab-item.active, ion-tabs.tabs-color-active-calm .tab-item.activated {
     color: #11c1f3; }
-
-ion-tabs.tabs-striped.tabs-color-active-calm .tab-item.tab-item-active, ion-tabs.tabs-striped.tabs-color-active-calm .tab-item.active, ion-tabs.tabs-striped.tabs-color-active-calm .tab-item.activated {
-  border-color: #11c1f3;
-  color: #11c1f3; }
 
 ion-tabs.tabs-color-active-assertive .tab-item {
   color: #444; }
   ion-tabs.tabs-color-active-assertive .tab-item.tab-item-active, ion-tabs.tabs-color-active-assertive .tab-item.active, ion-tabs.tabs-color-active-assertive .tab-item.activated {
     color: #ef473a; }
 
-ion-tabs.tabs-striped.tabs-color-active-assertive .tab-item.tab-item-active, ion-tabs.tabs-striped.tabs-color-active-assertive .tab-item.active, ion-tabs.tabs-striped.tabs-color-active-assertive .tab-item.activated {
-  border-color: #ef473a;
-  color: #ef473a; }
-
 ion-tabs.tabs-color-active-balanced .tab-item {
   color: #444; }
   ion-tabs.tabs-color-active-balanced .tab-item.tab-item-active, ion-tabs.tabs-color-active-balanced .tab-item.active, ion-tabs.tabs-color-active-balanced .tab-item.activated {
     color: #33cd5f; }
-
-ion-tabs.tabs-striped.tabs-color-active-balanced .tab-item.tab-item-active, ion-tabs.tabs-striped.tabs-color-active-balanced .tab-item.active, ion-tabs.tabs-striped.tabs-color-active-balanced .tab-item.activated {
-  border-color: #33cd5f;
-  color: #33cd5f; }
 
 ion-tabs.tabs-color-active-energized .tab-item {
   color: #444; }
   ion-tabs.tabs-color-active-energized .tab-item.tab-item-active, ion-tabs.tabs-color-active-energized .tab-item.active, ion-tabs.tabs-color-active-energized .tab-item.activated {
     color: #ffc900; }
 
-ion-tabs.tabs-striped.tabs-color-active-energized .tab-item.tab-item-active, ion-tabs.tabs-striped.tabs-color-active-energized .tab-item.active, ion-tabs.tabs-striped.tabs-color-active-energized .tab-item.activated {
-  border-color: #ffc900;
-  color: #ffc900; }
-
 ion-tabs.tabs-color-active-royal .tab-item {
   color: #444; }
   ion-tabs.tabs-color-active-royal .tab-item.tab-item-active, ion-tabs.tabs-color-active-royal .tab-item.active, ion-tabs.tabs-color-active-royal .tab-item.activated {
     color: #886aea; }
 
-ion-tabs.tabs-striped.tabs-color-active-royal .tab-item.tab-item-active, ion-tabs.tabs-striped.tabs-color-active-royal .tab-item.active, ion-tabs.tabs-striped.tabs-color-active-royal .tab-item.activated {
-  border-color: #886aea;
-  color: #886aea; }
-
 ion-tabs.tabs-color-active-dark .tab-item {
   color: #fff; }
   ion-tabs.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs.tabs-color-active-dark .tab-item.active, ion-tabs.tabs-color-active-dark .tab-item.activated {
     color: #444; }
-
-ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.active, ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.activated {
-  border-color: #444;
-  color: #444; }
 
 .tabs-top.tabs-striped {
   padding-bottom: 0; }
@@ -5101,7 +5061,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
   white-space: nowrap;
   font-weight: 400;
   font-size: 14px;
-  font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
   opacity: 0.7; }
   .tab-item:hover {
     cursor: pointer; }
@@ -5268,12 +5228,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
 
 .menu-open .menu-content .pane,
 .menu-open .menu-content .scroll-content {
-  pointer-events: none; }
-
-.menu-open .menu-content .scroll-content .scroll {
-  pointer-events: none; }
-
-.menu-open .menu-content .scroll-content:not(.overflow-scroll) {
+  pointer-events: none;
   overflow: hidden; }
 
 .grade-b .menu-content,
@@ -5685,7 +5640,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
   z-index: 2;
   display: block;
   margin: -1px;
-  padding: 0px;
+  padding: 16px;
   border-width: 1px;
   border-style: solid;
   font-size: 16px; }
@@ -6273,12 +6228,6 @@ button.item.item-button-right {
     min-height: 34px;
     font-size: 18px;
     line-height: 32px; }
-
-.item-button-left.item-button-right .button:first-child {
-  right: auto; }
-
-.item-button-left.item-button-right .button:last-child {
-  left: auto; }
 
 .item-avatar,
 .item-avatar .item-content,
@@ -7531,7 +7480,7 @@ input,
 button,
 select,
 textarea {
-  font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif; }
+  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif; }
 
 .item-input {
   display: -webkit-box;
@@ -8118,7 +8067,7 @@ input:checked + .checkbox-icon:after {
   pointer-events: none; }
 
 /* Fix to avoid background color bleeding */
-/* (occurred on (at least) Android 4.2, Asus MeMO Pad HD7 ME173X) */
+/* (occured on (at least) Android 4.2, Asus MeMO Pad HD7 ME173X) */
 .platform-android4_2 .toggle .track {
   -webkit-background-clip: padding-box; }
 
@@ -8604,8 +8553,8 @@ progress {
     padding-right: 0;
     padding-left: .2em; }
   .button.button-block, .button.button-full {
-    margin-top: 0px;
-    margin-bottom: 0px; }
+    margin-top: 10px;
+    margin-bottom: 10px; }
   .button.button-light {
     border-color: transparent;
     background-color: #fff;
@@ -8969,24 +8918,6 @@ a.button {
       width: auto;
       display: inline-block;
       float: left; }
-  .button-bar.bar-light > .button {
-    border-color: #ddd; }
-  .button-bar.bar-stable > .button {
-    border-color: #b2b2b2; }
-  .button-bar.bar-positive > .button {
-    border-color: #0c60ee; }
-  .button-bar.bar-calm > .button {
-    border-color: #0a9dc7; }
-  .button-bar.bar-assertive > .button {
-    border-color: #e42112; }
-  .button-bar.bar-balanced > .button {
-    border-color: #28a54c; }
-  .button-bar.bar-energized > .button {
-    border-color: #e6b500; }
-  .button-bar.bar-royal > .button {
-    border-color: #6b46e5; }
-  .button-bar.bar-dark > .button {
-    border-color: #111; }
 
 .button-bar > .button {
   -webkit-box-flex: 1;

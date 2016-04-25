@@ -10,8 +10,8 @@
 	line-height: 2.5rem;
 }
 .library .title a{
-	color: #000000;
-	border-bottom: solid 2px #000000;
+	color: #666666;
+	border-bottom: solid 2px #999999;
 }
 .library .title .selected{
 	border-color: #EF473A;
@@ -20,9 +20,14 @@
 .library .testcontent {
 	
 }
+.library .testcontent .paperitem{
+	border-bottom: solid 1px #EFE5E5;
+	padding-bottom: 5px;
+}
 .library .testcontent .papername{
 	display: block;
 	margin-bottom: 1rem;
+	color: #666666;
 }
 .library .testcontent .papernumber{
 	font-size: 0.6rem;
@@ -36,4 +41,30 @@
 }
 .library .testcontent .papertime{
 	 font-size: 0.6rem;
+	  color: #999999;
+}
+.library .testcontent .haveupdate{
+	display: block;
+    font-size: 0.7rem;
+    text-align: center;
+    background-color: #EF473A;
+    border-radius: 2px;
+    color: #ffffff;
+    line-height: 1.5rem;
+    width: 80%;
+    margin: 0.6rem auto;
+}
+.library .testcontent .havedownload{
+	display: block;
+    font-size: 0.7rem;
+    color: #999999;
+    text-align: center;
+    margin-top: 0.6rem;
+}
+.library .testcontent .havevip{
+	display: block;
+    font-size: 0.7rem;
+    color: #EF473A;
+    text-align: center;
+    margin-top: 0.6rem;
 }

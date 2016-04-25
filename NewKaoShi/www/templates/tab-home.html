@@ -34,5 +34,16 @@
 					</div>
 				</div>
 		</ion-scoll>
+		<div ng-show="selectindex==3" class="row row-wrap itemcontent">
+			<div class="col col-20">
+						<img ng-src="{{vipitem.Img}}">
+					</div>
+					<div class="col col-80">
+						<span class="itemname" ng-bind="vipitem.Name"></span>
+						<span class="itemdescript" ng-bind="vipitem.Descript"></span>
+						<span class="itemprice">{{vipitem.Price}}元</span>
+						<a class="buytype"> 天猫购买</a>
+					</div>
+		</div>
 	</ion-content>
 </ion-view>

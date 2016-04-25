@@ -12,8 +12,8 @@
   		</a>
   	</div>
   	<ion-scroll>
-  		<div ng-show="selectindex==0" class="testcontent">
-  			<div ng-repeat="paper in papers" class="row row-wrap">
+  		<div class="testcontent">
+  			<a ng-repeat="paper in papers" class="row row-wrap paperitem" ng-show="paper.testType==selectindex">
   				<div class="col col-80">
   					<span class="papername">
   						{{paper.Name}}
@@ -27,9 +27,12 @@
   					<span class="papertime">{{paper.Updatetime}}</span>
   				</div>
   				<div class="col col-20">
-  					
+  						<span class="haveupdate" ng-show="paper.IsUpdate==1">有更新</span>
+  						<span class="havedownload" ng-show="paper.IsUpdate==0 && paper.IsDownload==0">已下载</span>
+  						<span class="havevip" ng-show="paper.IsUpdate==0 && paper.IsDownload==1 && paper.vipType==0">VIP</span>
+  						<span class="havedownload" ng-show="paper.IsUpdate==0 && paper.IsDownload==1 && paper.vipType==1">免费</span>
   				</div>
-  			</div>
+  			</a>
   		</div>
   	</ion-scroll>
   </ion-content>

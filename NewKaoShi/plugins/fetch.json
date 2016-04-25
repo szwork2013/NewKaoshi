@@ -1,0 +1,15 @@
+{
+    "cordova-plugin-camera": {
+        "source": {
+            "type": "local",
+            "path": "E:\\ionicobject\\ngCordova\\cordova-plugin-camera-master"
+        }
+    },
+    "cordova-sqlite-storage": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/litehelpers/Cordova-sqlite-storage.git",
+            "subdir": "."
+        }
+    }
+}

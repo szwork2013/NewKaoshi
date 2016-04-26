@@ -5,7 +5,7 @@
 		
 	</ion-header-bar>
 	<ion-content class="home" scroll=false>
-		<ion-slide-box class="slide-box">
+		<ion-slide-box class="slide-box" auto-play="true" slide-interval="5000">
 			<ion-slide ng-repeat="item in slideboxes">
 				<a class="slideitem">
 					<img ng-src="{{item.imgsrc}}" alt="活动" />

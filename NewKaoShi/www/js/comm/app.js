@@ -5,9 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('NewKaoShi', ['ionic','ClassifyModule','HomeModule','LibraryModule','ErrorModule','SearchModule','AccountModule','CommModule'])
+angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule','LibraryModule','ErrorModule','SearchModule','AccountModule','CommModule'])
 
-.run(function($ionicPlatform,$ionicPopup,$rootScope) {
+.run(function($ionicPlatform,$ionicPopup,$rootScope,$ionicPopover) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -80,25 +80,39 @@ angular.module('NewKaoShi', ['ionic','ClassifyModule','HomeModule','LibraryModul
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
+  //登录
+		.state('login', {
+			url: '/login',
+			cache: true,
+			templateUrl: 'templates/login/login.html',
+			controller: 'LoginCtrl'
+		})
+		 //注册
+		.state('register', {
+			url: '/register',
+			cache: true,
+			templateUrl: 'templates/login/register.html',
+			controller: 'RegisterCtrl'
+		})
 	//搜索考试分类（金融）
 		.state('testType', {
 			url: '/testType',
 			cache: true,
-			templateUrl: 'templates/testType.html',
+			templateUrl: 'templates/classfiy/testType.html',
 			controller: 'TestTypeCtrl'
 		})
 		//类型细项（银行、保险）
 		.state('typeItem', {
 			url: '/typeItem/:typeId/:typeName',
 			cache: false,
-			templateUrl: 'templates/typeItem.html',
+			templateUrl: 'templates/classfiy/typeItem.html',
 			controller: 'TypeItemCtrl'
 		})
 		//资格考试（个人理财、风险管理）
 		.state('qualification', {
 			url: '/qualification/:typeItemId/:typeItemName',
 			cache: false,
-			templateUrl: 'templates/qualification.html',
+			templateUrl: 'templates/classfiy/qualification.html',
 			controller: 'QualificationCtrl'
 		})
   // setup an abstract state for the tabs directive
@@ -160,32 +174,39 @@ angular.module('NewKaoShi', ['ionic','ClassifyModule','HomeModule','LibraryModul
 		.state('paperDetail', {
 			url: '/paperDetail',
 			cache: false,
-			templateUrl: 'templates/paperDetail.html',
+			templateUrl: 'templates/paper/paperDetail.html',
 			controller: 'PaperDetailCtrl'
 		})
 		//考试
 		.state('kaoshi', {
 			url: '/kaoshi',
 			cache: false,
-			templateUrl: 'templates/kaoshi.html',
+			templateUrl: 'templates/paper/kaoshi.html',
 			controller: 'KaoshiCtrl'
 		})
 		//答题卡
 		.state('answerCard', {
 			url: '/answerCard',
 			cache: false,
-			templateUrl: 'templates/answerCard.html',
+			templateUrl: 'templates/paper/answerCard.html',
 			controller: 'AnswerCardCtrl'
 		})
 		//结果
 		.state('result', {
 			url: '/result',
 			cache: false,
-			templateUrl: 'templates/result.html',
+			templateUrl: 'templates/paper/result.html',
 			controller: 'ResultCtrl'
+		})
+		//答案解析
+		.state('resultCard', {
+			url: '/resultCard',
+			cache: false,
+			templateUrl: 'templates/paper/resultCard.html',
+			controller: 'AnswerCardCtrl'
 		});
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/testType');
+  $urlRouterProvider.otherwise('/tab/account');
 
 });

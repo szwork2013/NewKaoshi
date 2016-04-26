@@ -1,3 +1,5 @@
+var loginModule=angular.module('LoginModule',[])
+
 var commModule=angular.module('CommModule',[]);
 
 var classifyModule=angular.module('ClassifyModule',[]);

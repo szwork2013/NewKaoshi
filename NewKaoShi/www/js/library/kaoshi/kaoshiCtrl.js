@@ -1,7 +1,7 @@
 libraryModule
-.controller('KaoshiCtrl',['$scope','KaoshiServ','$state',
-function($scope,KaoshiServ,$state){
-	lists = [{
+.controller('KaoshiCtrl',['$scope','KaoshiServ','$state','$ionicSlideBoxDelegate',
+function($scope,KaoshiServ,$state,$ionicSlideBoxDelegate){
+	$scope.lists = [{
 			type: 0, //0表示单选题
 			title: "1.（单选题）是衡量银行资产质量的最重要指标",
 			answerlist: [{
@@ -38,27 +38,32 @@ function($scope,KaoshiServ,$state){
 				value: 'D.资产利率的作用'
 			}]
 		}]
-	var currentindex=0;
-		$scope.test=lists[currentindex];
 		$scope.SelectAnswer = SelectAnswer;
 		$scope.LastTest=LastTest;
 		$scope.NextTest=NextTest;
 		$scope.Assignment=Assignment;
+		$scope.slideHasChanged=slideHasChanged;
+		function slideHasChanged(index){
+			
+		}
 		function SelectAnswer(answer) {
 			currentindex++;
 			$scope.test=lists[currentindex];
 		}
 		function LastTest(){
-			if(currentindex>0){
-				currentindex--;
+			if($ionicSlideBoxDelegate.currentIndex()<=0){
+				//已到最前题
+				return;
 			}
-			$scope.test=lists[currentindex];
+			$ionicSlideBoxDelegate.previous();
 		}
 		function NextTest(){
-			if(currentindex<lists.length-1){
-				currentindex++;
+			var length=$scope.lists.length-1;
+			if($ionicSlideBoxDelegate.currentIndex()>=length){
+				//已到最后题
+				return;
 			}
-			$scope.test=lists[currentindex];
+			$ionicSlideBoxDelegate.next();
 			//记录历史(未完成)
 		}
 		function Assignment(){

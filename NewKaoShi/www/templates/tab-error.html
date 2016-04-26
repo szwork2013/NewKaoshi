@@ -1,0 +1,27 @@
+<ion-view   >
+	 <ion-header-bar>
+	 	<div class="title">
+	 		<a><span class="errortitle" ng-class="{'yellowtitle':isError,'whitetitle':!isError}" ng-click="ChangeShow(true)">我的错题</span></a>
+	 		<a><span class="collecttitle" ng-class="{'yellowtitle':!isError,'whitetitle':isError}" ng-click="ChangeShow(false)">我的收藏</span></a>
+	 	</div>
+	 </ion-header-bar>
+	<ion-content class="error">
+		<div>
+			<div ng-repeat="items in list" ng-show="(isError && items.type==0) || (!isError && items.type==1)" class="itemb">
+				<div class="button button-full icon-right itemMain" ng-class="{'ion-ios-arrow-down':items.isShow,'ion-ios-arrow-up':!items.isShow}" ng-click="ChangeShowItem(items)" >
+					<span>{{items.typeItem}}</span>
+					<span class="errorcount">{{items.errorlist.length}}</span>
+				</div>
+				<div ng-show="items.isShow" class="errordetail">
+						<div ng-repeat="item in items.errorlist"  class="itemsa">
+							<div class="itemMain">
+								<span class="errorpaper">{{item.qualication}}</span>
+								<span class="errorcount">{{item.Count}}</span>
+								<a class="redo" ng-click="TestAgain()"> 重做</a>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

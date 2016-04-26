@@ -128,6 +128,9 @@
 	line-height: 2rem;
 	color: #333333;
 }
+.kaoshi .slider-pager{
+	visibility: hidden;
+}
 .kaoshi .bigtitle{
 	display: block;
 	width: 96%;
@@ -175,7 +178,7 @@
 	    width: 2rem;
 	    line-height: 2rem;
 	    text-align: center;
-	    background-color:#E42112;
+	    background-color:#ff6666;
 	    color: #FFFFFF;
 	    border-radius: 50%;
 	    font-weight: bolder;
@@ -190,4 +193,45 @@
 	    border: solid 1px #999999;
 	    border-radius: 50%;
 	        font-weight: bolder;
+}
+.answercard .content .rightAnswer{
+	display: block;
+		margin: auto;
+	    width: 2rem;
+	    line-height: 2rem;
+	    text-align: center;
+	    background-color:green;
+	    color: #FFFFFF;
+	    border-radius: 50%;
+	    font-weight: bolder;
+}
+.answercard .content .wrongAnswer{
+	display: block;
+		margin: auto;
+	    width: 2rem;
+	    line-height: 2rem;
+	    text-align: center;
+	    background-color:#ff6666;
+	    color: #FFFFFF;
+	    border-radius: 50%;
+	    font-weight: bolder;
+}
+.resultScode{
+	width: 96%;
+	margin: auto;
+}
+.resultScode .resultbg{
+	background-image: url("../img/ben.png");
+}
+.resultScode .resultbg .content{
+	width: 60%;
+	margin: auto;
+	padding-top: 4rem;
+}
+.resultScode .resultbg .descript{
+	display: block;
+	color: #ff6000;
+}
+.resultScode .resultbtn{
+	border-radius: 5px;
 }

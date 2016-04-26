@@ -1,0 +1,26 @@
+<ion-view >
+	 <ion-header-bar>
+	 	<button class="button button-icon button-clear ion-ios-arrow-back button-light" ng-click="HideLogin()"></button>
+	 	<span class="title">用户登录</span>
+	 </ion-header-bar>
+	<ion-content class="login">
+		<form name="loginForm" ng-submit="doLogin()">
+			<div class="content">
+				<div >
+					<div class="item item-input itemaccount">
+						<input type="email" name="account" ng-model="loginData.account" placeholder="请输入邮箱" required>
+					</div>
+					<div class="item item-input itempsd">
+						<input type="password" name="password" ng-model="loginData.password" placeholder="请输入密码" required>
+					</div>
+				</div>
+				<div class="subbtn">
+					<button class="button button-full button-assertive" type="submit" ng-disabled="loginForm.account.$error.required||loginForm.password.$error.required">登录</button>
+				</div>
+			</div>
+			<div class="goregistbtn">
+				<a class="button button-full icon-right ion-ios-arrow-right" ng-click="goRegister()">还没有账号,赶紧注册</a>
+			</div>
+		</form>
+	</ion-content>
+</ion-view >

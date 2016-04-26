@@ -1,0 +1,30 @@
+<!--
+	作者：1085463652@qq.com
+	时间：2016-04-26
+	描述：考试答案解析
+-->
+	<ion-view >
+	<ion-header-bar align-title="center">
+		<button class="button button-icon ion-ios-arrow-back" ng-click="showPop($event)">
+		</button>
+		<span class="title"> 答题卡</span>
+		<button class="button  button-clear " ng-click="ConfirmAssignment()">
+			<span class='assignment'>重考</span>
+		</button>
+	</ion-header-bar>
+	<ion-content class="answercard">
+		<div class="title">
+			总分<span class="number">100</span>,及格分<span class="number">50</span>,您的得分<span class="number">20</span>
+		</div>
+		<div class="content">
+			<div ng-repeat="items in paperquestions">
+				<span class="itemtitle">{{items.title}}</span>
+				<div class="row row-wrap">
+					<a ng-repeat="item in items.answer" class="col col-20 answer" >
+						<span ng-class="{'rightAnswer':item.result==item.answer,'wrongAnswer':item.result!=item.answer}">{{$index+1}}</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

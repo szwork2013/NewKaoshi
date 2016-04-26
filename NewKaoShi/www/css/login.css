@@ -1,0 +1,33 @@
+.login{
+	background-color: #efefef;
+}
+.login .content{
+	width: 90%;
+	margin: auto;
+	margin-top: 4rem;
+}
+.login .content .itemaccount{
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
+}
+.login .content .itempsd{
+	border-bottom-left-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+}
+.login .content .subbtn{
+	margin-top: 1.5rem;
+}
+.login .goregistbtn{
+	width: 90%;
+    margin: 3rem auto 0px;
+}
+.login .confimrule{
+	margin-top: 0.5rem;
+}
+.login .confimrule i{
+	color: #ff6666;
+}
+.login .confimrule span{
+	color: #999999;
+	font-size: 0.6rem;
+}

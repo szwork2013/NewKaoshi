@@ -1,0 +1,18 @@
+<ion-modal-view>
+	 <ion-header-bar>
+	 	<button class="button button-icon button-clear ion-ios-arrow-back button-light" ng-click="HideLogin()"></button>
+	 	<span class="title">解锁软件</span>
+	 	<button class="button button-clear">确定</button>
+	 	
+	 </ion-header-bar>
+	<ion-content class="login">
+			<div class="content">
+					<div class="item item-input itemaccount">
+						<input type="password" name="number" ng-model="key.account" placeholder="请输入Vip激活码" required>
+					</div>
+					<div class="item item-input itempsd">
+						<input type="password" name="connumber" ng-model="key.conaccount" placeholder="请确认输入" required>
+					</div>
+			</div>
+	</ion-content>
+</ion-modal-view >

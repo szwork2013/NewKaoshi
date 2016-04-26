@@ -1,0 +1,32 @@
+.account{
+	
+	background-color: #efefef;
+}
+.account .row, .account .col{
+	margin: 0px;
+	padding: 0px;
+	
+}
+.account .head{
+	width: 96%;
+	margin: auto;
+	padding: 0;
+}
+.account .headimg{
+	display: block;
+    float: left;
+	width: 20%;
+	border-radius: 50%;
+	vertical-align: middle;
+	margin: 1rem;
+}
+.account .headbtn{
+	margin: 0px;
+	padding: 0px;
+}
+.account .headname{
+	
+}
+.account .heademail{
+	display: block;
+}

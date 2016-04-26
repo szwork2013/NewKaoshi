@@ -1,0 +1,44 @@
+<ion-view  >
+	<ion-header-bar align-title="center">
+		<button class="button button-icon ion-ios-arrow-back" ng-click="showPop($event)">
+		</button>
+		<span class="title"> 单选题</span>
+		<button class="button  button-clear " ng-click="Assignment()">
+			<span class='assignment'>交卷</span>
+		</button>
+	</ion-header-bar>
+	<ion-content class="kaoshi">
+		<ion-slide-box on-slide-changed="slideHasChanged($index)">
+			<ion-slide ng-repeat="items in lists" >
+				<span class="bigtitle" ng-show="items.type==0">
+					一、单项选择题(共80题,每题0.5分;下列每小题有四个答案,只有一项符合题目要求,请选择出来...)
+				</span>
+				<span class="title content">{{items.title}}{{items.type}}</span>
+				<div class="list content" ng-show="items.type==0">
+					<label ng-repeat="item in items.answerlist" class="item">
+						<input   type="radio" ng-value="item.value" name="answer" ng-model="data.serverSide" ng-change="SelectAnswer(item)"/>
+						<span>{{ item.value }}</span>
+					</label>
+				</div>
+				<!--多选答案-->
+				<div class="list content" ng-show="items.type==1">
+					<label ng-repeat="item in items.answerlist" class="item">
+						<input   type="checkbox" ng-value="item.value" name="answer" ng-model="data.serverSide" />
+						<span>{{ item.value }}</span>
+					</label>
+				</div>
+				<!--简答题-->
+				<div class="list content" ng-show="items.type==2">
+					<label ng-repeat="item in items.answerlist" class="item">
+						<span>{{ item.value }}</span>
+					</label>
+				</div>
+			</ion-slide>
+		</ion-slide-box>
+	</ion-content>
+	<ion-footer-bar>
+		<button class="button button-icon ion-ios-undo-outline" ng-click="LastTest()"></button>
+		<span class="title">00:00:00</span>
+		<button class="button button-icon ion-ios-redo-outline" ng-click="NextTest()"></button>
+	</ion-footer-bar>
+</ion-view>

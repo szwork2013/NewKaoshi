@@ -1,13 +1,13 @@
 homeModule
 	.controller('HomeCtrl', ['$scope', 'HomeServ', function($scope, HomeServ) {
 		$scope.slideboxes = [{
-			imgsrc: "img/adam.jpg",
+			imgsrc: "img/123.jpg",
 			linksrc: ''
 		}, {
-			imgsrc: "img/adam.jpg",
+			imgsrc: "img/123.jpg",
 			linksrc: ''
 		}, {
-			imgsrc: "img/adam.jpg",
+			imgsrc: "img/123.jpg",
 			linksrc: ''
 		}]
 		$scope.selectindex = 0;

@@ -85,6 +85,12 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
+  /*导航页路由*/
+				.state('navigation', {
+					url: '/navigation',
+					cache: true,
+					templateUrl: 'templates/navigation.html'
+			})
   //登录
 		.state('login', {
 			url: '/login',
@@ -212,6 +218,10 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
 		});
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/account');
+  $urlRouterProvider.otherwise(function($injector) {
+  		//获取到注入器,获取$state服务
+				var $state = $injector.get("$state");
+				$state.go('navigation');
+  });
 
 });

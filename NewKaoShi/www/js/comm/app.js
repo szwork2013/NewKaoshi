@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule','LibraryModule','ErrorModule','SearchModule','AccountModule','CommModule'])
 
-.run(function($ionicPlatform,$ionicPopup,$rootScope,$ionicPopover) {
+.run(function($ionicPlatform,$ionicPopup,$rootScope,$ionicHistory) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -21,6 +21,11 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
       StatusBar.styleDefault();
     }
   });
+  $rootScope.BackView=function(){
+  	if($ionicHistory.viewHistory()){
+  		$ionicHistory.goBack();
+  	}
+  }
   $rootScope.ExitApp = function() {
 			//定义确认弹出框confirm
 			/*var confirmPopup = $ionicPopup.confirm({
@@ -104,14 +109,14 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
 		//类型细项（银行、保险）
 		.state('typeItem', {
 			url: '/typeItem/:typeId/:typeName',
-			cache: false,
+			cache: true,
 			templateUrl: 'templates/classfiy/typeItem.html',
 			controller: 'TypeItemCtrl'
 		})
 		//资格考试（个人理财、风险管理）
 		.state('qualification', {
 			url: '/qualification/:typeItemId/:typeItemName',
-			cache: false,
+			cache: true,
 			templateUrl: 'templates/classfiy/qualification.html',
 			controller: 'QualificationCtrl'
 		})

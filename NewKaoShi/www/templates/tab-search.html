@@ -4,8 +4,40 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{chat.name}}">
-  <ion-content >
-   
-  </ion-content>
+<ion-view>
+	<ion-header-bar align-title="center">
+
+		<span class="title"> 搜索</span>
+
+	</ion-header-bar>
+	<ion-content>
+		<div class="bar bar-header item-input-inset">
+			<label class="item-input-wrapper">
+        <i class="icon  ion-ios-search-strong placeholder-icon" ng-click="search(searchName)"></i>
+        <input type="search" placeholder="请输入关键字" ng-model="searchName">
+    	</label>
+		</div>
+		<div class="testcontent" ng-show="false">
+  			<a ng-repeat="paper in papers track by paper.id" class="row row-wrap paperitem" ng-show="paper.testType==selectindex" ng-click="GoPaperDetail()">
+  				<div class="col col-80">
+  					<span class="papername">
+  						{{paper.Name}}
+  					</span>
+  					<span class="papernumber">
+  						<span class="number">
+  						{{paper.Number}}
+  						</span>
+  						人做过
+  					</span>
+  					<span class="papertime">{{paper.Updatetime}}</span>
+  				</div>
+  				<div class="col col-20">
+  						<span class="haveupdate" ng-show="paper.IsUpdate==1">有更新</span>
+  						<span class="havedownload" ng-show="paper.IsUpdate==0 && paper.IsDownload==0">已下载</span>
+  						<span class="havevip" ng-show="paper.IsUpdate==0 && paper.IsDownload==1 && paper.vipType==0">VIP</span>
+  						<span class="havedownload" ng-show="paper.IsUpdate==0 && paper.IsDownload==1 && paper.vipType==1">免费</span>
+  				</div>
+  			</a>
+  		</div>
+	</ion-content>
 </ion-view>

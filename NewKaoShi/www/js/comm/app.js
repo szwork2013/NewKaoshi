@@ -129,7 +129,7 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
   // Each tab has its own nav history stack:
 
   .state('tab.home', {
-    url: '/home/:id',
+    url: '/home',
     views: {
       'tab-home': {
         templateUrl: 'templates/tab-home.html',

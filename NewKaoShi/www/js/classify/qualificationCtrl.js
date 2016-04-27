@@ -1,6 +1,6 @@
 classifyModule
-.controller('QualificationCtrl',['$scope','$stateParams','QualificationServ',
-function($scope,$stateParams,QualificationServ){
+.controller('QualificationCtrl',['$scope','$stateParams','QualificationServ','$state',
+function($scope,$stateParams,QualificationServ,$state){
 	$scope.qualifications=[{
 				parentId:0,
 				id: 0,
@@ -20,4 +20,8 @@ function($scope,$stateParams,QualificationServ){
 			}, ]
 	$scope.typeItemName=$stateParams.typeItemName;
 	$scope.typeItemId=$stateParams.typeItemId;
+	$scope.Enter=Enter;
+	function Enter(item){
+		$state.go('tab.home');
+	}
 }])

@@ -146,6 +146,7 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
 
   .state('tab.library', {
       url: '/library',
+      cache:false,
       views: {
         'tab-library': {
           templateUrl: 'templates/tab-library.html',
@@ -221,7 +222,7 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
   $urlRouterProvider.otherwise(function($injector) {
   		//获取到注入器,获取$state服务
 				var $state = $injector.get("$state");
-				$state.go('navigation');
+				$state.go('tab.library');
   });
 
 });

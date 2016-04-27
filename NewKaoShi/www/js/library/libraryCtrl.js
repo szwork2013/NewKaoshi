@@ -1,12 +1,8 @@
 libraryModule
-.controller('LibraryCtrl',['$scope','LibraryServ','$state','$ionicSideMenuDelegate',function($scope,LibraryServ,$state,$ionicSideMenuDelegate){
+.controller('LibraryCtrl',['$scope','LibraryServ','$state',function($scope,LibraryServ,$state){
 	$scope.selectindex=0;
 	$scope.ChangeType=ChangeType;
 	$scope.GoPaperDetail=GoPaperDetail;
-	$scope.TrageMenu=TrageMenu;
-	function TrageMenu(){
-		$ionicSideMenuDelegate.toggleRight();
-	}
 	function ChangeType(index){
 		$scope.selectindex=index;
 	}

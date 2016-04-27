@@ -1,0 +1,10 @@
+[
+	{
+		"tableName": "Messages",
+		"tablePrama": ["SendID", "Img","Type" ,"Content","AudioTime","Time", "ReceiveID"]
+	},
+	{
+		"tableName": "Contacts",
+		"tablePrama": ["ID Primary key", "Img", "Account","Name", "NickName", "Address","IsCurrent boolean","CurrentContent","CurrentTime"]
+	}
+]

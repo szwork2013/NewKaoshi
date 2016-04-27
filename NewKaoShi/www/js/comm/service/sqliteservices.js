@@ -1,4 +1,4 @@
-angular.module("sqliteModel", ['ngCordova']).factory('$Sqlite', ['$q', '$cordovaSQLite', '$http',
+angular.module("sqliteModel", ['ngCordova']).factory('SqliteServ', ['$q', '$cordovaSQLite', '$http',
 	function($q, $cordovaSQLite, $http) {
 		var db = null;
 		var table = [];
@@ -6,7 +6,7 @@ angular.module("sqliteModel", ['ngCordova']).factory('$Sqlite', ['$q', '$cordova
 			alert('该浏览器不支持数据库');
 			return false;
 		} else {
-			db = window.openDatabase('bcdb', '1.0', 'bcdb', 30000);
+			db = window.openDatabase('ksdb', '1.0', 'ksdb', 30000);
 			var service = {
 				createDB: createDB,
 				GetMessages: GetMessages,
@@ -108,7 +108,7 @@ angular.module("sqliteModel", ['ngCordova']).factory('$Sqlite', ['$q', '$cordova
 				}).error(function() {});
 		};
 		
-		function GetMessages(SendID, ReceiveID) {
+		/*function GetMessages(SendID, ReceiveID) {
 			var q = $q.defer();
 			SendID = SendID.toString();
 			ReceiveID = ReceiveID.toString();
@@ -175,6 +175,5 @@ angular.module("sqliteModel", ['ngCordova']).factory('$Sqlite', ['$q', '$cordova
 
 			})
 			return q.promise;
-		};
-	}
-]);
+		};*/
+	}]);

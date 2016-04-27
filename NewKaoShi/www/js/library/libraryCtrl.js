@@ -3,6 +3,7 @@ libraryModule
 	$scope.selectindex=0;
 	$scope.ChangeType=ChangeType;
 	$scope.GoPaperDetail=GoPaperDetail;
+	$scope.TragetMenu=TragetMenu;
 	function ChangeType(index){
 		$scope.selectindex=index;
 	}
@@ -46,4 +47,11 @@ libraryModule
 		IsDownload:1,//是否已下载，0已下载，1未下载
 		IsUpdate:0
 	},]
+	var menu=document.getElementById("menu_list");
+	var height=document.documentElement.clientHeight;
+	menu.style.cssText="height:"+height+"px";
+	$scope.isShow=false;
+	function TragetMenu(){
+		$scope.isShow=!$scope.isShow;
+	}
 }])

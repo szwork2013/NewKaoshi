@@ -68,6 +68,15 @@
     text-align: center;
     margin-top: 0.6rem;
 }
+.library  .menulist{
+	margin-top: -43px;
+	position: absolute;
+	top: 0px;
+	width: 50%;
+	background-color: #999999;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+}
 .detail .row,.detail .col{
 	margin: 0px;
 	padding: 0px;

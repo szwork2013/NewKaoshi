@@ -5,8 +5,12 @@
 		
 	</ion-header-bar>
   <ion-content class="account">
-  	<div class="list head">
-  			<div class="item item-icon-right">
+
+  	<div class="list head" >
+  		<div ng-show="!isLogin">
+  			<button class="button button-full button-small button-assertive" ng-click="GoLogin()">还未登录,请登录</button>
+  		</div>
+  			<div class="item item-icon-right" ng-show="isLogin">
 				
 				<img ng-src="img/user.png" class="item-note headimg" />
 				<span>
@@ -23,36 +27,31 @@
 			</div>
   	</div>
    <div class="list content">
-    	<div class="item item-icon-right contentoption">
-    		<a class="button button-full icon-left button-icon ion-ios-loop ">
-    			<span>切换考试</span>
-    		</a>
+    	<a class="item item-icon-left item-icon-right contentoption" ng-click="ChangeTest()">
+    		<i class="icon ion-ios-loop "></i>
+    		<span>切换考试</span>
     		<i class="icon ion-ios-arrow-forward"></i>
-    	</div>
-    	<div class="item item-icon-right contentoption">
-    		<a class="button button-full icon-left button-icon ion-ios-download-outline">
-    			<span>我的下载</span>
-    		</a>
+    	</a>
+    	<a class="item item-icon-left item-icon-right contentoption">
+    		<i class="icon ion-ios-download-outline"></i>
+    		<span>我的下载</span>
     		<i class="icon ion-ios-arrow-forward"></i>
-    	</div>
-    	<div class="item item-icon-right contentoption">
-    		<a class="button button-full icon-left button-icon ion-ios-list-outline">
-    			<span>最近练习</span>
-    		</a>
+    	</a>
+    	<a class="item item-icon-left item-icon-right contentoption">
+    		<i class="icon ion-ios-list-outline"></i>
+    		<span>最近练习</span>
     		<i class="icon ion-ios-arrow-forward"></i>
-    	</div>
-    	<div class="item item-icon-right contentoption">
-    		<a class="button button-full icon-left button-icon ion-ios-alarm-outline">
+    	</a>
+    	<a class="item item-icon-left item-icon-right contentoption">
+    		<i class="icon ion-ios-alarm-outline"></i>
     			<span>模拟考试</span>
-    		</a>
     		<i class="icon ion-ios-arrow-forward"></i>
-    		</div>
-    	<div class="item item-icon-right contentoption">
-    		<a class="button button-full icon-left button-icon ion-ios-information-outline">
+    		</a>
+    	<a class="item item-icon-left item-icon-right contentoption">
+    		<i class="icon ion-ios-information-outline"></i>
     			<span>关于</span>
-    		</a>
     		<i class="icon ion-ios-arrow-forward"></i>
-    	</div>
+    	</a>
     </div>
   </ion-content>
 </ion-view>

@@ -1,5 +1,7 @@
 homeModule
-	.controller('HomeCtrl', ['$scope', 'HomeServ', function($scope, HomeServ) {
+	.controller('HomeCtrl', ['$scope','$rootScope', 'HomeServ', 
+	function($scope,$rootScope, HomeServ) {
+		$rootScope.isLogin=false;
 		$scope.slideboxes = [{
 			imgsrc: "img/123.jpg",
 			linksrc: ''

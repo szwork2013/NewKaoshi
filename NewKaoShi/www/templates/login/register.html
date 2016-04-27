@@ -4,7 +4,7 @@
 	 	<span class="title">用户注册</span>
 	 </ion-header-bar>
 	<ion-content class="login">
-		<form name="loginForm" ng-submit="doLogin()">
+		<form name="loginForm" >
 			<div class="content">
 				<div >
 					<div class="item item-input itemaccount">
@@ -25,7 +25,7 @@
 					</div>
 				</div>
 				<div class="subbtn">
-					<button class="button button-full button-assertive" type="submit" ng-disabled="loginForm.account.$error.required||loginForm.name.$error.required||loginForm.password.$error.required||loginForm.conpassword.$error.required">注册</button>
+					<button ng-click="Register()" class="button button-full button-assertive" type="submit" ng-disabled="loginForm.account.$error.required||loginForm.name.$error.required||loginForm.password.$error.required||loginForm.conpassword.$error.required">注册</button>
 				</div>
 			</div>
 		</form>

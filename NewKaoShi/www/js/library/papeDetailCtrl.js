@@ -1,14 +1,24 @@
 libraryModule
-.controller('PaperDetailCtrl',['$scope','PaperDetailServ','$state',
-function($scope,PaperDetailServ,$state){
+.controller('PaperDetailCtrl',['$scope','$rootScope','PaperDetailServ','$state',
+function($scope,$rootScope,PaperDetailServ,$state){
 	$scope.StartExams = StartExams;
-
+	$rootScope.paperInfo={
+		haveTest:false,
+		haveKaoshi:true,
+		currentType:0,//当前试卷模式0表示考试，1表示练习
+		rtime:0
+	}
 	function StartExams(type) {
 		switch (type) {
 			case 0:
+			$rootScope.paperInfo.haveKaoshi=true;
+			$rootScope.paperInfo.currentType=0;
 				$state.go('kaoshi')
 				break;
 			case 1:
+			$rootScope.paperInfo.haveTest=true;
+			$rootScope.paperInfo.currentType=1;
+				$state.go('kaoshi')
 				break;
 		}
 	}

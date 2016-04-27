@@ -1,10 +1,10 @@
 <ion-view >
 	 <ion-header-bar>
-	 	<button class="button button-icon button-clear ion-ios-arrow-back button-light" ng-click="BackView()"></button>
+	 	<button class="button button-icon button-clear ion-ios-arrow-back button-light" ng-click="BackAccount()"></button>
 	 	<span class="title">用户登录</span>
 	 </ion-header-bar>
 	<ion-content class="login">
-		<form name="loginForm" ng-submit="doLogin()">
+		<form name="loginForm" >
 			<div class="content">
 				<div >
 					<div class="item item-input itemaccount">
@@ -15,7 +15,7 @@
 					</div>
 				</div>
 				<div class="subbtn">
-					<button class="button button-full button-assertive" type="submit" ng-disabled="loginForm.account.$error.required||loginForm.password.$error.required">登录</button>
+					<button ng-click="Login()" class="button button-full button-assertive" type="submit" ng-disabled="loginForm.account.$error.required||loginForm.password.$error.required">登录</button>
 				</div>
 			</div>
 			<div class="goregistbtn">

@@ -89,7 +89,8 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
 				.state('navigation', {
 					url: '/navigation',
 					cache: true,
-					templateUrl: 'templates/navigation.html'
+					templateUrl: 'templates/navigation.html',
+					controller: 'InitCtrl'
 			})
   //登录
 		.state('login', {

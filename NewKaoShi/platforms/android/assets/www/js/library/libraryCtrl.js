@@ -9,8 +9,15 @@ libraryModule
 		$scope.$on("$ionicView.enter", function() {
 			$scope.isShow = 0;
 			var menu=document.getElementById("menu_list");
+			var content=document.getElementById("linrary_scroll");
+			
+			var menuscr=document.getElementById("menu_scroll");
 			var height=document.documentElement.clientHeight-49;
 			menu.style.cssText="height:"+height+'px';
+			menuscr.style.cssText="height:"+height+'px';
+			var contentheight=height-54-42;
+			content.style.cssText="height:"+contentheight+'px';
+			
 		})
 
 		function TragetMenu() {

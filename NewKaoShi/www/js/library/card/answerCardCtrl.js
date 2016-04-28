@@ -2,8 +2,12 @@ libraryModule
 .controller('AnswerCardCtrl',['$scope','AnswerCardServ','$state',
 function($scope,AnswerCardServ,$state){
 	$scope.ConfirmAssignment=ConfirmAssignment;
+	$scope.TestAgain=TestAgain;
 	function ConfirmAssignment(){
-		$state.go('result')
+		$state.go('result');
+	}
+	function TestAgain(){
+		$state.go('kaoshi');
 	}
 	$scope.paperquestions=[
 	{

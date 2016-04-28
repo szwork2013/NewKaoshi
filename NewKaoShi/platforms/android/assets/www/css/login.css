@@ -11,37 +11,27 @@
 }
 
 .nav1 {
-	background: url(../img/1.JPG);
+	background: url(../img/load.png);
 	background-size: cover;
 	background-repeat: no-repeat;
 }
 
 .nav2 {
-	background: url(../img/3.jpg);
+	background: url(../img/load.png);
 	background-size: cover;
 	background-repeat: no-repeat;
 }
 
 .nav3 {
-	background: url(../img/4.jpg);
+	background: url(../img/load.png);
 	background-size: cover;
 	background-repeat: no-repeat;
 }
 
 .nav4 {
-	background: url(../img/6.jpg);
+	background: url(../img/load.png);
 	background-size: cover;
 	background-repeat: no-repeat;
-}
-.btnstart {
-	width: 60%;
-	height: 55px;
-	background: #008CD7;
-	border: #FFFFFF solid 1px;
-	line-height: 55px;
-	font-size: 30px;
-	position: relative;
-	top: 60%;
 }
 .login{
 	background-color: #efefef;

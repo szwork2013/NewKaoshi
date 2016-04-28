@@ -1,4 +1,10 @@
 loginModule
+.controller('InitCtrl',['$scope','$state',function($scope,$state){
+	$scope.GoInit=GoInit;
+	function GoInit(){
+		$state.go('testType');
+	}
+}])
 .controller('LoginCtrl',['$scope','$rootScope','LoginServ','$state',
 function($scope,$rootScope,LoginServ,$state){
 	$scope.goRegister=goRegister;

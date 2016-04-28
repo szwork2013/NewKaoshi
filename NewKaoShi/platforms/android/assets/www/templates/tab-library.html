@@ -18,7 +18,7 @@
 					<span>章节练习</span>
 				</a>
 			</div>
-			<ion-scroll>
+			<ion-scroll id="linrary_scroll">
 				<div class="testcontent">
 					<a ng-repeat="paper in papers track by paper.id" class="row row-wrap paperitem" ng-show="paper.testType==selectindex" ng-click="GoPaperDetail()">
 						<div class="col col-80">
@@ -43,13 +43,17 @@
 			</ion-scroll>
 		</div>
 		<div id="menu_list" ng-class="{'showmenu':isShow==1,'menushow':isShow==1,'hidemenu':isShow==2,'menuhide':isShow!=1}" class="row row-wrap testmenu">
+			
 			<a class="col col-50" ng-click="HideMenu()"></a>
 			<div class="col col-50 menuitems">
-				<a class="item menutitle"><span>{{qulificationlist.title}}</span></a>
-				<a class="item menucontent" ng-repeat='qua in qulificationlist.children track by qua.id' ng-click="ChangepaperDetail()">
-					<span>{{qua.title}}</span>
-				</a>
+				<ion-scroll id="menu_scroll">
+					<a class="item menutitle"><span>{{qulificationlist.title}}</span></a>
+					<a class="item menucontent" ng-repeat='qua in qulificationlist.children track by qua.id' ng-click="ChangepaperDetail()">
+						<span>{{qua.title}}</span>
+					</a>
+				</ion-scroll>
 			</div>
+			
 		</div>
 	</ion-content>
 </ion-view>

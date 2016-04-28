@@ -3,8 +3,10 @@
 		<button class="button button-icon ion-ios-arrow-back" ng-click="BackView()">
 		</button>
 		<span class="title"> 单选题</span>
-		<button class="button  button-clear " ng-click="Assignment()">
+		<button class="button  button-clear " ng-click="Assignment()" ng-if="paperInfo.currentType==0">
 			<span class='assignment'>交卷</span>
+		</button>
+		<button class="button  button-icon ion-ios-keypad-outline  " ng-click="SingMenu()" ng-if="paperInfo.currentType==1">
 		</button>
 	</ion-header-bar>
 	<ion-content class="kaoshi">

@@ -1,0 +1,59 @@
+.account{
+	
+	background-color: #efefef;
+}
+.account .row, .account .col{
+	margin: 0px;
+	padding: 0px;
+	
+}
+.account .head{
+	width: 96%;
+	margin:2rem auto 0px;
+	padding: 0;
+}
+.account .headimg{
+    float: left;
+    vertical-align: middle;
+	
+}
+.account .headbtn{
+	margin: 0px;
+	padding: 0px;
+}
+.account .headname{
+	display: block;
+	margin-top: 1rem;
+	line-height: 2rem;
+}
+.account .heademail{
+	display: block;
+	margin-bottom: 1rem;
+	font-size: 0.8rem;
+    color: #999999;
+}
+.account .unclockimg{
+	color: #ff6666;
+}
+.account .unclockvip{
+	margin-left: 0.5rem;
+}
+.account .unclockbtn{
+	font-size: 0.8rem;
+	margin-left: 0.2rem;
+    color: #999999;
+}
+.account  .content{
+	width: 96%;
+	margin:2rem auto 0px;
+}
+.account .content a{
+	margin: 0.5rem 0 0.5rem 0;
+}
+.account .content .contentoption{
+	margin: 0px;
+}
+.account .content .contentoption a{
+	text-align: left;
+}
+

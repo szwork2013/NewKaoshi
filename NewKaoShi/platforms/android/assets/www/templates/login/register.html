@@ -1,0 +1,33 @@
+<ion-modal-view >
+	 <ion-header-bar>
+	 	<button class="button button-icon button-clear ion-ios-arrow-back button-light" ng-click="BackView()"></button>
+	 	<span class="title">用户注册</span>
+	 </ion-header-bar>
+	<ion-content class="login">
+		<form name="loginForm" >
+			<div class="content">
+				<div >
+					<div class="item item-input itemaccount">
+						<input type="email" name="account" ng-model="loginData.account" placeholder="输入邮箱" required>
+					</div>
+					<div class="item item-input">
+						<input type="text" name="name" ng-model="loginData.name" placeholder="输入昵称(2-14字符)" required>
+					</div>
+					<div class="item item-input ">
+						<input type="password" name="password" ng-model="loginData.password" placeholder="输入密码(2-14字符)" required>
+					</div>
+					<div class="item item-input itempsd">
+						<input type="password" name="conpassword" ng-model="loginData.conpassword" placeholder="确认密码(2-14字符)" required>
+					</div>
+					<div ng-model="loginData.confim" class="confimrule">
+						<i ng-class="{'ion-ios-circle-outline':!loginData.confim,'ion-ios-checkmark':loginData.confim}" ng-click="loginData.confim=!loginData.confim"></i>
+						<span>我已阅读并同意《用户管理款项》</span>
+					</div>
+				</div>
+				<div class="subbtn">
+					<button ng-click="Register()" class="button button-full button-assertive" type="submit" ng-disabled="loginForm.account.$error.required||loginForm.name.$error.required||loginForm.password.$error.required||loginForm.conpassword.$error.required">注册</button>
+				</div>
+			</div>
+		</form>
+	</ion-content>
+</ion-modal-view >

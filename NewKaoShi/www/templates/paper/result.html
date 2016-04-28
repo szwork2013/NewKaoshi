@@ -1,21 +1,31 @@
-<ion-view >
+<ion-view>
 	<ion-header-bar align-title="center">
 		<button class="button button-icon ion-ios-arrow-back" ng-click="GoPaperDeatail()">
 		</button>
 		<span class="title">考试成绩</span>
-		<button class="button  button-clear ">
-			<span class='assignment'>照相</span>
-		</button>
 	</ion-header-bar>
 	<ion-content class="resultScode">
-		<div id="kao_result" class="resultbg">
-			<div class="content">
-				<span class="descript">很遗憾，您没有通过考试</span>
-				<span class="descript">得分：0</span>
-				<span class="descript">用时：1分钟</span>
+		<div class="code resultbottom">
+			<span class="rightbig block">交卷得分：90</span>
+			<span class="alerttext">成绩优秀，请继续保持</span>
+		</div>
+		<div class="resultdetail">
+			<div class="resultbottom">
+				<span class="resulttimetext">答题时间</span>
+				<span class="totaltime">总时间：150</span>
+			</div>
+			<span class="resulttime resultbottom block">1小时30分45秒</span>
+			<span class="resulttimetext resultbottom block">正确率</span>
+			<span class="rightrate resultbottom block">90%</span>
+			<div class="resultbottom resuleno">
+				<span class="totalno">总题数：100</span>
+				<span class="rightno">答对：90</span>
+				<span class="wrongno">答错：10</span>
 			</div>
 		</div>
-		<button class="button button-small button-full button-positive resultbtn" ng-click="CheckAnswer()">查看答案及解析</button>
-		<button class="button button-small button-full button-light resultbtn">重新考试</button>
 	</ion-content>
+	<ion-footer-bar>
+		<a class="resultbtn againbtn">重新考试</a>
+		<a class="resultbtn answerbtn" ng-click="CheckAnswer()">查看答案及解析</a>
+	</ion-footer-bar>
 </ion-view>

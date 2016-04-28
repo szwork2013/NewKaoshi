@@ -2,6 +2,7 @@ libraryModule
 .controller('PaperDetailCtrl',['$scope','$rootScope','PaperDetailServ','$state',
 function($scope,$rootScope,PaperDetailServ,$state){
 	$scope.StartExams = StartExams;
+	$scope.BackLibrary=BackLibrary;
 	$rootScope.paperInfo={
 		haveTest:false,
 		haveKaoshi:true,
@@ -22,4 +23,7 @@ function($scope,$rootScope,PaperDetailServ,$state){
 				break;
 		}
 	}
+	function BackLibrary(){
+			$state.go('tab.library');
+		}
 }])

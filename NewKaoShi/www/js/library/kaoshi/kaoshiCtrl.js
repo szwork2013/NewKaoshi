@@ -53,13 +53,9 @@ function($scope,KaoshiServ,$state,$rootScope,$ionicSlideBoxDelegate){
 		$scope.LastTest=LastTest;
 		$scope.NextTest=NextTest;
 		$scope.Assignment=Assignment;
-		$scope.BackLibrary=BackLibrary;
 		$scope.slideHasChanged=slideHasChanged;
 		$scope.ShowAnswer=ShowAnswer;//查看答案解析
 		$scope.Conllect=Conllect;//说收藏
-		function BackLibrary(){
-			$state.go('tab.library');
-		}
 		function ShowAnswer(){
 			$scope.showAnswer=true;
 			$scope.btnStatus=1;

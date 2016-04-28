@@ -1,0 +1,246 @@
+.library{
+	
+}
+.library .row,.home .col{
+	margin: 0px;
+	padding: 0px;
+} 
+.library .title{
+	text-align: center;
+	line-height: 2.5rem;
+}
+.library .title a{
+	color: #666666;
+	border-bottom: solid 2px #999999;
+}
+.library .title .selected{
+	border-color: #EF473A;
+	color: #EF473A;
+}
+.library .testcontent {
+	
+}
+.library .testcontent .paperitem{
+	border-bottom: solid 1px #EFE5E5;
+	padding-bottom: 5px;
+}
+.library .testcontent .papername{
+	display: block;
+	margin-bottom: 1rem;
+	color: #666666;
+}
+.library .testcontent .papernumber{
+	font-size: 0.6rem;
+    display: block;
+    float: left;
+    width: 40%;
+    color: #999999;
+}
+.library .testcontent .papernumber .number{
+	color:#EF473A
+}
+.library .testcontent .papertime{
+	 font-size: 0.6rem;
+	  color: #999999;
+}
+.library .testcontent .haveupdate{
+	display: block;
+    font-size: 0.7rem;
+    text-align: center;
+    background-color: #EF473A;
+    border-radius: 2px;
+    color: #ffffff;
+    line-height: 1.5rem;
+    width: 80%;
+    margin: 0.6rem auto;
+}
+.library .testcontent .havedownload{
+	display: block;
+    font-size: 0.7rem;
+    color: #999999;
+    text-align: center;
+    margin-top: 0.6rem;
+}
+.library .testcontent .havevip{
+	display: block;
+    font-size: 0.7rem;
+    color: #EF473A;
+    text-align: center;
+    margin-top: 0.6rem;
+}
+.library  .menulist{
+	margin-top: -43px;
+	position: absolute;
+	top: 0px;
+	width: 50%;
+	background-color: #999999;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+}
+.detail .row,.detail .col{
+	margin: 0px;
+	padding: 0px;
+}
+.detail{
+	width: 94%;
+	margin: auto;
+}
+.detail .title{
+	border-bottom: solid 1px #999999;
+	padding: 1.5rem 0px;
+}
+.detail .title .papername{
+	display: block;
+    margin-bottom:1rem;
+    font-size: 1.1rem;
+}
+.detail .title .startbtn span{
+	display: block;
+	width: 80%;
+	margin: auto;
+	background-color: #E42112;
+	border-radius: 3px;
+	color: #ffffff;
+	text-align: center;
+	line-height: 3rem;
+}
+.detail .paperparma{
+	width: 96%;
+	margin:1rem auto 0px;
+	border-bottom:solid 1px #999999;
+	padding-bottom: 1rem;
+}
+.detail .paperparma span{
+	display: block;
+	line-height: 2rem;
+	color: #999999;
+}
+.detail .paperparma .number{
+	color: #E42112;
+	float: left;
+}
+.detail .introduce{
+	width: 96%;
+	margin:1rem auto 0px;
+	border-bottom:solid 1px #999999;
+	padding-bottom: 1rem;
+}
+.detail .introduce span{
+	display: block;
+	color: #999999;
+	line-height: 2rem;
+}
+.detail .introduce .examstype{
+	color:#E42112;
+}
+.assignment{
+	line-height: 2rem;
+	color: #333333;
+}
+.kaoshi .slider-pager{
+	visibility: hidden;
+}
+.kaoshi .bigtitle{
+	display: block;
+	width: 96%;
+	margin:0.5rem auto 0px;
+    line-height: 1.5rem;
+    font-weight: bolder;
+}
+.kaoshi .title{
+	display: block;
+	width: 96%;
+	margin: 1rem auto 1rem;
+}
+.kaoshi .content{
+	font-size: 1rem;
+	color: #333333;
+}
+.answercard .row,.answercard .col{
+	margin: 0px;
+	padding: 0px;
+}
+.answercard .title{
+	text-align: center;
+    font-size: 1.1rem;
+    padding: 1rem 0px;
+    border-bottom: solid 1px #999999;
+}
+.answercard .title .number{
+	color:#E42112;
+}
+.answercard .content{
+	width: 96%;
+	margin: auto;
+}
+.answercard .content .itemtitle{
+	display: block;
+	margin: 1rem 0px 1.5rem;
+	color: #333333;
+}
+.answercard .content .answer{
+	height: 3rem;
+}
+.answercard .content .haveAnswer{
+		display: block;
+		margin: auto;
+	    width: 2rem;
+	    line-height: 2rem;
+	    text-align: center;
+	    background-color:#ff6666;
+	    color: #FFFFFF;
+	    border-radius: 50%;
+	    font-weight: bolder;
+}
+.answercard .content .noAnswer{
+		display: block;
+		margin: auto;
+	    width: 2rem;
+	    line-height: 2rem;
+	    text-align: center;
+	    color: #333333;
+	    border: solid 1px #999999;
+	    border-radius: 50%;
+	        font-weight: bolder;
+}
+.answercard .content .rightAnswer{
+	display: block;
+		margin: auto;
+	    width: 2rem;
+	    line-height: 2rem;
+	    text-align: center;
+	    background-color:green;
+	    color: #FFFFFF;
+	    border-radius: 50%;
+	    font-weight: bolder;
+}
+.answercard .content .wrongAnswer{
+	display: block;
+		margin: auto;
+	    width: 2rem;
+	    line-height: 2rem;
+	    text-align: center;
+	    background-color:#ff6666;
+	    color: #FFFFFF;
+	    border-radius: 50%;
+	    font-weight: bolder;
+}
+.resultScode{
+	width: 96%;
+	margin: auto;
+}
+.resultScode .resultbg{
+	background-image: url("../img/ben.png");
+}
+.resultScode .resultbg .content{
+	width: 60%;
+	margin: auto;
+	padding-top: 4rem;
+}
+.resultScode .resultbg .descript{
+	display: block;
+	color: #ff6000;
+}
+.resultScode .resultbtn{
+	border-radius: 5px;
+}

@@ -1,0 +1,57 @@
+<ion-view >
+	<ion-header-bar align-title="center">
+		
+		<span class="title"> 我的</span>
+		
+	</ion-header-bar>
+  <ion-content class="account">
+
+  	<div class="list head" >
+  		<div ng-show="!isLogin">
+  			<button class="button button-full button-small button-assertive" ng-click="GoLogin()">还未登录,请登录</button>
+  		</div>
+  			<div class="item item-icon-right" ng-show="isLogin">
+				
+				<img ng-src="img/user.png" class="item-note headimg" />
+				<span>
+  					<span class="headname">我的黄花菜</span>
+    				<span class="heademail">123456@qq.com</span>
+  				</span>
+  					<span>
+    				<i class="ion-ios-unlocked-outline unclockimg"></i><span class="unclockbtn">解锁密码</span>
+    				</span>
+    				<span class="unclockvip">
+    				<i class="ion-ios-unlocked-outline unclockimg"></i><span class="unclockbtn">解锁软件</span>
+    				</span>
+				<i class="icon ion-ios-arrow-forward"></i>
+			</div>
+  	</div>
+   <div class="list content">
+    	<a class="item item-icon-left item-icon-right contentoption" ng-click="ChangeTest()">
+    		<i class="icon ion-ios-loop "></i>
+    		<span>切换考试</span>
+    		<i class="icon ion-ios-arrow-forward"></i>
+    	</a>
+    	<a class="item item-icon-left item-icon-right contentoption">
+    		<i class="icon ion-ios-download-outline"></i>
+    		<span>我的下载</span>
+    		<i class="icon ion-ios-arrow-forward"></i>
+    	</a>
+    	<a class="item item-icon-left item-icon-right contentoption">
+    		<i class="icon ion-ios-list-outline"></i>
+    		<span>最近练习</span>
+    		<i class="icon ion-ios-arrow-forward"></i>
+    	</a>
+    	<a class="item item-icon-left item-icon-right contentoption">
+    		<i class="icon ion-ios-alarm-outline"></i>
+    			<span>模拟考试</span>
+    		<i class="icon ion-ios-arrow-forward"></i>
+    		</a>
+    	<a class="item item-icon-left item-icon-right contentoption">
+    		<i class="icon ion-ios-information-outline"></i>
+    			<span>关于</span>
+    		<i class="icon ion-ios-arrow-forward"></i>
+    	</a>
+    </div>
+  </ion-content>
+</ion-view>

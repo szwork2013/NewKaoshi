@@ -1,44 +1,55 @@
-<ion-view ng-class="{'fadeInRight':isSHow,'fadeOutRight':!isShow}">
-	<ion-header-bar align-title="center">
-		<span class="title"> 公共基础</span>
-		<button class="button button-clear button-icon ion-ios-keypad-outline" ng-click="TragetMenu()"></button>
-	</ion-header-bar>
-  <ion-content class="library" scroll=false>
-  	<div class="row row-wrap title">
-  		<a class="col col-33" ng-class="{'selected':selectindex==0}" ng-click="ChangeType(0)">
-  			<span>历年真题</span>
-  		</a>
-  		<a class="col col-33" ng-class="{'selected':selectindex==1}" ng-click="ChangeType(1)">
-  			<span>模拟试题</span>
-  		</a>
-  		<a class="col col-33" ng-class="{'selected':selectindex==2}" ng-click="ChangeType(2)">
-  			<span>章节练习</span>
-  		</a>
-  	</div>
-  	<ion-scroll>
-  		<div class="testcontent">
-  			<a ng-repeat="paper in papers track by paper.id" class="row row-wrap paperitem" ng-show="paper.testType==selectindex" ng-click="GoPaperDetail()">
-  				<div class="col col-80">
-  					<span class="papername">
+<ion-view>
+	<ion-content class="library" scroll=false >
+		<div>
+			<div>
+				<a class="item  item-icon-right contentoption">
+					<span>公共基础</span>
+					<i class="icon ion-ios-keypad-outline" ng-click="TragetMenu()"></i>
+				</a>
+			</div>
+			<div class="row row-wrap title">
+				<a class="col col-33" ng-class="{'selected':selectindex==0}" ng-click="ChangeType(0)">
+					<span>历年真题</span>
+				</a>
+				<a class="col col-33" ng-class="{'selected':selectindex==1}" ng-click="ChangeType(1)">
+					<span>模拟试题</span>
+				</a>
+				<a class="col col-33" ng-class="{'selected':selectindex==2}" ng-click="ChangeType(2)">
+					<span>章节练习</span>
+				</a>
+			</div>
+			<ion-scroll>
+				<div class="testcontent">
+					<a ng-repeat="paper in papers track by paper.id" class="row row-wrap paperitem" ng-show="paper.testType==selectindex" ng-click="GoPaperDetail()">
+						<div class="col col-80">
+							<span class="papername">
   						{{paper.Name}}
   					</span>
-  					<span class="papernumber">
+							<span class="papernumber">
   						<span class="number">
   						{{paper.Number}}
-  						</span>
-  						人做过
-  					</span>
-  					<span class="papertime">{{paper.Updatetime}}</span>
-  				</div>
-  				<div class="col col-20">
-  						<span class="haveupdate" ng-show="paper.IsUpdate==1">有更新</span>
-  						<span class="havedownload" ng-show="paper.IsUpdate==0 && paper.IsDownload==0">已下载</span>
-  						<span class="havevip" ng-show="paper.IsUpdate==0 && paper.IsDownload==1 && paper.vipType==0">VIP</span>
-  						<span class="havedownload" ng-show="paper.IsUpdate==0 && paper.IsDownload==1 && paper.vipType==1">免费</span>
-  				</div>
-  			</a>
-  		</div>
-  	</ion-scroll>
-
-  </ion-content>
+  						</span> 人做过
+							</span>
+							<span class="papertime">{{paper.Updatetime}}</span>
+						</div>
+						<div class="col col-20">
+							<span class="haveupdate" ng-show="paper.IsUpdate==1">有更新</span>
+							<span class="havedownload" ng-show="paper.IsUpdate==0 && paper.IsDownload==0">已下载</span>
+							<span class="havevip" ng-show="paper.IsUpdate==0 && paper.IsDownload==1 && paper.vipType==0">VIP</span>
+							<span class="havedownload" ng-show="paper.IsUpdate==0 && paper.IsDownload==1 && paper.vipType==1">免费</span>
+						</div>
+					</a>
+				</div>
+			</ion-scroll>
+		</div>
+		<div id="menu_list" ng-class="{'showmenu':isShow==1,'menushow':isShow==1,'hidemenu':isShow==2,'menuhide':isShow!=1}" class="row row-wrap testmenu">
+			<a class="col col-50" ng-click="HideMenu()"></a>
+			<div class="col col-50 menuitems">
+				<a class="item menutitle"><span>{{qulificationlist.title}}</span></a>
+				<a class="item menucontent" ng-repeat='qua in qulificationlist.children track by qua.id' ng-click="ChangepaperDetail()">
+					<span>{{qua.title}}</span>
+				</a>
+			</div>
+		</div>
+	</ion-content>
 </ion-view>

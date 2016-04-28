@@ -15,21 +15,15 @@
 		<ion-list>
 			<ion-item ng-repeat="item in testTypes" class="typeitem">
 				<a class="button button-full icon-right ion-chevron-right typeitema" href="#/typeItem/{{item.id}}/{{item.name}}">
-					<div class="row row-wrap" style="width: 90%;">
-						<div class="col col-33 itemMain">
-							<span>{{item.name}}</span>
-						</div>
-						<div class="col col-33 itemText">
-							<span>
-								会计从业资格
-							</span>
-						</div>
-						<div class="col col-33 itemText">
-							<span>
-								价格鉴定师
-							</span>
-						</div>
-					</div>
+					<span class="itemMain">
+						{{item.name}}
+					</span>
+					<span class="itemText">
+						会计从业资格
+					</span>
+					<span class="itemText">
+						价格鉴定师
+					</span>
 				</a>
 			</ion-item>
 		</ion-list>

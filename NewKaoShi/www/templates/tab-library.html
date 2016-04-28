@@ -44,10 +44,13 @@
 		</div>
 		<div id="menu_list" ng-class="{'showmenu':isShow==1,'menushow':isShow==1,'hidemenu':isShow==2,'menuhide':isShow!=1}" class="row row-wrap testmenu">
 			
-			<a class="col col-50" ng-click="HideMenu()"></a>
-			<div class="col col-50 menuitems">
+			<a class="col col-33" ng-click="HideMenu()"></a>
+			<div class="col col-67 menuitems">
 				<ion-scroll id="menu_scroll">
-					<a class="item menutitle"><span>{{qulificationlist.title}}</span></a>
+					<a class="item item-icon-right menutitle" >
+						<span>{{qulificationlist.title}}</span>
+						<i class="icon ion-ios-list-outline" ng-click="GoTestType()"></i>
+					</a>
 					<a class="item menucontent" ng-repeat='qua in qulificationlist.children track by qua.id' ng-click="ChangepaperDetail()">
 						<span>{{qua.title}}</span>
 					</a>

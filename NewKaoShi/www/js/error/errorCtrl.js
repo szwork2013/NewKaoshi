@@ -1,5 +1,6 @@
 errorModule
-.controller('ErrorCtrl',['$scope','ErrorServ','$ionicPopover',function($scope,ErrorServ,$ionicPopover){
+.controller('ErrorCtrl',['$scope','ErrorServ','$state','$rootScope',
+function($scope,ErrorServ,$state,$rootScope){
 	$scope.isError = true;
 		$scope.ChangeShow = ChangeShow;
 		$scope.ChangeShowItem = ChangeShowItem;
@@ -7,27 +8,14 @@ errorModule
 		function ChangeShow(bool) {
 			$scope.isError = bool;
 		}
-
 		function ChangeShowItem(item) {
 			item.isShow = !item.isShow;
 		}
 
 		function TestAgain() {
-			$ionicPopover.fromTemplateUrl('templates/login.html', {
-				scope: $scope
-			}).then(function(popover) {
-				$scope.popover = popover;
-				$scope.popover.show();
-			})
-		}
-		
-		function HideLogin() {
-				if($scope.popover){
-					$scope.popover.hide();
-				}
-			}
-		function DoLogin(){
-			
+			$rootScope.paperInfo.haveTest=true;
+			$rootScope.paperInfo.currentType=1;
+			$state.go('kaoshi');
 		}
 		$scope.list = [{
 			type: 0, //错题

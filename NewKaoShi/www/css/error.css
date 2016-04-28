@@ -3,7 +3,10 @@
 	text-align: right;
 	border-bottom-left-radius:0.5rem;
 	border-top-left-radius: 0.5rem;
-	border:solid 1px #ff6000;
+	border:solid 1px #ff6666;
+}
+.collecta{
+	margin-left: -2px;
 }
 .collecttitle{
 	display: inline-block;
@@ -11,23 +14,21 @@
 	border-bottom-right-radius: 0.5rem;
 	border-top-right-radius:0.5rem;
 	margin-left: -5px;
-	border:solid 1px #ff6000;
+	border:solid 1px #ff6666;
 }
 .yellowtitle{
 	
     width: 5rem;
-    background-color: #ff6000;
+    background-color: #ff6666;
     color: #FFFFFF;
     line-height: 2.2rem;
 }
 .whitetitle{
     width: 5rem;
-	color: #ff6000;
+	color: #ff6666;
 	line-height: 2.2rem;
 }
 .error{
-	width: 96%;
-	margin: auto;
 }
 .error .itemb{
 	border-bottom: solid 1px #999999;
@@ -53,11 +54,12 @@
 .error .redo{
 	display: inline-block;
     float: right;
-    margin-top: 6px;
-    background-color: #ff6000;
+    font-size: 0.7rem;
+    margin-top: 0.6rem;
+    background-color: #ff6666;
     width: 3rem;
     text-align: center;
     color: #ffffff;
-    line-height: 2rem;
-    border-radius: 3px;
+    line-height: 1.5rem;
+    border-radius: 2px;
 }

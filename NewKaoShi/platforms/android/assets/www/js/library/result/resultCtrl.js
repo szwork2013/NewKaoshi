@@ -6,11 +6,15 @@ function($scope,ResultServ,$state){
 	code.style.cssText = "height:" + height + "px";*/
 	$scope.CheckAnswer=CheckAnswer;
 	$scope.GoPaperDeatail=GoPaperDeatail;
+	$scope.TestAgain=TestAgain;
 	function CheckAnswer(){
 		$state.go('resultCard');
 		
 	}
 	function GoPaperDeatail(){
 		$state.go('paperDetail');
+	}
+	function TestAgain(){
+		$state.go('kaoshi');
 	}
 }])

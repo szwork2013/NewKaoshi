@@ -6,6 +6,7 @@ libraryModule
 		$scope.TragetMenu = TragetMenu;
 		$scope.HideMenu = HideMenu;
 		$scope.ChangepaperDetail=ChangepaperDetail;//选择新的资格考试
+		$scope.GoTestType=GoTestType;//选择分类
 		$scope.$on("$ionicView.enter", function() {
 			$scope.isShow = 0;
 			var menu=document.getElementById("menu_list");
@@ -19,7 +20,9 @@ libraryModule
 			content.style.cssText="height:"+contentheight+'px';
 			
 		})
-
+		function GoTestType(){
+			$state.go('testType');
+		}
 		function TragetMenu() {
 			if ($scope.isShow == 1) {
 				$scope.isShow = 2;

@@ -1,6 +1,18 @@
 loginModule
-.controller('InitCtrl',['$scope','$state',function($scope,$state){
+.controller('InitCtrl',['$scope','$state','$ionicSlideBoxDelegate',
+function($scope,$state,$ionicSlideBoxDelegate){
 	$scope.GoInit=GoInit;
+	$scope.slideHasChanged=slideHasChanged;
+	$scope.$on('$ionicView.enter',function(){
+		$ionicSlideBoxDelegate.slide(0);
+	})
+	
+	function slideHasChanged(index){
+		var count=$ionicSlideBoxDelegate.slidesCount();
+		if(index>=count-1){
+			$state.go('testType');
+		}
+	}
 	function GoInit(){
 		$state.go('testType');
 	}

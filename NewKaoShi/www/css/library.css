@@ -104,8 +104,7 @@
 	line-height: 2.5rem;
 }
 .library .title a{
-	color: #666666;
-	border-bottom: solid 2px #999999;
+	border-bottom: solid 2px #D9D9D9;
 }
 .library .title .selected{
 	border-color: #EF473A;
@@ -117,11 +116,12 @@
 .library .testcontent .paperitem{
 	border-bottom: solid 1px #EFE5E5;
 	padding-bottom: 5px;
+	padding-left: 2%;
 }
 .library .testcontent .papername{
 	display: block;
 	margin-bottom: 1rem;
-	color: #666666;
+	margin-top: 0.5rem;
 }
 .library .testcontent .papernumber{
 	font-size: 0.6rem;
@@ -141,7 +141,7 @@
 	display: block;
     font-size: 0.7rem;
     text-align: center;
-    background-color: #EF473A;
+    background-color: #ff6666;
     border-radius: 2px;
     color: #ffffff;
     line-height: 1.5rem;
@@ -153,21 +153,21 @@
     font-size: 0.7rem;
     color: #999999;
     text-align: center;
-    margin-top: 0.6rem;
+    margin-top: 1rem;
 }
 .library .testcontent .havevip{
 	display: block;
     font-size: 0.7rem;
     color: #EF473A;
     text-align: center;
-    margin-top: 0.6rem;
+    margin-top: 1rem;
 }
 .library  .menulist{
 	margin-top: -43px;
 	position: absolute;
 	top: 0px;
 	width: 50%;
-	background-color: #999999;
+	background-color: #D9D9D9;
     -webkit-transform: translate3d(100%, 0, 0);
     transform: translate3d(100%, 0, 0);
 }
@@ -176,12 +176,11 @@
 	padding: 0px;
 }
 .detail{
-	width: 94%;
-	margin: auto;
 }
 .detail .title{
-	border-bottom: solid 1px #999999;
+	border-bottom: solid 1px #D9D9D9;
 	padding: 1.5rem 0px;
+	padding-left: 3%;
 }
 .detail .title .papername{
 	display: block;
@@ -192,16 +191,16 @@
 	display: block;
 	width: 80%;
 	margin: auto;
-	background-color: #E42112;
+	background-color: #ff6666;
 	border-radius: 3px;
 	color: #ffffff;
 	text-align: center;
 	line-height: 3rem;
 }
 .detail .paperparma{
-	width: 96%;
+	padding-left: 4%;
 	margin:1rem auto 0px;
-	border-bottom:solid 1px #999999;
+	border-bottom:solid 1px #D9D9D9;
 	padding-bottom: 1rem;
 }
 .detail .paperparma span{
@@ -216,7 +215,7 @@
 .detail .introduce{
 	width: 96%;
 	margin:1rem auto 0px;
-	border-bottom:solid 1px #999999;
+	border-bottom:solid 1px #D9D9D9;
 	padding-bottom: 1rem;
 }
 .detail .introduce span{
@@ -229,7 +228,6 @@
 }
 .assignment{
 	line-height: 2rem;
-	color: #333333;
 }
 .kaoshi .slider-pager{
 	visibility: hidden;
@@ -247,8 +245,6 @@
 	margin: 1rem auto 1rem;
 }
 .kaoshi .content{
-	font-size: 1rem;
-	color: #333333;
 }
 .answercard .row,.answercard .col{
 	margin: 0px;
@@ -258,7 +254,7 @@
 	text-align: center;
     font-size: 1.1rem;
     padding: 1rem 0px;
-    border-bottom: solid 1px #999999;
+    border-bottom: solid 1px #D9D9D9;
 }
 .answercard .title .number{
 	color:#E42112;
@@ -270,7 +266,6 @@
 .answercard .content .itemtitle{
 	display: block;
 	margin: 1rem 0px 1.5rem;
-	color: #333333;
 }
 .answercard .content .answer{
 	height: 3rem;
@@ -292,8 +287,7 @@
 	    width: 2rem;
 	    line-height: 2rem;
 	    text-align: center;
-	    color: #333333;
-	    border: solid 1px #999999;
+	    border: solid 1px #D9D9D9;
 	    border-radius: 50%;
 	        font-weight: bolder;
 }
@@ -303,7 +297,7 @@
 	    width: 2rem;
 	    line-height: 2rem;
 	    text-align: center;
-	    background-color:green;
+	    background-color:#4bb227;
 	    color: #FFFFFF;
 	    border-radius: 50%;
 	    font-weight: bolder;

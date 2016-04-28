@@ -1,11 +1,9 @@
 
 .ioncontent{
-	width: 96%;
-	margin: auto;
 }
 .typeitem{
 	margin: 0px;
-	padding: 0px;
+	padding: 0px 2%;
 	text-align:left;
 	border-top-width:0px ;
 	border-left-width:0px ;
@@ -20,13 +18,20 @@
 	padding: 0px;
 }
 .typeitem .itemMain{
-	margin: 0px;
-	padding: 0px;
+	display: inline-block;
+	width: 30%;
 	text-align: left;
 	font-size: 1rem;
-    color: #000000;
+}
+.typeitem .itemTypeMain{
+	    margin: 0px;
+    padding: 0px;
+	text-align: left;
+	font-size: 1rem;
 }
 .typeitem .itemText{
+	display: inline-block;
+	width: 30%;
 	text-align: center;
 	font-size: 0.6rem;
     color: #999999;

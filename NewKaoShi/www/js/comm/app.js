@@ -222,7 +222,7 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
   $urlRouterProvider.otherwise(function($injector) {
   		//获取到注入器,获取$state服务
 				var $state = $injector.get("$state");
-				$state.go('tab.library');
+				$state.go('navigation');
   });
 
 });

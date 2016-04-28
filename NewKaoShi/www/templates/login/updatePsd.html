@@ -1,15 +1,15 @@
 <ion-modal-view >
 	 <ion-header-bar>
-	 	<button class="button button-icon button-clear ion-ios-arrow-back button-light" ng-click="BackView()"></button>
+	 	<button class="button button-icon button-clear ion-ios-arrow-back button-light" ng-click="HidePsd()"></button>
 	 	<span class="title">登录密码</span>
-	 		<button class="button button-clear">修改</button>
+	 		<button class="button button-clear" ng-click="UpdatePsd()">修改</button>
 	 </ion-header-bar>
 	<ion-content class="login">
 		<div class="content">
 					<div class="item item-input itemaccount">
 						<input type="text" name="oldpsd" ng-model="psd.oldpsd" placeholder="请输入原密码" required>
 					</div>
-					<div class="item item-input itempsd">
+					<div class="item item-input">
 						<input type="password" name="newpsd" ng-model="psd.newpsd" placeholder="请输入新密码" required>
 					</div>
 					<div class="item item-input itempsd">

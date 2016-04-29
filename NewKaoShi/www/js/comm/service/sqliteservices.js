@@ -1,4 +1,5 @@
-angular.module("sqliteModel", ['ngCordova']).factory('SqliteServ', ['$q', '$cordovaSQLite', '$http',
+commModule
+.factory('SqliteServ', ['$q', '$cordovaSQLite', '$http',
 	function($q, $cordovaSQLite, $http) {
 		var db = null;
 		var table = [];

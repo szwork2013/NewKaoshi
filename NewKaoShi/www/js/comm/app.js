@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule','LibraryModule','ErrorModule','SearchModule','AccountModule','CommModule'])
+angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule','HomeModule','LibraryModule','ErrorModule','SearchModule','AccountModule','CommModule'])
 
 .run(function($ionicPlatform,$ionicPopup,$rootScope,$ionicHistory) {
   $ionicPlatform.ready(function() {
@@ -21,15 +21,6 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
       StatusBar.styleDefault();
     }
   });
-  if ($rootScope.dbbase == null || $rootScope.dbbase == undefined) {
-			$rootScope.dbbase=new DataBase();
-	}
-	if ($rootScope.dbbase.db == null) {
-		//初始化数据库
-		$rootScope.dbbase.OpenTransaction(function(tx) {
-			$rootScope.dbbase.InitDB(tx);
-		});
-	}
   $rootScope.BackView=function(){
   	if($ionicHistory.viewHistory()){
   		$ionicHistory.goBack();

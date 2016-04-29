@@ -115,26 +115,12 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
 			templateUrl: 'templates/login/register.html',
 			controller: 'RegisterCtrl'
 		})
-	//搜索考试分类（金融）
-		.state('testType', {
-			url: '/testType/:type',
+	//考试分类
+		.state('examType', {
+			url: '/examType/:type',
 			cache: false,
-			templateUrl: 'templates/classfiy/testType.html',
-			controller: 'TestTypeCtrl'
-		})
-		//类型细项（银行、保险）
-		.state('typeItem', {
-			url: '/typeItem/:typeId/:typeName',
-			cache: true,
-			templateUrl: 'templates/classfiy/typeItem.html',
-			controller: 'TypeItemCtrl'
-		})
-		//资格考试（个人理财、风险管理）
-		.state('qualification', {
-			url: '/qualification/:typeItemId/:typeItemName',
-			cache: true,
-			templateUrl: 'templates/classfiy/qualification.html',
-			controller: 'QualificationCtrl'
+			templateUrl: 'templates/examType/examType.html',
+			controller: 'ExamTypeCtrl'
 		})
   // setup an abstract state for the tabs directive
    .state('tab', {

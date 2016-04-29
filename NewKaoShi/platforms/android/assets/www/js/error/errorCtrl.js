@@ -15,7 +15,7 @@ function($scope,ErrorServ,$state,$rootScope){
 		function TestAgain() {
 			$rootScope.paperInfo.haveTest=true;
 			$rootScope.paperInfo.currentType=1;
-			$state.go('kaoshi');
+			$state.go('kaoshi',{type:1});
 		}
 		$scope.list = [{
 			type: 0, //错题

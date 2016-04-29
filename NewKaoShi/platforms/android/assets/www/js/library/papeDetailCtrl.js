@@ -14,12 +14,12 @@ function($scope,$rootScope,PaperDetailServ,$state){
 			case 0:
 			$rootScope.paperInfo.haveKaoshi=true;
 			$rootScope.paperInfo.currentType=0;
-				$state.go('kaoshi')
+				$state.go('kaoshi',{type:0})
 				break;
 			case 1:
 			$rootScope.paperInfo.haveTest=true;
 			$rootScope.paperInfo.currentType=1;
-				$state.go('kaoshi')
+				$state.go('kaoshi',{type:0})
 				break;
 		}
 	}

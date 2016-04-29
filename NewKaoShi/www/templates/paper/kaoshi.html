@@ -1,6 +1,6 @@
 <ion-view  >
 	<ion-header-bar align-title="center">
-		<button class="button button-icon ion-ios-arrow-back" ng-click="BackView()">
+		<button class="button button-icon ion-ios-arrow-back" ng-click="Back()">
 		</button>
 		<span class="title"> 单选题</span>
 		<button class="button  button-clear " ng-click="Assignment()" ng-if="paperInfo.currentType==0">
@@ -15,7 +15,9 @@
 				<span class="bigtitle" ng-show="items.type==0">
 					一、单项选择题(共80题,每题0.5分;下列每小题有四个答案,只有一项符合题目要求,请选择出来...)
 				</span>
+				
 				<span class="title content">{{items.title}}{{items.type}}</span>
+				<img ng-src="img/ben.png" class="itemimg"/>
 				<div class="list content" ng-show="items.type==0">
 					<label ng-repeat="item in items.answerlist" class="item">
 						<input   type="radio" ng-value="item.value" name="answer" ng-model="data.serverSide" ng-change="SelectAnswer(item)"/>

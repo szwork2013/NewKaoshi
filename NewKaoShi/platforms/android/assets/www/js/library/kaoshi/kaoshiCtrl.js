@@ -1,6 +1,6 @@
 libraryModule
-.controller('KaoshiCtrl',['$scope','KaoshiServ','$state','$rootScope','$ionicSlideBoxDelegate',
-function($scope,KaoshiServ,$state,$rootScope,$ionicSlideBoxDelegate){
+.controller('KaoshiCtrl',['$scope','KaoshiServ','$state','$rootScope','$ionicSlideBoxDelegate','$stateParams',
+function($scope,KaoshiServ,$state,$rootScope,$ionicSlideBoxDelegate,$stateParams){
 	$scope.lists = [{
 			type: 0, //0表示单选题
 			title: "1.（单选题）是衡量银行资产质量的最重要指标",
@@ -56,6 +56,14 @@ function($scope,KaoshiServ,$state,$rootScope,$ionicSlideBoxDelegate){
 		$scope.slideHasChanged=slideHasChanged;
 		$scope.ShowAnswer=ShowAnswer;//查看答案解析
 		$scope.Conllect=Conllect;//说收藏
+		$scope.Back=Back;
+		function Back(){
+			if($stateParams.type==0){
+				$rootScope.BackView();
+			}else{
+				$state.go('tab.error');
+			}
+		}
 		function ShowAnswer(){
 			$scope.showAnswer=true;
 			$scope.btnStatus=1;
@@ -72,7 +80,9 @@ function($scope,KaoshiServ,$state,$rootScope,$ionicSlideBoxDelegate){
 			$scope.showAnswer=false;
 		}
 		function SelectAnswer(answer) {
+			if($rootScope.paperInfo.currentType==0){
 				NextTest();
+			}
 		}
 		function LastTest(){
 			if($ionicSlideBoxDelegate.currentIndex()<=0){

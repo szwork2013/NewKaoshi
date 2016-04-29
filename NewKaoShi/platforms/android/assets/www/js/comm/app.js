@@ -108,8 +108,8 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
 		})
 	//搜索考试分类（金融）
 		.state('testType', {
-			url: '/testType',
-			cache: true,
+			url: '/testType/:type',
+			cache: false,
 			templateUrl: 'templates/classfiy/testType.html',
 			controller: 'TestTypeCtrl'
 		})
@@ -190,9 +190,9 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
 			templateUrl: 'templates/paper/paperDetail.html',
 			controller: 'PaperDetailCtrl'
 		})
-		//考试
+		//考试,暂时性参数，后续会去掉
 		.state('kaoshi', {
-			url: '/kaoshi',
+			url: '/kaoshi/:type',
 			cache: false,
 			templateUrl: 'templates/paper/kaoshi.html',
 			controller: 'KaoshiCtrl'

@@ -21,7 +21,7 @@ libraryModule
 			
 		})
 		function GoTestType(){
-			$state.go('testType');
+			$state.go('testType',{type:1});
 		}
 		function TragetMenu() {
 			if ($scope.isShow == 1) {

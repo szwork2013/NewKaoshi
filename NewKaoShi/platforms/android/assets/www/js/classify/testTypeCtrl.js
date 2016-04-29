@@ -1,6 +1,15 @@
 classifyModule
-	.controller('TestTypeCtrl', ['$scope', 'TestTypeServ',
-		function($scope, TestTypeServ) {
+	.controller('TestTypeCtrl', ['$scope','$stateParams', 'TestTypeServ','$state',
+		function($scope, $stateParams,TestTypeServ,$state) {
+			$scope.TypeBack=TypeBack;
+			$scope.$on('$ionicView.enter',function(){
+				if($stateParams.type==0){
+					$scope.isShowBack=false;
+				}else{
+					$scope.isShowBack=true;
+				}
+			})
+			
 			$scope.testTypes = [{
 				id: 0,
 				name: '教师类'
@@ -14,5 +23,9 @@ classifyModule
 				id: 3,
 				name: '计算机类'
 			}, ]
+			function TypeBack(){
+				$state.go('tab.library');
+			}
+			
 		}
 	])

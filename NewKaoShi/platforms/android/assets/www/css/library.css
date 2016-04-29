@@ -7,8 +7,8 @@
 .library .showmenu {
 	-webkit-animation-name: fadeInRight;
 	animation-name: fadeInRight;
-	-webkit-animation-duration: 1s;
-	animation-duration:1s;
+	-webkit-animation-duration: 0.5s;
+	animation-duration:0.5s;
 	-webkit-animation-timing-function: linear;
 	animation-timing-function: linear;
 	
@@ -38,8 +38,8 @@
 .library .hidemenu {
 	-webkit-animation-name: fadeOutRight;
 	animation-name: fadeOutRight;
-	-webkit-animation-duration: 1s;
-	animation-duration:1s;
+	-webkit-animation-duration: 0.5s;
+	animation-duration:0.5s;
 	-webkit-animation-timing-function: linear;
 	animation-timing-function: linear;
 }

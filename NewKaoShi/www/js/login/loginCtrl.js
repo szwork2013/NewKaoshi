@@ -14,7 +14,7 @@ function($scope,$state,$ionicSlideBoxDelegate){
 		}
 	}
 	function GoInit(){
-		$state.go('testType');
+		$state.go('testType',{type:0});
 	}
 }])
 .controller('LoginCtrl',['$scope','$rootScope','LoginServ','$state',

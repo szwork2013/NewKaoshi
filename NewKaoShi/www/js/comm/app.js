@@ -21,6 +21,15 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
       StatusBar.styleDefault();
     }
   });
+  if ($rootScope.dbbase == null || $rootScope.dbbase == undefined) {
+			$rootScope.dbbase=new DataBase();
+	}
+	if ($rootScope.dbbase.db == null) {
+		//初始化数据库
+		$rootScope.dbbase.OpenTransaction(function(tx) {
+			$rootScope.dbbase.InitDB(tx);
+		});
+	}
   $rootScope.BackView=function(){
   	if($ionicHistory.viewHistory()){
   		$ionicHistory.goBack();
@@ -108,8 +117,8 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
 		})
 	//搜索考试分类（金融）
 		.state('testType', {
-			url: '/testType',
-			cache: true,
+			url: '/testType/:type',
+			cache: false,
 			templateUrl: 'templates/classfiy/testType.html',
 			controller: 'TestTypeCtrl'
 		})
@@ -190,9 +199,9 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
 			templateUrl: 'templates/paper/paperDetail.html',
 			controller: 'PaperDetailCtrl'
 		})
-		//考试
+		//考试,暂时性参数，后续会去掉
 		.state('kaoshi', {
-			url: '/kaoshi',
+			url: '/kaoshi/:type',
 			cache: false,
 			templateUrl: 'templates/paper/kaoshi.html',
 			controller: 'KaoshiCtrl'

@@ -7,7 +7,7 @@ function($scope,AnswerCardServ,$state){
 		$state.go('result');
 	}
 	function TestAgain(){
-		$state.go('kaoshi');
+		$state.go('paperDetail');
 	}
 	$scope.paperquestions=[
 	{

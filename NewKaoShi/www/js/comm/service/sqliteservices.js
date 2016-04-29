@@ -7,7 +7,7 @@ commModule
 			alert('该浏览器不支持数据库');
 			return false;
 		} else {
-			db = window.openDatabase('ksdb', '1.0', 'ksdb', 30000);
+			db = window.openDatabase('khddb', '1.0', 'khddb', 30000);
 			var service = {
 				createDB: createDB,
 				GetMessages: GetMessages,

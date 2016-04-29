@@ -29,7 +29,7 @@ classifyModule
 					id: 3,
 					name: '计算机类'
 				}, ]
-				if (examTypeList.length <= 0) {
+				if (serverdata.examTypeList.length <= 0) {
 					$rootScope.examTypeID = id;
 					$state.go('tab.home');
 				}

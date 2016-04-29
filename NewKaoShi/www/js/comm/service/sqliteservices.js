@@ -9,12 +9,7 @@ commModule
 		} else {
 			db = window.openDatabase('khddb', '1.0', 'khddb', 30000);
 			var service = {
-				createDB: createDB,
-				GetMessages: GetMessages,
-				AddMessages: AddMessages,
-				AddContacts: AddContacts,
-				GetContacts: GetContacts,
-				UpdateContacts: UpdateContacts
+				createDB: createDB
 			};
 			return service;
 		}

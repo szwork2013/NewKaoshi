@@ -37,7 +37,6 @@ libraryModule
 			$scope.isShow = 2;
 		}
 		function ChangepaperDetail(id){
-			//查找新的资格考试详细，未完成
 			$rootScope.examTypeID=id;
 			LibraryServ.InitData($rootScope.examTypeID);
 			HideMenu();

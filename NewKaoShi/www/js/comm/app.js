@@ -210,7 +210,15 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
   $urlRouterProvider.otherwise(function($injector) {
   		//获取到注入器,获取$state服务
 				var $state = $injector.get("$state");
-				$state.go('navigation');
+					var commfun = $injector.get("CommFunServ");
+			/*	commfun.CheckInit().then(function(bool){
+					if(bool){
+								$state.go('navigation');
+					}else{
+								$state.go('tab.home');
+					}
+				})*/
+					$state.go('navigation');
   });
 
 });

@@ -9,7 +9,8 @@ commModule
 		} else {
 			db = window.openDatabase('khddb', '1.0', 'khddb', 30000);
 			var service = {
-				createDB: createDB
+				createDB: createDB,
+				select:select
 			};
 			return service;
 		}
@@ -100,9 +101,31 @@ commModule
 							console.error(err);
 						});
 					}
+					//Test();
 
 				}).error(function() {});
 		};
+		function Test(){
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['1','财务类','0']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['2','工程类','0']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['3','教师类','0']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['4','会计','1']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['5','银行','1']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['6','管理','2']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['7','预算','2']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['8','语文','3']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['9','数学','4']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['10','资格证','4']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['11','入行资格','4']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['12','高级会计','4']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['13','柜台','5']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['14','保险','5']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['15','理财','5']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['16','甲方','6']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['17','材料','6']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['18','核价','7']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['19','总价','7']);
+		}
 		
 		/*function GetMessages(SendID, ReceiveID) {
 			var q = $q.defer();

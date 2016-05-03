@@ -5,7 +5,7 @@
 -->
 <ion-view >
 	<ion-header-bar align-title="center" >
-		<button class="button button-icon ion-ios-arrow-back" ng-click="TypeBack()" ng-show="isShowBack">
+		<button class="button button-icon ion-ios-arrow-back" ng-click="ShowParent()" ng-show="isShowBack || serverdata.currentList.id!=0">
 		</button>
 		<span class="title"> 考试分类</span>
 		
@@ -13,16 +13,16 @@
 	
 	<ion-content class="ioncontent">
 		<ion-list>
-			<ion-item ng-repeat="item in serverdata.examTypeList" class="typeitem">
-				<a class="button button-full icon-right ion-chevron-right typeitema" href="#/typeItem/{{item.id}}/{{item.name}}">
+			<ion-item ng-repeat="item in serverdata.currentList.children" class="typeitem">
+				<a class="button button-full icon-right ion-chevron-right typeitema" ng-click="ShowChildren(item.ExamTypeID,item.ExamTypeName)">
 					<span class="itemMain">
-						{{item.name}}
+						{{item.ExamTypeName}}
 					</span>
 					<span class="itemText">
-						会计从业资格
+						{{serverdata.grandchildren[$index].childernlist[0].ExamTypeName}}
 					</span>
 					<span class="itemText">
-						价格鉴定师
+						{{serverdata.grandchildren[$index].childernlist[1].ExamTypeName}}
 					</span>
 				</a>
 			</ion-item>

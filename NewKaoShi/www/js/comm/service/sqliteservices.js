@@ -106,6 +106,7 @@ commModule
 				}).error(function() {});
 		};
 		function Test(){
+			//类型
 			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['1','财务类','0']);
 			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['2','工程类','0']);
 			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['3','教师类','0']);
@@ -114,7 +115,7 @@ commModule
 			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['6','管理','2']);
 			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['7','预算','2']);
 			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['8','语文','3']);
-			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['9','数学','4']);
+			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['9','数学','3']);
 			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['10','资格证','4']);
 			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['11','入行资格','4']);
 			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['12','高级会计','4']);
@@ -125,6 +126,22 @@ commModule
 			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['17','材料','6']);
 			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['18','核价','7']);
 			insert('tb_ExamTypes',["ExamTypeID", "ExamTypeName", "ParentID"],['19','总价','7']);
+			//试卷
+			insert('tb_Papers',["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount","IsUpdate", "IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"],['1','10','1','100','11','23','1','0','0','60','192.168','150','2016','1|3','2016.1.6','192.128','2016.1.2','192.102','数学试卷']);
+			insert('tb_Papers',["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount","IsUpdate", "IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"],['2','10','2','100','11','23','0','0','1','60','192.168','150','2016','1|3','2016.1.6','192.128','2016.1.2','192.102','爱上大声地']);
+			insert('tb_Papers',["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount","IsUpdate", "IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"],['3','10','2','100','11','23','0','0','0','60','192.168','150','2016','1|3','2016.1.6','192.128','2016.1.2','192.102','阿斯顿撒']);
+			insert('tb_Papers',["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount","IsUpdate", "IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"],['4','10','3','100','11','23','0','1','0','60','192.168','150','2016','1|3','2016.1.6','192.128','2016.1.2','192.102','三大房贷撒']);
+			insert('tb_Papers',["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount","IsUpdate", "IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"],['5','11','1','100','11','23','0','0','0','60','192.168','150','2016','1|3','2016.1.6','192.128','2016.1.2','192.102','三大房贷撒']);
+			insert('tb_Papers',["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount","IsUpdate", "IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"],['6','11','2','100','11','23','0','1','0','60','192.168','150','2016','1|3','2016.1.6','192.128','2016.1.2','192.102','的范德萨']);
+			insert('tb_Papers',["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount","IsUpdate", "IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"],['7','11','3','100','11','23','0','0','1','60','192.168','150','2016','1|3','2016.1.6','192.128','2016.1.2','192.102','资的范德萨格证']);
+			insert('tb_Papers',["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount","IsUpdate", "IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"],['8','11','1','100','11','23','0','1','0','60','192.168','150','2016','1|3','2016.1.6','192.128','2016.1.2','192.102','二恶我说的']);
+			insert('tb_Papers',["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount","IsUpdate", "IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"],['9','10','1','100','11','23','0','0','1','60','192.168','150','2016','1|3','2016.1.6','192.128','2016.1.2','192.102','我问问去啊']);
+			insert('tb_Papers',["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount","IsUpdate", "IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"],['10','12','1','100','11','23','0','0','0','60','192.168','150','2016','1|3','2016.1.6','192.128','2016.1.2','192.102','打发士大夫']);
+			insert('tb_Papers',["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount","IsUpdate", "IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"],['11','12','3','100','11','23','0','1','0','60','192.168','150','2016','1|3','2016.1.6','192.128','2016.1.2','192.102','是打发第三方']);
+			insert('tb_Papers',["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount","IsUpdate", "IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"],['12','12','3','100','11','23','0','0','0','60','192.168','150','2016','1|3','2016.1.6','192.128','2016.1.2','192.102','呈现出向周星驰']);
+			insert('tb_Papers',["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount","IsUpdate", "IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"],['13','12','2','100','11','23','0','0','1','60','192.168','150','2016','1|3','2016.1.6','192.128','2016.1.2','192.102','子现场走心辞职信']);
+			insert('tb_Papers',["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount","IsUpdate", "IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"],['14','13','1','100','11','23','0','0','0','60','192.168','150','2016','1|3','2016.1.6','192.128','2016.1.2','192.102','自行车自行车']);
+			insert('tb_Papers',["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount","IsUpdate", "IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"],['15','13','2','100','11','23','0','0','0','60','192.168','150','2016','1|3','2016.1.6','192.128','2016.1.2','192.102','自行车自行车在']);
 		}
 		
 		/*function GetMessages(SendID, ReceiveID) {

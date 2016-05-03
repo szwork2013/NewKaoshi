@@ -3,6 +3,7 @@ commModule
 		function($http, $q, SqliteServ) {
 			var server = {
 				GetExamType:GetExamType,
+				GetPaperData:GetPaperData
 			}
 			return server;
 			//类型id，获取考试分类
@@ -15,10 +16,11 @@ commModule
 			}
 			//类型id，获取试卷
 			function GetPaperData(id) {
+				var q = $q.defer();
 				SqliteServ.select('tb_Papers', 'ExamTypeID=?', [id]).then(function(data) {
-
+					q.resolve(data)
 				})
-
+				return q.promise;
 			}
 			//试卷id，获取试题
 			function GetQuestionData(id) {

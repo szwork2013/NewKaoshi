@@ -2,13 +2,13 @@ classifyModule
 	.factory('ExamTypeServ', ['$state', '$rootScope', 'CommFunServ', 'GetDataServ',
 		function($state, $rootScope, CommFunServ, GetDataServ) {
 			var examList = []
+			$rootScope.currentList = {
+				id: 0,
+				name: '',
+				children: [] //当前显示列表
+			}
 			var serverdata = {
-				currentList: {
-					id: 0,
-					name: '',
-					children: []
-				},
-				grandchildren: []
+				grandchildren: [] //当前列表子列表
 			}
 			var server = {
 				BindServerData: BindServerData,
@@ -30,23 +30,21 @@ classifyModule
 			}
 			//显示下级,父级id，父级name
 			function ShowChildren(id, name) {
-				serverdata.currentList = {
-					id: 0,
-					name: '',
-					children: []
-				}
-				serverdata.grandchildren = [];
-				serverdata.currentList.id = id;
-				serverdata.currentList.name = name;
+				var arr = [];
 				var len = examList.length;
 				for (var i = 0; i < len; i++) {
 					if (examList[i].ParentID == id) {
-						serverdata.currentList.children.push(examList[i]);
+						arr.push(examList[i]);
 					}
 				}
-				if (serverdata.currentList.children.length <= 0) {
-					$rootScope.examTypeID = id;
+				if (arr.length <= 0) {
+					$rootScope.examTypeID = id; //当前进入分类id
 					$state.go('tab.home');
+				} else {
+					$rootScope.currentList.children = arr;
+					serverdata.grandchildren = [];
+					$rootScope.currentList.id = id;
+					$rootScope.currentList.name = name;
 				}
 				CommFunServ.RefreshData(serverdata);
 				if (id == 0) {
@@ -55,15 +53,15 @@ classifyModule
 			}
 
 			function ShowGrandChildren() {
-				var len = serverdata.currentList.children.length;
+				var len = $rootScope.currentList.children.length;
 				for (var i = 0; i < len; i++) {
 					var item = {
-						parentid: serverdata.currentList.children[i].ExamTypeID,
+						parentid: $rootScope.currentList.children[i].ExamTypeID,
 						childernlist: []
 					}
 					var alllen = examList.length;
 					for (var j = 0; j < alllen; j++) {
-						if (examList[j].ParentID == serverdata.currentList.children[i].ExamTypeID) {
+						if (examList[j].ParentID == $rootScope.currentList.children[i].ExamTypeID) {
 							item.childernlist.push(examList[j]);
 						}
 					}
@@ -73,14 +71,14 @@ classifyModule
 			}
 			//显示父级，子级id
 			function ShowParent() {
-				if (serverdata.currentList) {
-					if (serverdata.currentList.id == 0) {
+				if ($rootScope.currentList) {
+					if ($rootScope.currentList.id == 0) {
 						Back();
 						return;
 					} else {
 						var len = examList.length;
 						for (var i = 0; i < len; i++) {
-							if (examList[i].ExamTypeID == serverdata.currentList.id) {
+							if (examList[i].ExamTypeID == $rootScope.currentList.id) {
 								if (examList[i].ParentID == 0) {
 									ShowChildren(examList[i].ParentID, '考试分类');
 								} else {
@@ -101,8 +99,9 @@ classifyModule
 			function Back() {
 				$state.go('tab.library');
 			}
-			function Destory(){
-				
+
+			function Destory() {
+
 			}
 		}
 	])

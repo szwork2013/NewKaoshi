@@ -13,7 +13,7 @@
 	
 	<ion-content class="detail">
 		<div class="title">
-			<span class="papername">2012年上半年银行资格考试《公共基础》真题及答案解析</span>
+			<span class="papername">{{currentPaper.Dec}}</span>
 			<div class="row row-wrap">
 				<a class="col col-50 startbtn" ng-click="StartExams(0)">
 					<span>开始考试</span>
@@ -25,15 +25,15 @@
 		</div>
 		<div class="row row-wrap paperparma">
 			<div class="col col-50">
-				<span>所属年份:2012</span>
-				<span>卷面总分:120</span>
-				<span>作答:180分钟</span>
-				<span><span class="number">6005</span>人做过</span>
+				<span>所属年份:{{currentPaper.Year}}</span>
+				<span>卷面总分:{{currentPaper.TotalScore}}</span>
+				<span>作答:{{currentPaper.TotalTime}}分钟</span>
+				<span><span class="number">{{currentPaper.UserCount}}</span>人做过</span>
 			</div>
 			<div class="col col-50">
-				<span>发布时间:2014-09-12</span>
-				<span>及格分数:60</span>
-				<span>提供机构:网站</span>
+				<span>发布时间:{{currentPaper.UpdateTime}}</span>
+				<span>及格分数:{{currentPaper.PassMark}}</span>
+				<span>提供机构:{{currentPaper.CreatorID}}</span>
 				<span><span class="number">49</span>人评论过</span>
 			</div>
 		</div>

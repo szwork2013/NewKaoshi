@@ -186,6 +186,7 @@
 	display: block;
     margin-bottom:1rem;
     font-size: 1.1rem;
+    text-align: center;
 }
 .detail .title .startbtn span{
 	display: block;

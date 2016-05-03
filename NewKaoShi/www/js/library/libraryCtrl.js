@@ -46,7 +46,7 @@ libraryModule
 		}
 		//进入试卷
 		function GoPaperDetail(id) {
-			LibraryServ.GoPaperDetail();
+			LibraryServ.GoPaperDetail(id);
 		}
 		//进入分类
 		function GoExamType(){

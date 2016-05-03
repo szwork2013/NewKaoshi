@@ -2,8 +2,10 @@ commModule
 	.factory('GetDataServ', ['$http', '$q', 'SqliteServ',
 		function($http, $q, SqliteServ) {
 			var server = {
-				GetExamType:GetExamType,
-				GetPaperData:GetPaperData
+				GetExamType:GetExamType,//获取考试类型
+				GetPaperData:GetPaperData,//获取类型下所有试卷
+				GetDetailPaperData:GetDetailPaperData,//获取试卷详情
+				GetHistoyPaper:GetHistoyPaper//获取历史记录
 			}
 			return server;
 			//类型id，获取考试分类
@@ -18,6 +20,22 @@ commModule
 			function GetPaperData(id) {
 				var q = $q.defer();
 				SqliteServ.select('tb_Papers', 'ExamTypeID=?', [id]).then(function(data) {
+					q.resolve(data)
+				})
+				return q.promise;
+			}
+			//试卷id，获取试卷详情
+			function GetDetailPaperData(id) {
+				var q = $q.defer();
+				SqliteServ.select('tb_Papers', 'PaperID=?', [id]).then(function(data) {
+					q.resolve(data)
+				})
+				return q.promise;
+			}
+			//试卷id，获取试卷历史
+			function GetHistoyPaper(id){
+				var q = $q.defer();
+				SqliteServ.select('tb_History', 'PaperID=?', [id]).then(function(data) {
 					q.resolve(data)
 				})
 				return q.promise;

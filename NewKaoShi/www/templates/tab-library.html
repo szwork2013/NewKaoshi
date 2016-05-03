@@ -20,7 +20,7 @@
 			</div>
 			<ion-scroll id="linrary_scroll">
 				<div class="testcontent">
-					<a ng-repeat="paper in serverdata.paperlist track by paper.PaperID|orderBy:paper.UpdateTime" class="row row-wrap paperitem" ng-if="paper.PaperTypeID==selectindex" ng-click="GoPaperDetail()">
+					<a ng-repeat="paper in serverdata.paperlist track by paper.PaperID|orderBy:paper.UpdateTime" class="row row-wrap paperitem" ng-if="paper.PaperTypeID==selectindex" ng-click="GoPaperDetail(paper.PaperID)">
 						<div class="col col-80">
 							<span class="papername">
   						{{paper.Dec}}

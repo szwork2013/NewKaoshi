@@ -7,11 +7,11 @@ libraryModule
 				rtime: 0, //考试时间
 				questionlist: [], //考试试题
 				isUpload: false, //是否交卷
-				answerContent:[]
+				answerContent:[]//试卷所有试题答案
 				
 			}
 			var server = {
-
+				GetServerData:GetServerData
 			}
 			return server;
 
@@ -27,6 +27,24 @@ libraryModule
 						//获取试卷所有试题并合并
 						GetDataServ.GetQuestionData($rootScope.currentPaper.PaperID).then(function(data) {
 							if (data && data.length > 0) {
+								var len=data.length;
+								for(var i=0;i<len;i++){
+									var item={
+										ID:data[i].ID, 
+										PaperID:data[i].PaperID, 
+										QuestionContent:data[i].QuestionContent, 
+										QuestionIndex:data[i].QuestionIndex, 
+										Soure:data[i].Soure, 
+										PID:data[i].PID, 
+										OptionContent:data[i].OptionContent, 
+										Answer:data[i].Answer, 
+										PictureAddress:data[i].PictureAddress,
+										Analysis:data[i].Analysis,
+										haveAnswer:null
+									}
+									serverdata.questionlist.push(item);
+									item=null;
+								}
 								//type=0表示历史考试
 								if(bool){
 									GetHistory(data);
@@ -45,17 +63,22 @@ libraryModule
 					}
 				}
 			}
-			//试题id，当前题已做选项
-			function GetCurrentAnswer(id){
+			//试题id，选项索引index，当前题已做选项
+			function GetCurrentAnswer(id,index){
 				if(serverdata.answerContent){
 					var len=serverdata.answerContent.length;
 					for(var i=0;i<len;i++){
 						if(serverdata.answerContent[i].id==id){
-							return serverdata.answerContent[i];
+							var item=serverdata.answerContent[i];
+							var arr=item.answer.split("|");
+							var length=arr.length;
+							if(var j=0;j<length;j++){
+								
+							}
 						}
 					}
 				}
-				return null;
+				return false;
 			}
 			//单选
 			function SelectAnswer(parentindex,index) {

@@ -1,24 +1,17 @@
 libraryModule
 .controller('KaoshiCtrl',['$scope','KaoshiServ','$state','$rootScope','$ionicSlideBoxDelegate','$stateParams',
 function($scope,KaoshiServ,$state,$rootScope,$ionicSlideBoxDelegate,$stateParams){
-		$scope.SelectAnswer = SelectAnswer;//选择题选择答案
+		$scope.SelectAnswer = SelectAnswer;//单项选择答案
 		$scope.LastTest=LastTest;
 		$scope.NextTest=NextTest;
 		$scope.Assignment=Assignment;
+		$scope.$on("$ionicView.enter",function(){
+			$scope.serverdata=KaoshiServ.GetServerData();
+			KaoshiServ.GeTQuestionList();
+		})
 		function SelectAnswer(parentindex,index) {
-			items.haveSelect[index]=!items.haveSelect[index];
-			if(items.type==0){//单选取消其余选中
-				showAnswer=true;
-				var len=items.haveSelect.length;
-				for(var i=0;i<len;i++){
-					if(i!=index){
-						items.haveSelect[i]=false;
-					}
-				}
-			}
-			if($rootScope.paperInfo.currentType==0){
-				NextTest();
-			}
+			//未完成
+			NextTest();
 		}
 		//上一题
 		function LastTest(){

@@ -10,6 +10,8 @@ commModule
 			db = window.openDatabase('khddb', '1.0', 'khddb', 30000);
 			var service = {
 				createDB: createDB,
+				transaction:transaction,
+				insert:insert,
 				select:select
 			};
 			return service;

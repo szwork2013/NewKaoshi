@@ -104,3 +104,21 @@ function($scope,KaoshiServ,$state,$rootScope,$ionicSlideBoxDelegate,$stateParams
 			$state.go('answerCard');
 		}
 }])
+.directive('choiceQuestion',[function(){
+	return {
+			restrict: 'E',
+			templateUrl: "templates/paper/directive/choiceQuestion.html"
+		}
+}])
+.directive('multiplechoiceQuestion',[function(){
+	return {
+			restrict: 'E',
+			templateUrl: "templates/paper/directive/multiplechoiceQuestion.html"
+		}
+}])
+.directive('caseQuestion',[function(){
+	return {
+			restrict: 'E',
+			templateUrl: "templates/paper/directive/caseQuestion.html"
+		}
+}])

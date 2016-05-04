@@ -17,6 +17,6 @@
 		"tablePrama": ["ID", "QuestionID", "UserID", "Type","IsSync"]
 	},{
 		"tableName": "tb_History",
-		"tablePrama": ["ID", "PaperID", "UserID", "Time", "Soure", "Content","IsSync"]
+		"tablePrama": ["ID", "PaperID", "UserID", "Time", "Soure", "Content","Type","IsSync"]
 	}
 ]

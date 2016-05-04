@@ -1,6 +1,6 @@
 libraryModule
-	.factory('LibraryServ', ['$state', 'GetDataServ', 'CommFunServ', '$rootScope',
-		function($state, GetDataServ, CommFunServ, $rootScope) {
+	.factory('LibraryServ', ['$state', 'GetDataServ', 'CommFunServ', '$rootScope', 'PostServ', 'SaveDataServ',
+		function($state, GetDataServ, CommFunServ, $rootScope, PostServ, SaveDataServ) {
 			var serverdata = {
 				paperlist: []
 			}
@@ -28,18 +28,18 @@ libraryModule
 					if (data) {
 						$rootScope.currentPaper = data[0];
 						$rootScope.paperInfo = {
+							paperId: id,
 							haveTest: false,
-							haveKaoshi: true,
-							currentType: 0, //当前试卷模式0表示考试，1表示练习
+							haveKaoshi: false,
+							currentType: 0, //当前模式0表示考试，1表示练习
 							rtime: 0
 						}
 						GetDataServ.GetHistoyPaper(id).then(function(items) {
 							if (items) {
-								//历史记录
+								//历史记录,根据历史记录显示按钮
 							}
 							$state.go('paperDetail');
 						})
-
 					}
 				})
 

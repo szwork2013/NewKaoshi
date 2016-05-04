@@ -10,46 +10,20 @@
 		</button>
 	</ion-header-bar>
 	<ion-content class="kaoshi">
-		<ion-slide-box on-slide-changed="slideHasChanged($index)">
-			<ion-slide ng-repeat="items in lists" >
-				<span class="bigtitle" ng-show="items.type==0">
+		<ion-slide-box on-slide-changed="slideHasChanged($index)" >
+			<ion-slide ng-repeat="items in lists">
+				<span class="bigtitle" ng-if="paperInfo.currentType==0">
 					一、单项选择题(共80题,每题0.5分;下列每小题有四个答案,只有一项符合题目要求,请选择出来...)
 				</span>
-				
-				<span class="title content">{{items.title}}{{items.type}}</span>
-				<img ng-src="img/ben.png" class="itemimg"/>
-				<div class="list content" ng-show="items.type==0">
-					<label ng-repeat="item in items.answerlist" class="item">
-						<input   type="radio" ng-value="item.value" name="answer" ng-model="data.serverSide" ng-change="SelectAnswer(item)"/>
-						<span>{{ item.value }}</span>
-					</label>
-				</div>
-				<!--多选答案-->
-				<div class="list content" ng-show="items.type==1">
-					<label ng-repeat="item in items.answerlist" class="item">
-						<input   type="checkbox" ng-value="item.value" name="answer" ng-model="data.serverSide" />
-						<span>{{ item.value }}</span>
-					</label>
-				</div>
-				<!--简答题-->
-				<div class="list content" ng-show="items.type==2">
-					<label ng-repeat="item in items.answerlist" class="item">
-						<span>{{ item.value }}</span>
-					</label>
-				</div>
-				<div ng-show="showAnswer">
-					<div>
-						<span>
-							答案:{{items.answer}}
-						</span>
-					</div>
-					<div>
-						<span>
-							解析:{{items.analy}}
-						</span>
-					</div>
-				</div>
-				
+				<choice-Question  ng-if="items.type==0">
+					
+				</choice-Question>
+				<multiplechoice-Question ng-if="items.type==1">
+					
+				</multiplechoice-Question>
+				<case-Question ng-if="items.type==2">
+					
+				</case-Question>
 			</ion-slide>
 		</ion-slide-box>
 	</ion-content>

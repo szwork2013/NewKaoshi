@@ -1,0 +1,11 @@
+<!--简答题-->
+<div>
+	<span class="title content">{{items.title}}{{items.type}}</span>
+	<img ng-src="img/ben.png" class="itemimg" />
+	<div class="list content" ng-show="items.type==0">
+		<label ng-repeat="item in items.answerlist" class="item">
+			<input   type="radio" ng-value="item.value" name="answer" ng-model="data.serverSide" ng-change="SelectAnswer(item)"/>
+			<span>{{ item.value }}</span>
+		</label>
+	</div>
+</div>

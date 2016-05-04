@@ -1,24 +1,25 @@
 commModule
-.factory('SaveDataServ',['$http','$q','$rootScope',function($http,$q,$rootScope){
+.factory('SaveDataServ',['$http','$q','SqliteServ',
+function($http,$q,SqliteServ){
 	var server={
 		SyncData:SyncData,
 		SyncPaperData:SyncPaperData
 	}
 	return server;
 	function SyncData(data){
-		$rootScope.dbbase.OpenTransaction(function(tx){
-			$rootScope.dbbase.SaveOrUpdateTable();
+		SqliteServ.transaction(function(tx){
+			SqliteServ.insert();
 		})
 	}
 	function SyncPaperData(data){
-		$rootScope.dbbase.OpenTransaction(function(tx){
-			$rootScope.dbbase.SaveOrUpdateTable();
+		SqliteServ.transaction(function(tx){
+			SqliteServ.insert();
 		})
 	}
 	//保存历史记录
 	function SyncHistoryData(data){
-		$rootScope.dbbase.OpenTransaction(function(tx){
-			$rootScope.dbbase.SaveOrUpdateTable();
+		SqliteServ.transaction(function(tx){
+			SqliteServ.insert();
 		})
 	}
 }])

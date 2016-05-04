@@ -16,10 +16,12 @@
 			<span class="papername">{{currentPaper.Dec}}</span>
 			<div class="row row-wrap">
 				<a class="col col-50 startbtn" ng-click="StartExams(0)">
-					<span>开始考试</span>
+					<span class="startspan" ng-if='!paperInfo.haveKaoshi'>开始考试</span>
+					<span class="continuespan" ng-if='paperInfo.haveKaoshi'>继续考试</span>
 				</a>
 				<a class="col col-50 startbtn" ng-click="StartExams(1)">
-					<span>开始练习</span>
+					<span class="startspan" ng-if='!paperInfo.haveTest'>开始练习</span>
+					<span class="continuespan" ng-if='paperInfo.haveTest'>继续练习</span>
 				</a>
 			</div>
 		</div>

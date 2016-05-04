@@ -1,8 +1,9 @@
 commModule
-.factory('PostServ',['$http','$q','SaveDataServ',function($http,$q,SaveDataServ){
+.factory('PostServ',['$http','$q','SaveDataServ',
+function($http,$q,SaveDataServ){
 	
 	var server={
-		
+		SyncPaperData:SyncPaperData
 	}
 	return server;
 	function PostData(url,parma){
@@ -40,21 +41,34 @@ commModule
 	}
 	//同步试题，试卷id
 	function SyncPaperData(id){
+		var q=$q.defer();
 		PostData().then(function(data){
-			SaveDataServ.SyncPaperData(data);
+			if(data){
+				SaveDataServ.SyncPaperData(data);
+				q.resolve(data)
+			}
 		})
+		return q.promise;
 	}
 	//只在第一次登陆后同步历史记录
 	function SyncHistoryData(){
+		var q=$q.defer();
 		PostData().then(function(data){
-			SaveDataServ.SyncPaperData(data);
+			if(data){
+				q.resolve(data)
+			}
 		})
+		return q.promise;
 	}
 	//上传历史数据
 	function UploadHistoryData(){
+		var q=$q.defer();
 		PostData().then(function(data){
-			//提示成功
+			if(data){
+				q.resolve(data)
+			}
 		})
+		return q.promise;
 	}
 	
 }])

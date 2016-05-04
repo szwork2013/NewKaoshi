@@ -3,7 +3,8 @@ commModule
 	function($timeout,LoaclStorageServ,$cordovaAppVersion,$q) {
 		var server={
 			CheckInit:CheckInit,
-			RefreshData:RefreshData
+			RefreshData:RefreshData,
+			InitArray:InitArray
 		}
 		return server;
 		//刷新界面数据
@@ -11,6 +12,13 @@ commModule
 			$timeout(function(){
 				data=data;
 			},0)
+		}
+		function InitArray(length, initdata) {
+			var arr = new Array();
+			for (var i = 0; i < length; i++) {
+				arr[i] = initdata;
+			}
+			return arr;
 		}
 		//初始化检查
 		function CheckInit(){

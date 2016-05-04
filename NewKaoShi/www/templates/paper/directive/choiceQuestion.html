@@ -1,11 +1,11 @@
 <!--简答题-->
 <div>
-	<span class="title content">{{items.QuestionContent}}</span>
-	<img ng-if="true" ng-src="{{items.PictureAddress}}" class="itemimg"/>
+	<span class="title content">{{items.QuestionIndex}}.{{items.QuestionContent}}</span>
+	<img ng-if="items.PictureAddress" ng-src="{{items.PictureAddress}}" class="itemimg"/>
 	<div class="list content">
 		<label ng-repeat="item in items.OptionContent" class="item" >
-			<input type="radio" name="answer" ng-click="SelectAnswer($parent.$index,$index)" ng-checked='true'/>
-			<span ng-class="{'havechecked':true}">{{ item.value }}</span>
+			<input type="radio" name="{{items.ID}}" ng-click="SelectAnswer($parent.$index,$index)" ng-checked='items.answer[$index]'/>
+			<span ng-class="{'havechecked':items.answer[$index]}">{{ item.value }}</span>
 		</label>
 	</div>
 </div>

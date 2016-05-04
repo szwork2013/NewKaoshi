@@ -4,9 +4,9 @@ libraryModule
 			$scope.StartExams = StartExams;
 			$scope.StartExersice = StartExersice;
 			$scope.BackLibrary = BackLibrary;
-			$scope.$on("$ionicView.enter",{
+			$scope.$on("$ionicView.enter",function(){
 				$scope.serverdata=PaperDetailServ.GetServerData();
-				$scope.CheckHistory();
+				PaperDetailServ.CheckHistory();
 			})
 			function StartExams(bool) {
 				PaperDetailServ.StartExams(bool);

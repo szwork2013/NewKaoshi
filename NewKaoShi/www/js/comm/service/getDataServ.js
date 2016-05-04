@@ -6,7 +6,7 @@ commModule
 				GetPaperData:GetPaperData,//获取类型下所有试卷
 				GetDetailPaperData:GetDetailPaperData,//获取试卷详情
 				GetHistoyPaper:GetHistoyPaper,//获取历史记录
-				GetQuestionData:GetQuestionData//获取试卷试题
+				GetPaperQuestionData:GetPaperQuestionData//获取试卷试题
 			}
 			return server;
 			//类型id，获取考试分类
@@ -42,10 +42,10 @@ commModule
 				return q.promise;
 			}
 			//试卷id，获取试题
-			function GetQuestionData(id) {
+			function GetPaperQuestionData(id) {
 				var q = $q.defer();
 				SqliteServ.select('tb_Question', 'PaperID=?', [id]).then(function(data) {
-				q.resolve(data)
+					q.resolve(data)
 				})
 				return q.promise;
 			}

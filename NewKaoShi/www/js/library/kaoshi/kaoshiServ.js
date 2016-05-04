@@ -27,24 +27,7 @@ libraryModule
 						//获取试卷所有试题并合并
 						GetDataServ.GetQuestionData($rootScope.currentPaper.PaperID).then(function(data) {
 							if (data && data.length > 0) {
-								var len=data.length;
-								for(var i=0;i<len;i++){
-									var item={
-										ID:data[i].ID, 
-										PaperID:data[i].PaperID, 
-										QuestionContent:data[i].QuestionContent, 
-										QuestionIndex:data[i].QuestionIndex, 
-										Soure:data[i].Soure, 
-										PID:data[i].PID, 
-										OptionContent:data[i].OptionContent, 
-										Answer:data[i].Answer, 
-										PictureAddress:data[i].PictureAddress,
-										Analysis:data[i].Analysis,
-										haveAnswer:null
-									}
-									serverdata.questionlist.push(item);
-									item=null;
-								}
+								serverdata.questionlist=data;
 								//type=0表示历史考试
 								if(bool){
 									GetHistory(data);
@@ -60,23 +43,37 @@ libraryModule
 					if (data && data.length > 0) {
 						//存在历史
 						serverdata.answerContent=data[0].Content;
+						AssmbleList();
+					}
+				}
+			}
+			//组装历史记录
+			function AssmbleList(){
+				var len=serverdata.answerContent.length;
+				for(var i=0;i<len;i++){
+					var length=serverdata.questionlist.length;
+					for(var j=0;j<length;j++){
+						if(serverdata.answerContent[i].id==serverdata.questionlist[j].ID){
+							//"1|3"多选答案
+							if(serverdata.questionlist[j].QuestionType!=2 ){
+								//单选0，多选1
+								var arr=serverdata.answerContent[i].answer.split("|");
+								var lenk=arr.length;
+								var list=new Array(serverdata.questionlist[j].OptionContent.length;);
+								for(var k=0;k<lenk;k++){
+									list[arr[k]]=true;
+								}
+								serverdata.questionlist[j].answer=list;
+							}
+							break;
+						}
 					}
 				}
 			}
 			//试题id，选项索引index，当前题已做选项
 			function GetCurrentAnswer(id,index){
 				if(serverdata.answerContent){
-					var len=serverdata.answerContent.length;
-					for(var i=0;i<len;i++){
-						if(serverdata.answerContent[i].id==id){
-							var item=serverdata.answerContent[i];
-							var arr=item.answer.split("|");
-							var length=arr.length;
-							if(var j=0;j<length;j++){
-								
-							}
-						}
-					}
+					
 				}
 				return false;
 			}

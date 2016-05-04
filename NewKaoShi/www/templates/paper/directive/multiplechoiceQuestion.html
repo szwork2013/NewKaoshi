@@ -1,11 +1,11 @@
 <!--多选答案-->
 <div>
-<span class="title content">{{items.title}}{{items.type}}</span>
-				<img ng-src="img/ben.png" class="itemimg"/>
-				<div class="list content" ng-show="items.type==1">
-					<label ng-repeat="item in items.answerlist" class="item">
-						<input   type="checkbox" ng-value="item.value" name="answer" ng-model="data.serverSide" />
-						<span>{{ item.value }}</span>
-					</label>
-				</div>
-				</div>
+	<span class="title content">{{items.title}}{{items.type}}</span>
+	<img ng-src="img/ben.png" class="itemimg" />
+	<div class="list content">
+		<label ng-repeat="item in items.answerlist" class="item">
+			<input   type="checkbox"  name="answer" ng-click="SelectAnswer(items,$index)" ng-checked='items.haveSelect[$index]'/>
+			<span ng-class="{'havechecked':items.haveSelect[$index]}">{{ item.value }}</span>
+		</label>
+	</div>
+</div>

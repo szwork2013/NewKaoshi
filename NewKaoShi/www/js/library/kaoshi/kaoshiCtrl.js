@@ -14,7 +14,8 @@ function($scope,KaoshiServ,$state,$rootScope,$ionicSlideBoxDelegate,$stateParams
 				value: 'C.资产利率的作用'
 			}, {
 				value: 'D.资产利率的作用'
-			}]
+			}],
+			haveSelect:[false,false,true,false]
 		},{
 			type: 1, //1表示多选题
 			title: "2.（多选题）是衡量银行资产质量的最重要指标",
@@ -28,7 +29,8 @@ function($scope,KaoshiServ,$state,$rootScope,$ionicSlideBoxDelegate,$stateParams
 				value: 'C.资产利率的作用'
 			}, {
 				value: 'D.资产利率的作用'
-			}]
+			}],
+			haveSelect:[false,true,true,false]
 		},{
 			type: 2, //0表示简答题
 			title: "3.（简答题）是衡量银行资产质量的最重要指标",
@@ -42,7 +44,8 @@ function($scope,KaoshiServ,$state,$rootScope,$ionicSlideBoxDelegate,$stateParams
 				value: 'C.资产利率的作用'
 			}, {
 				value: 'D.资产利率的作用'
-			}]
+			}],
+			haveSelect:[false,false,true,false]
 		}]
 	
 	//试题练习按钮状态
@@ -79,11 +82,21 @@ function($scope,KaoshiServ,$state,$rootScope,$ionicSlideBoxDelegate,$stateParams
 			$scope.btnStatus=0;
 			$scope.showAnswer=false;
 		}
-		function SelectAnswer(answer) {
+		function SelectAnswer(items,index) {
+			items.haveSelect[index]=!items.haveSelect[index];
+			if(items.type==0){//单选取消其余选中
+				var len=items.haveSelect.length;
+				for(var i=0;i<len;i++){
+					if(i!=index){
+						items.haveSelect[i]=false;
+					}
+				}
+			}
 			if($rootScope.paperInfo.currentType==0){
 				NextTest();
 			}
 		}
+		//上一题
 		function LastTest(){
 			if($ionicSlideBoxDelegate.currentIndex()<=0){
 				//已到最前题
@@ -91,6 +104,7 @@ function($scope,KaoshiServ,$state,$rootScope,$ionicSlideBoxDelegate,$stateParams
 			}
 			$ionicSlideBoxDelegate.previous();
 		}
+		//下一题
 		function NextTest(){
 			var length=$scope.lists.length-1;
 			if($ionicSlideBoxDelegate.currentIndex()>=length){
@@ -100,6 +114,7 @@ function($scope,KaoshiServ,$state,$rootScope,$ionicSlideBoxDelegate,$stateParams
 			$ionicSlideBoxDelegate.next();
 			//记录历史(未完成)
 		}
+		//交卷
 		function Assignment(){
 			$state.go('answerCard');
 		}

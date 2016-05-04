@@ -253,6 +253,9 @@
 }
 .kaoshi .content{
 }
+.kaoshi .havechecked{
+	color: #4bb227;
+}
 .kaoshi .itemimg{
 	display: block;
 	width: 80%;

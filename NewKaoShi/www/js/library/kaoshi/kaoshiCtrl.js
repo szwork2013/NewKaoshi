@@ -8,7 +8,7 @@ function($scope,KaoshiServ,$stateParams){
 		$scope.Assignment=Assignment;
 		$scope.Back=Back;
 		$scope.$on("$ionicView.loaded",function(){
-			KaoshiServ.GeTQuestionList();
+			KaoshiServ.InitList($stateParams.history);
 			KaoshiServ.InitTime(0);
 		})
 		$scope.$on("$ionicView.enter",function(){

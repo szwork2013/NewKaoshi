@@ -7,6 +7,7 @@ libraryModule
 			$scope.$on("$ionicView.enter",function(){
 				$scope.serverdata=PaperDetailServ.GetServerData();
 				PaperDetailServ.CheckHistory();
+				PaperDetailServ.GeTQuestionList();
 			})
 			function StartExams(bool) {
 				PaperDetailServ.StartExams(bool);

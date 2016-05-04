@@ -1,16 +1,15 @@
 <ion-view>
 	<ion-header-bar align-title="center">
-		<button class="button button-icon ion-ios-arrow-back" ng-click="BackView()">
+		<button class="button button-icon ion-ios-arrow-back" ng-click="Back()">
 		</button>
 		<span class="title"> 单选题</span>
-		<button class="button  button-clear " ng-click="Assignment()">
-			<span class='assignment'>交卷</span>
+		<button class="button  button-icon ion-ios-keypad-outline  " ng-click="SingMenu()" >
 		</button>
 	</ion-header-bar>
 	<ion-content class="kaoshi">
-		<ion-slide-box >
+		<ion-slide-box on-slide-changed="slideHasChanged($index)">
 			<ion-slide ng-repeat="items in lists">
-				<span class="bigtitle" ng-if="paperInfo.currentType==0">
+				<span class="bigtitle">
 					一、单项选择题(共80题,每题0.5分;下列每小题有四个答案,只有一项符合题目要求,请选择出来...)
 				</span>
 				<choice-Question ng-if="items.type==0">
@@ -22,12 +21,27 @@
 				<case-Question ng-if="items.type==2">
 
 				</case-Question>
+				<div ng-show="showAnswer">
+					<div>
+						<span>
+                          	  答案:{{items.answer}}
+                        </span>
+					</div>
+					<div>
+						<span>
+                          	  解析:{{items.analy}}
+                        </span>
+					</div>
+				</div>
+
 			</ion-slide>
 		</ion-slide-box>
 	</ion-content>
 	<ion-footer-bar>
 		<button class="button button-icon ion-ios-undo-outline" ng-click="LastTest()"></button>
-		<span ng-if="paperInfo.currentType==0" class="title">00:00:00</span>
+		<span ng-if="btnStatus==0" class="title" ng-click="ShowAnswer()">答案解析</span>
+		<span ng-if="btnStatus==1" class="title" ng-click="Conllect(true)">收藏</span>
+		<span ng-if="btnStatus==2" class="title" ng-click="Conllect(false)">取消收藏</span>
 		<button class="button button-icon ion-ios-redo-outline" ng-click="NextTest()"></button>
 	</ion-footer-bar>
 </ion-view>

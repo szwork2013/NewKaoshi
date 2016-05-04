@@ -1,10 +1,10 @@
 <!--简答题-->
 <div>
-	<span class="title content">{{items.title}}{{items.type}}</span>
+	<span class="title content">{{items.QuestionContent}}</span>
 	<img ng-if="true" ng-src="img/ben.png" class="itemimg" />
 	<div class="list content">
-		<label ng-repeat="item in items.answerlist" class="item" >
-			<input type="radio" name="answer" ng-click="SelectAnswer(items,$index)" ng-checked='items.haveSelect[$index]'/>
+		<label ng-repeat="item in items.OptionContent" class="item" >
+			<input type="radio" name="answer" ng-click="SelectAnswer($parent.$index,$index)" ng-checked='items.haveSelect[$index]'/>
 			<span ng-class="{'havechecked':items.haveSelect[$index]}">{{ item.value }}</span>
 		</label>
 	</div>

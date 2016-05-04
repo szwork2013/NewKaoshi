@@ -5,7 +5,8 @@ commModule
 				GetExamType:GetExamType,//获取考试类型
 				GetPaperData:GetPaperData,//获取类型下所有试卷
 				GetDetailPaperData:GetDetailPaperData,//获取试卷详情
-				GetHistoyPaper:GetHistoyPaper//获取历史记录
+				GetHistoyPaper:GetHistoyPaper,//获取历史记录
+				GetQuestionData:GetQuestionData//获取试卷试题
 			}
 			return server;
 			//类型id，获取考试分类
@@ -32,19 +33,21 @@ commModule
 				})
 				return q.promise;
 			}
-			//试卷id，获取试卷历史
-			function GetHistoyPaper(id){
+			//试卷id，历史类型0考试，1练习，获取试卷历史
+			function GetHistoyPaper(id,type){
 				var q = $q.defer();
-				SqliteServ.select('tb_History', 'PaperID=?', [id]).then(function(data) {
+				SqliteServ.select('tb_History', 'PaperID=? and Type=?', [id,type]).then(function(data) {
 					q.resolve(data)
 				})
 				return q.promise;
 			}
 			//试卷id，获取试题
 			function GetQuestionData(id) {
+				var q = $q.defer();
 				SqliteServ.select('tb_Question', 'PaperID=?', [id]).then(function(data) {
-
+				q.resolve(data)
 				})
+				return q.promise;
 			}
 			//无参数，用于获取广告图
 			function GetHomeData() {

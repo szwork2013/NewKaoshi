@@ -177,12 +177,19 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
 			templateUrl: 'templates/paper/paperDetail.html',
 			controller: 'PaperDetailCtrl'
 		})
-		//考试,暂时性参数，后续会去掉
+		//考试,history历史，false没有历史，true有历史
 		.state('kaoshi', {
-			url: '/kaoshi/:type',
+			url: '/kaoshi/:history',
 			cache: false,
 			templateUrl: 'templates/paper/kaoshi.html',
 			controller: 'KaoshiCtrl'
+		})
+		//练习,history历史，false没有历史，true有历史；type:0试卷练习，1错题或收藏
+		.state('exercise', {
+			url: '/exercise/:history/:type',
+			cache: false,
+			templateUrl: 'templates/paper/exercises.html',
+			controller: 'ExerciseCtrl'
 		})
 		//答题卡
 		.state('answerCard', {

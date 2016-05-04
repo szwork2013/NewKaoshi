@@ -3,7 +3,8 @@ commModule
 function($http,$q,SqliteServ){
 	var server={
 		SyncData:SyncData,
-		SyncPaperData:SyncPaperData
+		SyncPaperData:SyncPaperData,
+		SyncHistoryData:SyncHistoryData
 	}
 	return server;
 	function SyncData(data){
@@ -19,12 +20,10 @@ function($http,$q,SqliteServ){
 	//保存历史记录
 	function SyncHistoryData(data){
 		SqliteServ.transaction(function(tx){
-			SqliteServ.insert(tx, ["PaperID", "UserID", "Time", "Soure", "Content","Type","IsSync"]);
-		})
-	}
-	function SaveHistoryData(parma){
-		SqliteServ.transaction(function(tx){
-			SqliteServ.insert(tx,'tb_History', ["PaperID", "UserID", "Time", "Soure", "Content","Type","IsSync"],parma);
+			var len=data.length;
+			for(var i=0;i<len;i++){
+				SqliteServ.insert(tx, ['ID',"PaperID", "UserID", "Time", "Soure", "Content","Type","IsSync"],[data[i].ID,data[i].PaperID,data[i].UserID,data[i].Time,data[i].Soure,data[i].Content,data[i].Type,data[i].IsSync]);
+			}
 		})
 	}
 }])

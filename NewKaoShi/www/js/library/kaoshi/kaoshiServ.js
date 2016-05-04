@@ -147,7 +147,17 @@ libraryModule
 
 			function Back() {
 				//保存历史
+				var item=[{
+					PaperID:$rootScope.currentPaper.PaperID,
+					UserID:'',
+					Time:timeCount, 
+					Soure:0, 
+					Content:serverdata.answerContent,
+					Type:0,//考试
+					IsSync:false}]
+				SaveDataServ.SyncHistoryData(item);
 				//返回试卷详细
+				$state.go('paperDetail');
 			}
 			//交卷
 			function Assignment() {

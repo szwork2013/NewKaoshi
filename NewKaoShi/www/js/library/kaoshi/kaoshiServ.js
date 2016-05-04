@@ -1,11 +1,11 @@
 libraryModule
-	.factory('KaoshiServ', ['$timeout', '$rootScope', 'GetDataServ', 'CommFunServ', '$ionicSlideBoxDelegate',
-		function($timeout, $rootScope, GetDataServ, CommFunServ, $ionicSlideBoxDelegate) {
+	.factory('KaoshiServ', ['$timeout', '$rootScope', 'GetDataServ', 'CommFunServ', '$ionicSlideBoxDelegate','$state',
+		function($timeout, $rootScope, GetDataServ, CommFunServ, $ionicSlideBoxDelegate,$state) {
 			var timeCount; //秒
 			var timer; //setTimeout方法 
 			var serverdata = {
 				title:'',//题型
-				rtime: 0, //考试时间
+				rtime: '', //考试时间
 				questionlist: [], //考试试题
 				isUpload: false, //是否交卷
 				answerContent: [] //试卷所有试题答案
@@ -13,11 +13,14 @@ libraryModule
 			}
 			var server = {
 				GetServerData: GetServerData,
-				slideHasChanged:slideHasChanged,
-				GeTQuestionList: GeTQuestionList,
-				SelectAnswer: SelectAnswer,
-				LastTest:LastTest,
-				NextTest:NextTest
+				InitTime:InitTime,
+				slideHasChanged:slideHasChanged,//改变试题
+				GeTQuestionList: GeTQuestionList,//获取试题
+				SelectAnswer: SelectAnswer,//选择答案
+				LastTest:LastTest,//上一题
+				NextTest:NextTest,//下一题
+				Back:Back,//返回
+				Assignment:Assignment//交卷
 				
 			}
 			return server;
@@ -161,6 +164,14 @@ libraryModule
 				$ionicSlideBoxDelegate.next();
 				//记录历史(未完成)
 			}
+			function Back(){
+				//保存历史
+				//返回试卷详细
+			}
+			//交卷
+		function Assignment(){
+			$state.go('answerCard');
+		}
 			//初始化考试时间秒、分、小时
 			function InitTime(sec) {
 				timeCount = sec;
@@ -169,8 +180,9 @@ libraryModule
 			//开始及时
 			function StartTime() {
 				t = $timeout(function() {
-					time++;
-					ShowTime(time);
+					timeCount++;
+					ShowTime(timeCount);
+					StartTime();
 				}, 1000); //每隔1秒（1000毫秒）递归调用一次
 			}
 			//停止考试
@@ -182,10 +194,11 @@ libraryModule
 			}
 			//显示时间
 			function ShowTime(time) {
-				var hour = time / 3600;
-				var minute = time % 3600 / 60;
+				var hour = parseInt(time / 3600);
+				var minute = parseInt(time % 3600 / 60);
 				var second = time % 60;
-				var str = AssmbleTime(hour) + ":" + AssmbleTime(minute) + ":" + AssmbleTime(second);
+				serverdata.rtime= AssmbleTime(hour) + ":" + AssmbleTime(minute) + ":" + AssmbleTime(second);
+				CommFunServ.RefreshData(serverdata);
 			}
 			//显示数字填补，即当显示的值为0-9时
 			function AssmbleTime(arg) {

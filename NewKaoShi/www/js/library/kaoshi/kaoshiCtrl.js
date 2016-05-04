@@ -1,13 +1,15 @@
 libraryModule
-.controller('KaoshiCtrl',['$scope','KaoshiServ','$state','$rootScope','$ionicSlideBoxDelegate','$stateParams',
-function($scope,KaoshiServ,$state,$rootScope,$ionicSlideBoxDelegate,$stateParams){
+.controller('KaoshiCtrl',['$scope','KaoshiServ','$stateParams',
+function($scope,KaoshiServ,$stateParams){
 		$scope.slideHasChanged=slideHasChanged;
 		$scope.SelectAnswer = SelectAnswer;//单项选择答案
 		$scope.LastTest=LastTest;
 		$scope.NextTest=NextTest;
 		$scope.Assignment=Assignment;
+		$scope.Back=Back;
 		$scope.$on("$ionicView.loaded",function(){
 			KaoshiServ.GeTQuestionList();
+			KaoshiServ.InitTime(0);
 		})
 		$scope.$on("$ionicView.enter",function(){
 			$scope.serverdata=KaoshiServ.GetServerData();
@@ -28,9 +30,13 @@ function($scope,KaoshiServ,$state,$rootScope,$ionicSlideBoxDelegate,$stateParams
 		function NextTest(){
 			KaoshiServ.NextTest();
 		}
+		//返回
+		function Back(){
+			KaoshiServ.Back();
+		}
 		//交卷
 		function Assignment(){
-			$state.go('answerCard');
+			KaoshiServ.Assignment();
 		}
 }])
 .directive('choiceQuestion',[function(){

@@ -1,10 +1,10 @@
 libraryModule
-	.factory('KaoshiServ', ['$timeout', '$rootScope', 'GetDataServ', 'CommFunServ', '$ionicSlideBoxDelegate','$state',
-		function($timeout, $rootScope, GetDataServ, CommFunServ, $ionicSlideBoxDelegate,$state) {
+	.factory('KaoshiServ', ['$timeout', '$rootScope', 'GetDataServ', 'CommFunServ', '$ionicSlideBoxDelegate', '$state','SaveDataServ',
+		function($timeout, $rootScope, GetDataServ, CommFunServ, $ionicSlideBoxDelegate, $state,SaveDataServ) {
 			var timeCount; //秒
 			var timer; //setTimeout方法 
 			var serverdata = {
-				title:'',//题型
+				title: '', //题型
 				rtime: '', //考试时间
 				isUpload: false, //是否交卷
 				answerContent: [] //试卷所有试题答案
@@ -12,15 +12,15 @@ libraryModule
 			}
 			var server = {
 				GetServerData: GetServerData,
-				InitTime:InitTime,
-				slideHasChanged:slideHasChanged,//改变试题
-				InitList: InitList,//初始化
-				SelectAnswer: SelectAnswer,//选择答案
-				LastTest:LastTest,//上一题
-				NextTest:NextTest,//下一题
-				Back:Back,//返回
-				Assignment:Assignment//交卷
-				
+				InitTime: InitTime,
+				slideHasChanged: slideHasChanged, //改变试题
+				InitList: InitList, //初始化
+				SelectAnswer: SelectAnswer, //选择答案
+				LastTest: LastTest, //上一题
+				NextTest: NextTest, //下一题
+				Back: Back, //返回
+				Assignment: Assignment //交卷
+
 			}
 			return server;
 
@@ -29,12 +29,12 @@ libraryModule
 			}
 			//初始化数据
 			function InitList(bool) {
-				
-								slideHasChanged(0);
-								//type=0表示历史考试
-								if (bool) {
-									GetHistory();
-								}
+
+				slideHasChanged(0);
+				//type=0表示历史考试
+				if (bool) {
+					GetHistory();
+				}
 			}
 			//获取历史
 			function GetHistory() {
@@ -70,29 +70,29 @@ libraryModule
 				}
 			}
 			//切换试题类型
-			function slideHasChanged(index){
-				var item=$rootScope.questionlist[index];
-				switch(item.QuestionType){
+			function slideHasChanged(index) {
+				var item = $rootScope.questionlist[index];
+				switch (item.QuestionType) {
 					case '0':
-					serverdata.title="单选题";
-					break;
+						serverdata.title = "单选题";
+						break;
 					case '1':
-					serverdata.title="多选题";
-					break;
+						serverdata.title = "多选题";
+						break;
 					case '2':
-					serverdata.title="案例题";
-					break;
+						serverdata.title = "案例题";
+						break;
 					default:
-					serverdata.title="";
-					break;
+						serverdata.title = "";
+						break;
 				}
 				CommFunServ.RefreshData(serverdata);
 			}
 			//单选
 			function SelectAnswer(parentindex, index) {
 				var item = $rootScope.questionlist[parentindex];
-				if($rootScope.questionlist[parentindex].answer==null || item.QuestionType==0){
-					$rootScope.questionlist[parentindex].answer=CommFunServ.InitArray(item.OptionContent.length,false)
+				if ($rootScope.questionlist[parentindex].answer == null || item.QuestionType == 0) {
+					$rootScope.questionlist[parentindex].answer = CommFunServ.InitArray(item.OptionContent.length, false)
 				}
 				$rootScope.questionlist[parentindex].answer[index] = !$rootScope.questionlist[parentindex].answer[index];
 
@@ -105,17 +105,17 @@ libraryModule
 				}
 				//答案是否存在，修改答案
 				var length = serverdata.answerContent.length;
-				for(var j = 0; j < length; j++) {
-						if (serverdata.answerContent[j].id == item.ID) {
-							serverdata.answerContent[j].answer = str;
-							CommFunServ.RefreshData(serverdata);
-							if (item.QuestionType == 0) { //单选
-								NextTest();
-							}
-							return;
+				for (var j = 0; j < length; j++) {
+					if (serverdata.answerContent[j].id == item.ID) {
+						serverdata.answerContent[j].answer = str;
+						CommFunServ.RefreshData(serverdata);
+						if (item.QuestionType == 0) { //单选
+							NextTest();
 						}
+						return;
 					}
-					//添加答案
+				}
+				//添加答案
 				var answeritem = {
 					id: item.ID,
 					answer: str
@@ -144,14 +144,15 @@ libraryModule
 				$ionicSlideBoxDelegate.next();
 				//记录历史(未完成)
 			}
-			function Back(){
+
+			function Back() {
 				//保存历史
 				//返回试卷详细
 			}
 			//交卷
-		function Assignment(){
-			$state.go('answerCard');
-		}
+			function Assignment() {
+				$state.go('answerCard');
+			}
 			//初始化考试时间秒、分、小时
 			function InitTime(sec) {
 				timeCount = sec;
@@ -177,7 +178,7 @@ libraryModule
 				var hour = parseInt(time / 3600);
 				var minute = parseInt(time % 3600 / 60);
 				var second = time % 60;
-				serverdata.rtime= AssmbleTime(hour) + ":" + AssmbleTime(minute) + ":" + AssmbleTime(second);
+				serverdata.rtime = AssmbleTime(hour) + ":" + AssmbleTime(minute) + ":" + AssmbleTime(second);
 				CommFunServ.RefreshData(serverdata);
 			}
 			//显示数字填补，即当显示的值为0-9时

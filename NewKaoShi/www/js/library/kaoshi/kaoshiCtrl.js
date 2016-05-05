@@ -7,12 +7,9 @@ function($scope,KaoshiServ,$stateParams){
 		$scope.NextTest=NextTest;
 		$scope.Assignment=Assignment;
 		$scope.Back=Back;
-		$scope.$on("$ionicView.loaded",function(){
-			KaoshiServ.InitList($stateParams.history);
-		})
 		$scope.$on("$ionicView.enter",function(){
 			$scope.serverdata=KaoshiServ.GetServerData();
-			
+			KaoshiServ.InitList($stateParams.history);
 		})
 		function slideHasChanged(index){
 			KaoshiServ.slideHasChanged(index);

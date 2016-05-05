@@ -22,7 +22,7 @@ function($http,$q,SqliteServ){
 		SqliteServ.transaction(function(tx){
 			var len=data.length;
 			for(var i=0;i<len;i++){
-				SqliteServ.insert(tx, ['ID',"PaperID", "UserID", "Time", "Soure", "Content","Type","IsSync"],[data[i].ID,data[i].PaperID,data[i].UserID,data[i].Time,data[i].Soure,data[i].Content,data[i].Type,data[i].IsSync]);
+				SqliteServ.saveOrupadte(tx, 'tb_History',["PaperID", "UserID", "Time", "Soure", "Content","Type","IsSync"],[data[i].PaperID,data[i].UserID,data[i].Time,data[i].Soure,data[i].Content,data[i].Type,data[i].IsSync],"PaperID=? and Type=?",[data[i].PaperID,data[i].Type]);
 			}
 		})
 	}

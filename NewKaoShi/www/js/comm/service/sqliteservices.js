@@ -12,7 +12,8 @@ commModule
 				createDB: createDB,
 				transaction:transaction,
 				insert:insert,
-				select:select
+				select:select,
+				saveOrupadte:saveOrupadte
 			};
 			return service;
 		}
@@ -62,6 +63,22 @@ commModule
 			});
 			return q.promise;
 		};
+		//插入数据
+		function insertsignal(tablename, field, param) {
+			var q = $q.defer();
+			var _length = field.length;
+			var _array = []
+			for (var i = 0; i < _length; i++) {
+				_array.push("?");
+			}
+			var query = "insert into " + tablename + "(" + field.join(',') + ") values (" + _array.join(',') + ")";
+			$cordovaSQLite.execute(db, query, param).then(function(response) {
+				q.resolve(response);
+			}, function(err) {
+				q.reject(err); //成功返回
+			});
+			return q.promise;
+		};
 		//修改数据
 		function update(tablename, field, param, condition, cparam) {
 			var q = $q.defer();
@@ -84,13 +101,13 @@ commModule
 			return q.promise;
 		};
 		//插入或修改数据
-		function saveOrupadte(tablename, field, param, condition, cparam) {
+		function saveOrupadte(tx,tablename, field, param, condition, cparam) {
 			var q = $q.defer();
 			select(tablename, condition, cparam).then(function(data) {
 				if (data.length > 0) {
 					update(tablename, field, param, condition, cparam);
 				} else {
-					insert(tablename, field, param)
+					insertsignal(tablename, field, param)
 				}
 			})
 			return q.promise;

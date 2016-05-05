@@ -9,7 +9,6 @@ function($scope,KaoshiServ,$stateParams){
 		$scope.Back=Back;
 		$scope.$on("$ionicView.loaded",function(){
 			KaoshiServ.InitList($stateParams.history);
-			KaoshiServ.InitTime(0);
 		})
 		$scope.$on("$ionicView.enter",function(){
 			$scope.serverdata=KaoshiServ.GetServerData();

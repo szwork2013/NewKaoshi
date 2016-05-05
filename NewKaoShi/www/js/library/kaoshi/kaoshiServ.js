@@ -12,7 +12,6 @@ libraryModule
 			}
 			var server = {
 				GetServerData: GetServerData,
-				InitTime: InitTime,
 				slideHasChanged: slideHasChanged, //改变试题
 				InitList: InitList, //初始化
 				SelectAnswer: SelectAnswer, //选择答案
@@ -32,8 +31,10 @@ libraryModule
 
 				slideHasChanged(0);
 				//type=0表示历史考试
-				if (bool) {
+				if (bool=='true') {
 					GetHistory();
+				}else{
+					InitTime(0);
 				}
 			}
 			//获取历史
@@ -41,7 +42,8 @@ libraryModule
 				GetDataServ.GetHistoyPaper($rootScope.currentPaper.PaperID, 0).then(function(data) {
 					if (data && data.length > 0) {
 						//存在历史
-						serverdata.answerContent = data[0].Content;
+						serverdata.answerContent = eval("(" + data[0].Content+")");
+						InitTime(parseInt(data[0].Time));
 						AssmbleList();
 					}
 				})
@@ -96,13 +98,14 @@ libraryModule
 				}
 				$rootScope.questionlist[parentindex].answer[index] = !$rootScope.questionlist[parentindex].answer[index];
 
-				var str = "";
+				var arr=[]
 				var len = $rootScope.questionlist[parentindex].answer.length;
 				for (var i = 0; i < len; i++) {
 					if ($rootScope.questionlist[parentindex].answer[i]) {
-						str = str + '|' + i;
+						arr.push(i);
 					}
 				}
+				var str=arr.join("|");
 				//答案是否存在，修改答案
 				var length = serverdata.answerContent.length;
 				for (var j = 0; j < length; j++) {
@@ -152,10 +155,14 @@ libraryModule
 					UserID:'',
 					Time:timeCount, 
 					Soure:0, 
-					Content:serverdata.answerContent,
+					Content:JSON.stringify(serverdata.answerContent),
 					Type:0,//考试
 					IsSync:false}]
 				SaveDataServ.SyncHistoryData(item);
+				if(timer){
+					$timeout.cancel(timer);
+					timer=null;
+				}
 				//返回试卷详细
 				$state.go('paperDetail');
 			}
@@ -170,7 +177,7 @@ libraryModule
 			}
 			//开始及时
 			function StartTime() {
-				t = $timeout(function() {
+				timer = $timeout(function() {
 					timeCount++;
 					ShowTime(timeCount);
 					StartTime();

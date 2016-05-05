@@ -2,7 +2,6 @@ libraryModule
 	.controller('ExerciseCtrl', ['$scope', 'ExerciseServ', '$rootScope', '$stateParams',
 		function($scope, ExerciseServ, $rootScope, $stateParams) {
 			//试题练习按钮状态
-			$scope.showAnswer = false;
 			$scope.btnStatus = 0; //0查看解析，1收藏，2取消收藏
 
 			$scope.slideHasChanged = slideHasChanged;
@@ -39,16 +38,12 @@ libraryModule
 			}
 
 			function ShowAnswer() {
-				$scope.showAnswer = true;
-				$scope.btnStatus = 1;
+				ExerciseServ.ShowAnswer();
+				
 			}
 
 			function Conllect(bool) {
-				if (bool) {
-					$scope.btnStatus = 2;
-				} else {
-					$scope.btnStatus = 1;
-				}
+				ExerciseServ.Conllect(bool);
 			}
 
 		}

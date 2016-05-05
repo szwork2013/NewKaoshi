@@ -2,34 +2,34 @@
 	<ion-header-bar align-title="center">
 		<button class="button button-icon ion-ios-arrow-back" ng-click="Back()">
 		</button>
-		<span class="title"> 单选题</span>
+		<span class="title"> {{serverdata.title}}</span>
 		<button class="button  button-icon ion-ios-keypad-outline  " ng-click="SingMenu()" >
 		</button>
 	</ion-header-bar>
 	<ion-content class="kaoshi">
 		<ion-slide-box on-slide-changed="slideHasChanged($index)">
-			<ion-slide ng-repeat="items in lists">
+			<ion-slide ng-repeat="items in questionlist">
 				<span class="bigtitle">
 					一、单项选择题(共80题,每题0.5分;下列每小题有四个答案,只有一项符合题目要求,请选择出来...)
 				</span>
-				<choice-Question ng-if="items.type==0">
+				<choice-Question ng-if="items.QuestionType==0">
 
 				</choice-Question>
-				<multiplechoice-Question ng-if="items.type==1">
+				<multiplechoice-Question ng-if="items.QuestionType==1">
 
 				</multiplechoice-Question>
-				<case-Question ng-if="items.type==2">
+				<case-Question ng-if="items.QuestionType==2">
 
 				</case-Question>
-				<div ng-show="showAnswer">
+				<div ng-show="serverdata.showAnswer">
 					<div>
 						<span>
-                          	  答案:{{items.answer}}
+                          	  答案:{{items.Answer}}
                         </span>
 					</div>
 					<div>
 						<span>
-                          	  解析:{{items.analy}}
+                          	  解析:{{items.Analysis}}
                         </span>
 					</div>
 				</div>
@@ -39,9 +39,9 @@
 	</ion-content>
 	<ion-footer-bar>
 		<button class="button button-icon ion-ios-undo-outline" ng-click="LastTest()"></button>
-		<span ng-if="btnStatus==0" class="title" ng-click="ShowAnswer()">答案解析</span>
-		<span ng-if="btnStatus==1" class="title" ng-click="Conllect(true)">收藏</span>
-		<span ng-if="btnStatus==2" class="title" ng-click="Conllect(false)">取消收藏</span>
+		<span ng-if="!serverdata.showAnswer" class="title" ng-click="ShowAnswer()">答案解析</span>
+		<span ng-if="serverdata.btnStatus==1 && serverdata.showAnswer" class="title" ng-click="Conllect(true)">收藏</span>
+		<span ng-if="serverdata.btnStatus==2 && serverdata.showAnswer" class="title" ng-click="Conllect(false)">取消收藏</span>
 		<button class="button button-icon ion-ios-redo-outline" ng-click="NextTest()"></button>
 	</ion-footer-bar>
 </ion-view>

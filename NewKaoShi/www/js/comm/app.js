@@ -89,14 +89,14 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
   /*导航页路由*/
 				.state('navigation', {
 					url: '/navigation',
-					cache: true,
+					cache: false,
 					templateUrl: 'templates/navigation.html',
 					controller: 'NavigationCtrl'
 			})
   //登录
 		.state('login', {
 			url: '/login',
-			cache: true,
+			cache: false,
 			templateUrl: 'templates/login/login.html',
 			controller: 'LoginCtrl'
 		})

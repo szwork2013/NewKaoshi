@@ -64,8 +64,6 @@ libraryModule
 						//获取试卷所有试题并合并
 						GetDataServ.GetPaperQuestionData($rootScope.currentPaper.PaperID).then(function(data) {
 							if (data && data.length > 0) {
-								/*var str="[{key:'A',value:'你很好'},{key:'B',value:'说的话说好的'},{key:'C',value:'阿斯顿撒旦'},{key:'D',value:'佛挡杀佛'}]"
-								var json=eval("("+str+")"); */
 								var len = data.length;
 								for (var i = 0; i < len; i++) {
 									data[i].OptionContent = eval("(" + data[i].OptionContent + ")");

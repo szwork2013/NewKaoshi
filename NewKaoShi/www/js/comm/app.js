@@ -91,7 +91,7 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
 					url: '/navigation',
 					cache: true,
 					templateUrl: 'templates/navigation.html',
-					controller: 'InitCtrl'
+					controller: 'NavigationCtrl'
 			})
   //登录
 		.state('login', {
@@ -99,13 +99,6 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
 			cache: true,
 			templateUrl: 'templates/login/login.html',
 			controller: 'LoginCtrl'
-		})
-		 //注册
-		.state('register', {
-			url: '/register',
-			cache: true,
-			templateUrl: 'templates/login/register.html',
-			controller: 'RegisterCtrl'
 		})
 	//考试分类
 		.state('examType', {

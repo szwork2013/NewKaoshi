@@ -5,7 +5,7 @@
 	<div class="list content">
 		<label ng-repeat="item in items.OptionContent" class="item" >
 			<input type="radio" name="{{items.ID}}" ng-click="SelectAnswer($parent.$index,$index)" ng-checked='items.answer[$index]'/>
-			<span ng-class="{'havechecked':items.answer[$index]}">{{ item.value }}</span>
+			<span ng-class="{'havechecked':(items.rightAnswer[$index] && serverdata.showAnswer)}">{{ item.value }}</span>
 		</label>
 	</div>
 </div>

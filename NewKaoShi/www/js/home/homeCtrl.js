@@ -60,7 +60,7 @@ homeModule
 			Price: '99'
 		}]
 		$scope.vipitem={
-			id:2,
+			id:24,
 			type: 0, //0表示全科
 			Img: 'img/ben.png',
 			Name: '一级建造师(全科+三门公共课)',

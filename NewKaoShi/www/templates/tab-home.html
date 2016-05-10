@@ -27,7 +27,7 @@
 			</a>
 		</div>
 		<ion-scroll id="items_Content" ng-show="selectindex!=3">
-				<div  ng-repeat="item in itemlist |filter:item.type=selectindex" class="row row-wrap itemcontent" ng-if="selectindex==0 || (selectindex==1 && item.type==0) || (selectindex==2 && item.type==1)">
+				<div  ng-repeat="item in itemlist track by item.id" class="row row-wrap itemcontent" ng-if="selectindex==0 || (selectindex==1 && item.type==0) || (selectindex==2 && item.type==1)">
 					<div class="col col-20">
 						<img ng-src="{{item.Img}}">
 					</div>

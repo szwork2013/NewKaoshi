@@ -16,13 +16,13 @@
 			<ion-item ng-repeat="item in currentList.children track by item.ExamTypeID" class="typeitem">
 				<a class="button button-full icon-right ion-chevron-right typeitema" ng-click="ShowChildren(item.ExamTypeID,item.ExamTypeName)">
 					<span class="itemMain">
-						{{item.ExamTypeName}}
+						{{::item.ExamTypeName}}
 					</span>
 					<span class="itemText">
-						{{serverdata.grandchildren[$index].childernlist[0].ExamTypeName}}
+						{{::serverdata.grandchildren[$index].childernlist[0].ExamTypeName}}
 					</span>
 					<span class="itemText">
-						{{serverdata.grandchildren[$index].childernlist[1].ExamTypeName}}
+						{{::serverdata.grandchildren[$index].childernlist[1].ExamTypeName}}
 					</span>
 				</a>
 			</ion-item>

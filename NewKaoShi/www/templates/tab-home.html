@@ -8,7 +8,7 @@
 		<ion-slide-box class="slide-box" auto-play="true" slide-interval="5000">
 			<ion-slide ng-repeat="item in slideboxes">
 				<a class="slideitem">
-					<img ng-src="{{item.imgsrc}}" alt="活动" />
+					<img ng-src="{{::item.imgsrc}}" alt="活动" />
 				</a>
 			</ion-slide>
 		</ion-slide-box>
@@ -26,29 +26,18 @@
 				<span>软件vip</span>
 			</a>
 		</div>
-		<ion-scroll id="items_Content" ng-show="selectindex!=3">
-				<div  ng-repeat="item in itemlist track by item.id" class="row row-wrap itemcontent" ng-if="selectindex==0 || (selectindex==1 && item.type==0) || (selectindex==2 && item.type==1)">
+		<ion-scroll id="items_Content" >
+				<div  ng-repeat="item in itemlist track by item.id" class="row row-wrap itemcontent" ng-if="selectindex==0 || (selectindex==item.type) ">
 					<div class="col col-20">
-						<img ng-src="{{item.Img}}">
+						<img ng-src="{{::item.Img}}">
 					</div>
 					<div class="col col-80">
 						<span class="itemname" ng-bind="item.Name"></span>
 						<span class="itemdescript" ng-bind="item.Descript"></span>
-						<span class="itemprice">{{item.Price}}元</span>
+						<span class="itemprice">{{::item.Price}}元</span>
 						<a class="buytype"> 天猫购买</a>
 					</div>
 				</div>
 		</ion-scroll>
-		<div ng-show="selectindex==3" class="row row-wrap itemcontent">
-			<div class="col col-20">
-						<img ng-src="{{vipitem.Img}}">
-					</div>
-					<div class="col col-80">
-						<span class="itemname" ng-bind="vipitem.Name"></span>
-						<span class="itemdescript" ng-bind="vipitem.Descript"></span>
-						<span class="itemprice">{{vipitem.Price}}元</span>
-						<a class="buytype"> 天猫购买</a>
-					</div>
-		</div>
 	</ion-content>
 </ion-view>

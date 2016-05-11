@@ -126,7 +126,7 @@ commModule
 							console.error(err);
 						});
 					}
-					Test();
+					//Test();
 
 				}).error(function() {});
 		};

@@ -14,6 +14,7 @@ libraryModule
 				slideHasChanged: slideHasChanged, //改变试题
 				InitList: InitList, //初始化
 				SelectAnswer: SelectAnswer, //选择答案
+				Estimate:Estimate,
 				LastTest: LastTest, //上一题
 				NextTest: NextTest, //下一题
 				Back: Back, //返回
@@ -152,6 +153,11 @@ libraryModule
 				if (item.QuestionType == 0) { //单选
 					NextTest();
 				}
+			}
+			//简答题评估分数
+			function Estimate(index,score){
+				//存储答案分数
+				$rootScope.currentpaper.questionlist[parentindex].hasdo=true;
 			}
 			//上一题
 			function LastTest() {

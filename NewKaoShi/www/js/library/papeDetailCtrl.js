@@ -5,8 +5,7 @@ libraryModule
 			$scope.BackLibrary = BackLibrary;
 			$scope.$on("$ionicView.enter",function(){
 				$scope.serverdata=PaperDetailServ.GetServerData();
-				PaperDetailServ.CheckHistory();
-				PaperDetailServ.GeTQuestionList();
+				PaperDetailServ.InitData();
 			})
 			function Start(type) {
 				PaperDetailServ.Start(type);

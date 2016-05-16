@@ -11,7 +11,7 @@
 		<ion-slide-box on-slide-changed="slideHasChanged($index)" >
 			<ion-slide ng-repeat="items in currentpaper.questionlist">
 				<span ng-show="isShowTitle" class="bigtitle">
-					一、单项选择题(共80题,每题0.5分;下列每小题有四个答案,只有一项符合题目要求,请选择出来...)
+					{{serverdata.titleContent}}
 				</span>
 				<choice-Question ng-if="items.QuestionType==0">
 

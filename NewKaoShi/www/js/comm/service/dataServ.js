@@ -147,7 +147,7 @@ SaveHisData:SaveHisData,
 			function GetPaperQuestions(id) {
 				var q = $q.defer();
 				//获取试题信息
-				SqliteServ.selectfree('tb_Question', 'where PaperID=? order by PID,QuestionIndex', [id]).then(function(data) {
+				SqliteServ.selectfree('tb_Question', ' where PaperID=? order by PID asc,QuestionIndex asc', [id]).then(function(data) {
 					q.resolve(data)
 				})
 				return q.promise;

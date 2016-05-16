@@ -10,10 +10,9 @@ libraryModule
 			}
 			var server = {
 				GetServerData: GetServerData,
-				CheckHistory: CheckHistory,
+				InitData: InitData,
 				Start: Start,
-				BackLibrary: BackLibrary,
-				GeTQuestionList: GeTQuestionList
+				BackLibrary: BackLibrary
 			}
 			return server;
 
@@ -87,7 +86,7 @@ libraryModule
 				$rootScope.currentpaper.questionlist=[];//试题列表
 				$rootScope.currentpaper.questiontitle=[];//标题列表
 				for (var i = 0; i < len; i++) {
-					if(data[i].PID!=0){
+					if(data[i].PID!='0'){
 						data[i].OptionContent = eval("(" + data[i].OptionContent + ")");
 						$rootScope.currentpaper.questionlist.push(data[i]);
 					}else{

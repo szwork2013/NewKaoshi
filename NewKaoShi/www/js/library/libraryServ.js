@@ -35,7 +35,7 @@ libraryModule
 			function GoPaperDetail(id) {
 				DataServ.GetPaperData(id).then(function(data) {
 					if (data) {
-						$rootScope.currentpaper.PaperID= data[0].PaperID;
+						$rootScope.currentpaper.paperID= data[0].PaperID;
 						$rootScope.currentpaper.itemNum=data[0].ItemNum;
 						$rootScope.currentpaper.totalTime=data[0].TotalTime;
 						$state.go('paperDetail');

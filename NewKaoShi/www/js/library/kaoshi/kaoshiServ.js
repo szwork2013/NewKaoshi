@@ -4,7 +4,8 @@ libraryModule
 			var timeCount; //秒
 			var timer; //setTimeout方法 
 			var serverdata = {
-				isShowTitle:false,//是否显示大题标题
+				isShowTitle: false, //是否显示大题标题
+				titleContent:'',//当前大题内容
 				title: '', //题型
 				isUpload: false, //是否交卷
 			}
@@ -28,9 +29,9 @@ libraryModule
 			function InitList(bool) {
 				slideHasChanged(0);
 				//type=0表示历史考试
-				if (bool=='true') {
+				if (bool == 'true') {
 					GetHistory();
-				}else{
+				} else {
 					InitTime(0);
 				}
 			}
@@ -39,7 +40,7 @@ libraryModule
 				DataServ.GetHistoy($rootScope.currentpaper.paperID, 0).then(function(data) {
 					if (data && data.length > 0) {
 						//存在历史
-						$rootScope.currentpaper.answerContent = eval("(" + data[0].Content+")");
+						$rootScope.currentpaper.answerContent = eval("(" + data[0].Content + ")");
 						InitTime(parseInt(data[0].Time));
 						AssmbleList();
 					}
@@ -70,39 +71,60 @@ libraryModule
 			}
 			//切换试题类型
 			function slideHasChanged(index) {
+				//根据大题类型显示头
 				var item = $rootScope.currentpaper.questionlist[index];
-				switch (item.QuestionType) {
-					case '0':
-						serverdata.title = "单选题";
-						break;
-					case '1':
-						serverdata.title = "多选题";
-						break;
-					case '2':
-						serverdata.title = "案例题";
-						break;
-					default:
-						serverdata.title = "";
-						break;
+				if(index==0){
+					serverdata.isShowTitle=true;
 				}
-				CommFunServ.RefreshData(serverdata);
+				if(index>0){
+					//与前一题对比查看是否显示大题
+					var lastitem= $rootScope.currentpaper.questionlist[index-1];
+					if(item.PID==lastitem.PID){
+						serverdata.isShowTitle=false;
+					}else{
+						serverdata.isShowTitle=true;
+					}
+				}
+				var len = $rootScope.currentpaper.questiontitle.length;
+				for (var i = 0; i < len; i++) {
+					if ($rootScope.currentpaper.questiontitle[i].ID == item.PID) {
+						serverdata.titleContent=$rootScope.currentpaper.questiontitle[i].QuestionContent;
+						switch ($rootScope.currentpaper.questiontitle[i].QuestionType) {
+							case '0':
+								serverdata.title = "单选题";
+								break;
+							case '1':
+								serverdata.title = "多选题";
+								break;
+							case '2':
+								serverdata.title = "案例题";
+								break;
+							default:
+								serverdata.title = "";
+								break;
+						}
+						CommFunServ.RefreshData(serverdata);
+						return;
+					}
+				}
+
 			}
 			//单选
 			function SelectAnswer(parentindex, index) {
-				var item = $rootScope.questionlist[parentindex];
+				var item = $rootScope.currentpaper.questionlist[parentindex];
 				if ($rootScope.currentpaper.questionlist[parentindex].answer == null || item.QuestionType == 0) {
 					$rootScope.currentpaper.questionlist[parentindex].answer = CommFunServ.InitArray(item.OptionContent.length, false)
 				}
 				$rootScope.currentpaper.questionlist[parentindex].answer[index] = !$rootScope.currentpaper.questionlist[parentindex].answer[index];
 
-				var arr=[]
+				var arr = []
 				var len = $rootScope.currentpaper.questionlist[parentindex].answer.length;
 				for (var i = 0; i < len; i++) {
 					if ($rootScope.currentpaper.questionlist[parentindex].answer[i]) {
 						arr.push(i);
 					}
 				}
-				var str=arr.join("|");
+				var str = arr.join("|");
 				//答案是否存在，修改答案
 				var length = $rootScope.currentpaper.answerContent.length;
 				for (var j = 0; j < length; j++) {
@@ -145,18 +167,19 @@ libraryModule
 
 			function Back() {
 				//保存历史
-				var item=[{
-					PaperID:$rootScope.PaperID,
-					UserID:'',
-					Time:timeCount, 
-					Soure:0, 
-					Content:JSON.stringify($rootScope.currentpaper.answerContent),
-					Type:0,//考试
-					IsSync:false}]
+				var item = [{
+					PaperID: $rootScope.PaperID,
+					UserID: '',
+					Time: timeCount,
+					Soure: 0,
+					Content: JSON.stringify($rootScope.currentpaper.answerContent),
+					Type: 0, //考试
+					IsSync: false
+				}]
 				DataServ.SaveHisData(item);
-				if(timer){
+				if (timer) {
 					$timeout.cancel(timer);
-					timer=null;
+					timer = null;
 				}
 				//返回试卷详细
 				$state.go('paperDetail');

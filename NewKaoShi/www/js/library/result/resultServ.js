@@ -11,7 +11,7 @@ function($rootScope,CommFunServ,$state){
 	}
 	var server={
 		GetServerdata:GetServerdata,
-		GetResult:GetResult
+		InitData:InitData
 	}
 	return server;
 	function GetServerdata(){

@@ -9,7 +9,7 @@ function($scope,ResultServ,$state){
 	$scope.TestAgain=TestAgain;
 	$scope.serverdata=ResultServ.GetServerdata();
 	$scope.$on("$ionicView.enter",function(){
-		
+		ResultServ.InitData();
 	})
 	function CheckAnswer(){
 		$state.go('resultCard');

@@ -7,6 +7,10 @@ function($scope,ResultServ,$state){
 	$scope.CheckAnswer=CheckAnswer;
 	$scope.GoPaperDeatail=GoPaperDeatail;
 	$scope.TestAgain=TestAgain;
+	$scope.serverdata=ResultServ.GetServerdata();
+	$scope.$on("$ionicView.enter",function({
+		
+	})
 	function CheckAnswer(){
 		$state.go('resultCard');
 		

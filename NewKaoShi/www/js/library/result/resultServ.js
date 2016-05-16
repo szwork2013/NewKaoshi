@@ -5,17 +5,25 @@ function($rootScope,CommFunServ,$state){
 		score:0,//获得分数
 		scoretext:'',//分数描述
 		rightcount:0,//答对题数
-		wrongcount:0//打错题数
+		wrongcount:0,//打错题数
+		rate:0,//正确率
+		time:0//考试已用时间
 	}
 	var server={
-		
+		GetServerdata:GetServerdata,
+		GetResult:GetResult
 	}
 	return server;
 	function GetServerdata(){
 		return serverdata;
 	}
-	//计算获得分数
-	function GetScore(){
+	//初始化数据
+	function InitData(){
+		GetResult();
+		ShowTime();
+	}
+	//计算结果
+	function GetResult(){
 		var score=0;
 		var len=$rootScope.currentpaper.questionlist.length;
 		for(var i=0;i<len;i++){
@@ -23,7 +31,7 @@ function($rootScope,CommFunServ,$state){
 				switch($rootScope.currentpaper.questionlist[i].QuestionType){
 					case 0://单选
 					case 1://多选
-						score+=JparseInt(iSuanChoiceScore($rootScope.currentpaper.questionlist[i]));
+						score+=parseInt(GetScore($rootScope.currentpaper.questionlist[i]));
 					break;
 					case 2://简答
 						var code=$rootScope.currentpaper.questionlist[i].answer;
@@ -39,10 +47,23 @@ function($rootScope,CommFunServ,$state){
 			}
 		}
 		serverdata.score=score;
+		serverdata.wrongcount=parseInt($rootScope.currentpaper.itemNum)-parseInt(serverdata.rightcount);
+		var str="";
+		var passmark=$rootScope.currentpaper.passMark;
+		var total=parseInt($rootScope.currentpaper.totalScore)-20;
+		if(serverdata.score<passmark){
+			str="没有及格，请再接再厉！"
+		}else if(serverdata.score>passmark && serverdata.score<total){
+			str="恭喜你考试通过！"
+		}else{
+			str="成绩优秀，请继续保持！"
+		}
+		serverdata.rate=serverdata.wrongcount/serverdata.rightcount*100;
+		serverdata.scoretext=str;
 		CommFunServ.RefreshData(serverdata);
 	}
 	//计算单选多选分数
-	function JiSuanChoiceScore(item){
+	function GetScore(item){
 		var score=0;
 		var rightarr=item.Answer.split("|");//正确答案
 		var answerarr=item.answer;//回答答案
@@ -69,6 +90,23 @@ function($rootScope,CommFunServ,$state){
 			return 0;
 		}
 		return 0;
+	}
+	//拼凑考试已用时间
+	function ShowTime() {
+		var time=$rootScope.currentpaper.rtime;
+		var hour = parseInt(time / 3600);
+		var minute = parseInt(time % 3600 / 60);
+		var second = time % 60;
+		var str="";
+		if(hour>0){
+			str =hour+"小时"
+		}
+		if(minute>0){
+			str=str+minute+"分钟"
+		}
+		str=str+second+"秒";
+		serverdata.time=str;
+		CommFunServ.RefreshData(serverdata);
 	}
 	
 }])

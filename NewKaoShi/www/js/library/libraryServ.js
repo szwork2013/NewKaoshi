@@ -6,6 +6,8 @@ libraryModule
 				paperID:0,//当前试卷ID
 				itemNum:0,//总题数
 				totalTime:0,//总时间
+				totalScore:0,//总分数
+				passMark:0,//及格分数
 				rtime:0,//时间
 				questionlist:[],//试题列表
 				questiontitle:[],//标题列表
@@ -38,6 +40,8 @@ libraryModule
 						$rootScope.currentpaper.paperID= data[0].PaperID;
 						$rootScope.currentpaper.itemNum=data[0].ItemNum;
 						$rootScope.currentpaper.totalTime=data[0].TotalTime;
+						$rootScope.currentpaper.passMark=data[0].PassMark;
+						$rootScope.currentpaper.totalScore=data[0].TotalScore;
 						$state.go('paperDetail');
 					}
 				})

@@ -20,7 +20,7 @@ function($rootScope,CommFunServ,$state){
 		ShowTime();
 	}
 	//拼凑考试已用时间
-	function ShowTime(time) {
+	function ShowTime() {
 		var time=$rootScope.currentpaper.rtime;
 		var hour = parseInt(time / 3600);
 		var minute = parseInt(time % 3600 / 60);

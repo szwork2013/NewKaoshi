@@ -5,7 +5,7 @@
 	},
 	{
 	"tableName": "tb_Papers",
-		"tablePrama": ["PaperID", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "IsUpdate","IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID","Dec"]
+		"tablePrama": ["PaperID","PaperName","ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "IsUpdate","IsVip","IsDownLoad", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID"]
 	},{
 		"tableName": "tb_Question",
 		"tablePrama": ["ID", "PaperID","QuestionType", "QuestionContent", "QuestionIndex", "Soure", "PID", "OptionContent", "Answer", "PictureAddress","Analysis"]

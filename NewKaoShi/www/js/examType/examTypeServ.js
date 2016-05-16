@@ -1,29 +1,29 @@
 classifyModule
-	.factory('ExamTypeServ', ['$state', '$rootScope', 'CommFunServ', 'GetDataServ',
-		function($state, $rootScope, CommFunServ, GetDataServ) {
+	.factory('ExamTypeServ', ['$state', '$rootScope', 'CommFunServ', 'DataServ',
+		function($state, $rootScope, CommFunServ, DataServ) {
 			var examList = []
 			$rootScope.currentList = {
-				id: 0,
-				name: '',
+				id: 0,//当前列表父id
+				name: '',//当前列表父名
 				children: [] //当前显示列表
 			}
 			var serverdata = {
 				grandchildren: [] //当前列表子列表
 			}
 			var server = {
-				BindServerData: BindServerData,
-				InitList: InitList,
-				ShowChildren: ShowChildren,
-				ShowParent: ShowParent
+				GetServerData: GetServerData,//绑定数据
+				InitList: InitList,//初始化列表
+				ShowChildren: ShowChildren,//显示子列表
+				ShowParent: ShowParent//返回显示父列表
 			}
 			return server;
 
-			function BindServerData() {
+			function GetServerData() {
 				return serverdata;
 			}
 
 			function InitList() {
-				GetDataServ.GetExamType().then(function(data) {
+				DataServ.GetExamType().then(function(data) {
 					examList = data;
 					ShowChildren(0, '考试分类')
 				})
@@ -72,15 +72,16 @@ classifyModule
 			//显示父级，子级id
 			function ShowParent() {
 				if ($rootScope.currentList) {
-					if ($rootScope.currentList.id == 0) {
+					if ($rootScope.currentList.id == 0) {//当前列表已是基层考试类型，
 						Back();
 						return;
 					} else {
 						var len = examList.length;
 						for (var i = 0; i < len; i++) {
 							if (examList[i].ExamTypeID == $rootScope.currentList.id) {
-								if (examList[i].ParentID == 0) {
+								if (examList[i].ParentID == 0) {//
 									ShowChildren(examList[i].ParentID, '考试分类');
+									return;
 								} else {
 									for (var j = 0; j < len; j++) {
 										if (examList[i].ParentID == examList[j].ExamTypeID) {

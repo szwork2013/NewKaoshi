@@ -1,6 +1,6 @@
 libraryModule
-	.factory('ExerciseServ', ['$rootScope', 'GetDataServ', 'CommFunServ', '$ionicSlideBoxDelegate', '$state', 'SaveDataServ',
-		function($rootScope, GetDataServ, CommFunServ, $ionicSlideBoxDelegate, $state, SaveDataServ) {
+	.factory('ExerciseServ', ['$rootScope', 'DataServ', 'CommFunServ', '$ionicSlideBoxDelegate', '$state',
+		function($rootScope, DataServ, CommFunServ, $ionicSlideBoxDelegate, $state) {
 			var currentType; //currentType=0试卷，currentType=1错题与收藏
 			var currentIndex; //当前试题索引
 			var serverdata = {
@@ -58,7 +58,7 @@ libraryModule
 			//获取历史
 			function GetHistory() {
 				//type=1表示历史试卷练习
-				GetDataServ.GetHistoyPaper($rootScope.currentPaper.PaperID, 1).then(function(data) {
+				DataServ.GetHistoy($rootScope.currentPaper.PaperID, 1).then(function(data) {
 					if (data && data.length > 0) {
 						//存在历史
 						serverdata.answerContent = eval("(" + data[0].Content + ")");
@@ -190,7 +190,7 @@ libraryModule
 					Type: 1, //练习
 					IsSync: false
 				}]
-				SaveDataServ.SyncHistoryData(item);
+				DataServ.SaveHisData(item);
 				if (currentType == '0') {
 					//返回试卷详细
 					$state.go('paperDetail');

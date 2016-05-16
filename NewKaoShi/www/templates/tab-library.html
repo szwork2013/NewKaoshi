@@ -1,5 +1,5 @@
 <ion-view>
-	<ion-content class="library" scroll=false >
+	<ion-content class="library" scroll=false>
 		<div>
 			<div>
 				<a class="item  item-icon-right contentoption">
@@ -22,32 +22,26 @@
 				<div class="testcontent">
 					<a ng-repeat="paper in serverdata.paperlist track by paper.PaperID|orderBy:paper.UpdateTime" class="row row-wrap paperitem" ng-if="paper.PaperTypeID==selectindex" ng-click="GoPaperDetail(paper.PaperID)">
 						<div class="col col-80">
-							<span class="papername">
-  						{{paper.Dec}}
-  					</span>
-							<span class="papernumber">
-  						<span class="number">
-  						{{paper.UserCount}}
-  						</span> 人做过
-							</span>
+							<span class="papername">{{paper.PaperContent}}</span>
+							<span class="papernumber"><span class="number">{{paper.UserCount}}</span> 人做过</span>
 							<span class="papertime">{{paper.UpdateTime}}</span>
 						</div>
 						<div class="col col-20">
-							<span class="haveupdate" ng-show="paper.IsUpdate==1">有更新</span>
-							<span class="havedownload" ng-show="paper.IsUpdate==0 && paper.IsDownload==1">已下载</span>
-							<span class="havevip" ng-show="paper.IsUpdate==0 && paper.IsDownload==0 && paper.IsVip==1">VIP</span>
-							<span class="havedownload" ng-show="paper.IsUpdate==0 && paper.IsDownload==0 && paper.IsVip==0">免费</span>
+							<span class="haveupdate" ng-if="paper.Status==3">有更新</span>
+							<span class="havedownload" ng-if="paper.Status==2">已下载</span>
+							<span class="havevip" ng-if="paper.Status==1">VIP</span>
+							<span class="havedownload" ng-if="paper.Status==0">免费</span>
 						</div>
 					</a>
 				</div>
 			</ion-scroll>
 		</div>
 		<div id="menu_list" ng-class="{'showmenu':isShow==1,'menushow':isShow==1,'hidemenu':isShow==2,'menuhide':isShow!=1}" class="row row-wrap testmenu">
-			
+
 			<a class="col col-33" ng-click="HideMenu()"></a>
 			<div class="col col-67 menuitems">
 				<ion-scroll id="menu_scroll">
-					<a class="item item-icon-right menutitle" >
+					<a class="item item-icon-right menutitle">
 						<span>{{currentList.name}}</span>
 						<i class="icon ion-ios-list-outline" ng-click="GoExamType()"></i>
 					</a>
@@ -56,7 +50,7 @@
 					</a>
 				</ion-scroll>
 			</div>
-			
+
 		</div>
 	</ion-content>
 </ion-view>

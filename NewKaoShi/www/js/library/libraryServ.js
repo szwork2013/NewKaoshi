@@ -1,6 +1,16 @@
 libraryModule
 	.factory('LibraryServ', ['$state', 'DataServ', 'CommFunServ', '$rootScope', 
 		function($state, DataServ, CommFunServ, $rootScope) {
+			//当前试卷信息
+			$rootScope.currentpaper={
+				paperID:0,//当前试卷ID
+				itemNum:0,//总题数
+				totalTime:0,//总分数
+				questionlist:[],//试题列表
+				questiontitle:[],//标题列表
+				rtime:0,//时间
+				answerContent:[]//答案列表
+			}
 			var serverdata = {
 				paperlist: []
 			}
@@ -25,7 +35,9 @@ libraryModule
 			function GoPaperDetail(id) {
 				DataServ.GetPaperData(id).then(function(data) {
 					if (data) {
-						$rootScope.currentPaper = data[0];
+						$rootScope.currentpaper.PaperID= data[0].PaperID;
+						$rootScope.currentpaper.itemNum=data[0].ItemNum;
+						$rootScope.currentpaper.totalTime=data[0].TotalTime;
 						$state.go('paperDetail');
 					}
 				})

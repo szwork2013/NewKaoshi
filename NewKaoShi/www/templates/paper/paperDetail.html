@@ -13,13 +13,13 @@
 	
 	<ion-content class="detail">
 		<div class="title">
-			<span class="papername">{{currentPaper.Dec}}</span>
+			<span class="papername">{{serverdata.paperdetail.PaperContent}}</span>
 			<div class="row row-wrap">
-				<a class="col col-50 startbtn" ng-click="StartExams(serverdata.haveKaoshi)">
+				<a class="col col-50 startbtn" ng-click="Start(0)">
 					<span class="startspan" ng-if='!serverdata.haveKaoshi'>开始考试</span>
 					<span class="continuespan" ng-if='serverdata.haveKaoshi'>继续考试</span>
 				</a>
-				<a class="col col-50 startbtn" ng-click="StartExersice(serverdata.haveExercise)">
+				<a class="col col-50 startbtn" ng-click="Start(1)">
 					<span class="startspan" ng-if='!serverdata.haveExercise'>开始练习</span>
 					<span class="continuespan" ng-if='serverdata.haveExercise'>继续练习</span>
 				</a>
@@ -27,15 +27,15 @@
 		</div>
 		<div class="row row-wrap paperparma">
 			<div class="col col-50">
-				<span>所属年份:{{currentPaper.Year}}</span>
-				<span>卷面总分:{{currentPaper.TotalScore}}</span>
-				<span>作答:{{currentPaper.TotalTime}}分钟</span>
-				<span><span class="number">{{currentPaper.UserCount}}</span>人做过</span>
+				<span>所属年份:{{serverdata.paperdetail.Year}}</span>
+				<span>卷面总分:{{serverdata.paperdetail.TotalScore}}</span>
+				<span>作答:{{serverdata.paperdetail.TotalTime}}分钟</span>
+				<span><span class="number">{{serverdata.paperdetail.UserCount}}</span>人做过</span>
 			</div>
 			<div class="col col-50">
-				<span>发布时间:{{currentPaper.UpdateTime}}</span>
-				<span>及格分数:{{currentPaper.PassMark}}</span>
-				<span>提供机构:{{currentPaper.CreatorID}}</span>
+				<span>发布时间:{{serverdata.paperdetail.UpdateTime}}</span>
+				<span>及格分数:{{serverdata.paperdetail.PassMark}}</span>
+				<span>提供机构:{{serverdata.paperdetail.CreatorID}}</span>
 				<span><span class="number">49</span>人评论过</span>
 			</div>
 		</div>

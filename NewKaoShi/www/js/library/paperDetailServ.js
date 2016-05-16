@@ -1,77 +1,115 @@
 libraryModule
-	.factory('PaperDetailServ', ['$state', '$rootScope', 'GetDataServ',
-		function($state, $rootScope, GetDataServ) {
+	.factory('PaperDetailServ', ['$state', '$rootScope', 'DataServ', '$ionicLoading',
+
+		function($state, $rootScope, DataServ, $ionicLoading) {
+		
 			var serverdata = {
+				paperdetail: null, //试卷详情
 				haveExercise: false, //是否有练习历史
 				haveKaoshi: false //是否有考试历史
 			}
 			var server = {
 				GetServerData: GetServerData,
 				CheckHistory: CheckHistory,
-				StartExams: StartExams,
-				StartExersice: StartExersice,
+				Start: Start,
 				BackLibrary: BackLibrary,
-				GeTQuestionList:GeTQuestionList
+				GeTQuestionList: GeTQuestionList
 			}
 			return server;
 
 			function GetServerData() {
 				return serverdata;
 			}
+			//初始化试卷详情
+			function InitData() {
+				//获取试卷详情
+				DataServ.GetPaperData($rootScope.currentpaper.paperID).then(function(data) {
+					if (data && data.length > 0) {
+						serverdata.paperdetail = data[0];
+						//获取历史，已下载的试卷才会出现历史记录
+						if (serverdata.paperdetail.IsDownload != 0) {
+							CheckHistory();
+						}
+
+					}
+				})
+			}
 			//检查历史记录
 			function CheckHistory() {
-				//在试卷已经下载的情况下才检查是否有历史记录
-				if ($rootScope.currentPaper && $rootScope.currentPaper.IsDownload != 0) {
-					GetDataServ.GetHistoyPaper($rootScope.currentPaper.PaperID, 0).then(function(data) {
-						if (data && data.length > 0) { //存在考试历史记录
-							serverdata.haveKaoshi = true;
-						} else {
-							serverdata.haveKaoshi = false;
+				DataServ.GetHistoy($rootScope.currentpaper.paperID).then(function(data) {
+					serverdata.haveKaoshi = false;
+					serverdata.haveExercise = false;
+					if (data && data.length > 0) {
+						var len = data.length;
+						for (var i = 0; i < len; i++) {
+							if (data[i].Type == 0) { //存在考试记录
+								serverdata.haveKaoshi = true;
+								$rootScope.currentpaper.rtime=data[i].Time;
+							} else if (data[i].Type == 1) { //存在练习记录
+								serverdata.haveExercise = true;
+							}
 						}
-					})
-					GetDataServ.GetHistoyPaper($rootScope.currentPaper.PaperID, 1).then(function(data) {
-						if (data && data.length > 0) { //存在练习历史记录
-							serverdata.haveExercise = true;
-						} else {
-							serverdata.haveExercise = false;
-						}
-					})
+					}
+				})
+			}
+			//开始考试、练习
+			function Start(type) {
+				//获取试卷所有试题
+				DataServ.GetPaperQuestions($rootScope.currentpaper.paperID).then(function(data) {
+					if (data && data.length > 0) {
+						//组装试题数据
+						AssmbleQuestionData(data);
+						//跳转到试题
+						GoExam(type);
+					} else { //数据库无数据
+						//显示加载
+						$ionicLoading.show({
+								template: '加载试题中...'
+							})
+							//请求服务器数据
+						DataServ.PostQuestions($rootScope.currentpaper.paperID).then(function(data) {
+							if (data && data.length > 0) {
+								$ionicLoading.hide(); //隐藏加载
+								//组装试题数据
+								AssmbleQuestionData(data)
+									//跳转到试题
+								GoExam(type);
+							} else {
+								//提示加载失败(未完成)
+							}
+						});
+					}
+				})
+			}
+			//组装试题数据
+			function AssmbleQuestionData(data) {
+				var len = data.length;
+				$rootScope.currentpaper.questionlist=[];//试题列表
+				$rootScope.currentpaper.questiontitle=[];//标题列表
+				for (var i = 0; i < len; i++) {
+					if(data[i].PID!=0){
+						data[i].OptionContent = eval("(" + data[i].OptionContent + ")");
+						$rootScope.currentpaper.questionlist.push(data[i]);
+					}else{
+						$rootScope.currentpaper.questiontitle.push(data[i]);
+					}
 				}
 			}
-
+			//返回题库
 			function BackLibrary() {
 				$state.go('tab.library');
 			}
-			//开始考试
-			function StartExams(bool) {
-				$state.go('kaoshi',{
-					history:bool
-				})
-			}
-			//开始练习
-			function StartExersice(bool) {
-				$state.go('exercise', {
-					history:bool,
-					type: 0
-				})
-			}
-			//获取试卷试题,再详细下载节省下载时间，看起来数据获取更快，同时更利于后续组装，不然slide-box组装样式无法获取
-			function GeTQuestionList() {
-				if ($rootScope.currentPaper) {
-					if ($rootScope.currentPaper.IsDownload == 0) {
-						//试卷未下载，请求下载试题
-					} else {
-						//获取试卷所有试题并合并
-						GetDataServ.GetPaperQuestionData($rootScope.currentPaper.PaperID).then(function(data) {
-							if (data && data.length > 0) {
-								var len = data.length;
-								for (var i = 0; i < len; i++) {
-									data[i].OptionContent = eval("(" + data[i].OptionContent + ")");
-								}
-								$rootScope.questionlist = data;
-							}
-						})
-					}
+			//跳转到试题
+			function GoExam(type) {
+				if (type == 0) {
+					$state.go('kaoshi', {
+						history: serverdata.haveKaoshi
+					})
+				} else {
+					$state.go('exercise', {
+						history: serverdata.haveExercise,
+						type: 0
+					})
 				}
 			}
 		}

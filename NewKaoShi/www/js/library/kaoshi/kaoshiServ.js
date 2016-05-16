@@ -1,6 +1,6 @@
 libraryModule
-	.factory('KaoshiServ', ['$timeout', '$rootScope', 'GetDataServ', 'CommFunServ', '$ionicSlideBoxDelegate', '$state','SaveDataServ',
-		function($timeout, $rootScope, GetDataServ, CommFunServ, $ionicSlideBoxDelegate, $state,SaveDataServ) {
+	.factory('KaoshiServ', ['$timeout', '$rootScope', 'DataServ', 'CommFunServ', '$ionicSlideBoxDelegate', '$state',
+		function($timeout, $rootScope, DataServ, CommFunServ, $ionicSlideBoxDelegate, $state) {
 			var timeCount; //秒
 			var timer; //setTimeout方法 
 			var serverdata = {
@@ -39,7 +39,7 @@ libraryModule
 			}
 			//获取历史
 			function GetHistory() {
-				GetDataServ.GetHistoyPaper($rootScope.currentPaper.PaperID, 0).then(function(data) {
+				DataServ.GetHistoy($rootScope.currentpaper.paperID, 0).then(function(data) {
 					if (data && data.length > 0) {
 						//存在历史
 						serverdata.answerContent = eval("(" + data[0].Content+")");
@@ -54,17 +54,17 @@ libraryModule
 				for (var i = 0; i < len; i++) {
 					var length = $rootScope.questionlist.length;
 					for (var j = 0; j < length; j++) {
-						if (serverdata.answerContent[i].id == $rootScope.questionlist[j].ID) {
+						if (serverdata.answerContent[i].id == $rootScope.currentpaper.questionlist[j].ID) {
 							//"1|3"多选答案
-							if ($rootScope.questionlist[j].QuestionType != 2) {
+							if ($rootScope.currentpaper.questionlist[j].QuestionType != 2) {
 								//单选0，多选1
 								var arr = serverdata.answerContent[i].answer.split("|");
 								var lenk = arr.length;
-								var list = new Array($rootScope.questionlist[j].OptionContent.length);
+								var list = new Array($rootScope.currentpaper.questionlist[j].OptionContent.length);
 								for (var k = 0; k < lenk; k++) {
 									list[arr[k]] = true;
 								}
-								$rootScope.questionlist[j].answer = list;
+								$rootScope.currentpaper.questionlist[j].answer = list;
 							}
 							break;
 						}
@@ -73,7 +73,7 @@ libraryModule
 			}
 			//切换试题类型
 			function slideHasChanged(index) {
-				var item = $rootScope.questionlist[index];
+				var item = $rootScope.currentpaper.questionlist[index];
 				switch (item.QuestionType) {
 					case '0':
 						serverdata.title = "单选题";
@@ -93,15 +93,15 @@ libraryModule
 			//单选
 			function SelectAnswer(parentindex, index) {
 				var item = $rootScope.questionlist[parentindex];
-				if ($rootScope.questionlist[parentindex].answer == null || item.QuestionType == 0) {
-					$rootScope.questionlist[parentindex].answer = CommFunServ.InitArray(item.OptionContent.length, false)
+				if ($rootScope.currentpaper.questionlist[parentindex].answer == null || item.QuestionType == 0) {
+					$rootScope.currentpaper.questionlist[parentindex].answer = CommFunServ.InitArray(item.OptionContent.length, false)
 				}
-				$rootScope.questionlist[parentindex].answer[index] = !$rootScope.questionlist[parentindex].answer[index];
+				$rootScope.currentpaper.questionlist[parentindex].answer[index] = !$rootScope.currentpaper.questionlist[parentindex].answer[index];
 
 				var arr=[]
-				var len = $rootScope.questionlist[parentindex].answer.length;
+				var len = $rootScope.currentpaper.questionlist[parentindex].answer.length;
 				for (var i = 0; i < len; i++) {
-					if ($rootScope.questionlist[parentindex].answer[i]) {
+					if ($rootScope.currentpaper.questionlist[parentindex].answer[i]) {
 						arr.push(i);
 					}
 				}
@@ -139,7 +139,7 @@ libraryModule
 			}
 			//下一题
 			function NextTest() {
-				var length = $rootScope.questionlist.length - 1;
+				var length = $rootScope.currentpaper.questionlist.length - 1;
 				if ($ionicSlideBoxDelegate.currentIndex() >= length) {
 					//已到最后题
 					return;
@@ -151,14 +151,14 @@ libraryModule
 			function Back() {
 				//保存历史
 				var item=[{
-					PaperID:$rootScope.currentPaper.PaperID,
+					PaperID:$rootScope.PaperID,
 					UserID:'',
 					Time:timeCount, 
 					Soure:0, 
 					Content:JSON.stringify(serverdata.answerContent),
 					Type:0,//考试
 					IsSync:false}]
-				SaveDataServ.SyncHistoryData(item);
+				DataServ.SaveHisData(item);
 				if(timer){
 					$timeout.cancel(timer);
 					timer=null;

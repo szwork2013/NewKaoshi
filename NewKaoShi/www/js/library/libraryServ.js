@@ -5,7 +5,7 @@ libraryModule
 			$rootScope.currentpaper={
 				paperID:0,//当前试卷ID
 				itemNum:0,//总题数
-				totalTime:0,//总分数
+				totalTime:0,//总时间
 				rtime:0,//时间
 				questionlist:[],//试题列表
 				questiontitle:[],//标题列表

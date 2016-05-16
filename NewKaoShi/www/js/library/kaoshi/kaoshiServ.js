@@ -50,7 +50,7 @@ libraryModule
 			function AssmbleList() {
 				var len = $rootScope.currentpaper.answerContent.length;
 				for (var i = 0; i < len; i++) {
-					var length = $rootScope.questionlist.length;
+					var length = $rootScope.currentpaper.questionlist.length;
 					for (var j = 0; j < length; j++) {
 						if ($rootScope.currentpaper.answerContent[i].id == $rootScope.currentpaper.questionlist[j].ID) {
 							//"1|3"多选答案
@@ -59,15 +59,19 @@ libraryModule
 								var arr = $rootScope.currentpaper.answerContent[i].answer.split("|");
 								var lenk = arr.length;
 								var list = new Array($rootScope.currentpaper.questionlist[j].OptionContent.length);
+								var sd = false;
 								for (var k = 0; k < lenk; k++) {
 									list[arr[k]] = true;
+									sd=true;
 								}
 								$rootScope.currentpaper.questionlist[j].answer = list;
+								$rootScope.currentpaper.questionlist[j].hasdo = sd;
 							}
 							break;
 						}
 					}
 				}
+				CommFunServ.RefreshData(serverdata);
 			}
 			//切换试题类型
 			function slideHasChanged(index) {
@@ -114,6 +118,9 @@ libraryModule
 				var item = $rootScope.currentpaper.questionlist[parentindex];
 				if ($rootScope.currentpaper.questionlist[parentindex].answer == null || item.QuestionType == 0) {
 					$rootScope.currentpaper.questionlist[parentindex].answer = CommFunServ.InitArray(item.OptionContent.length, false)
+				}
+				if (item.QuestionType == 0) { //单选
+					$rootScope.currentpaper.questionlist[parentindex].hasdo = !$rootScope.currentpaper.questionlist[parentindex].hasdo;
 				}
 				$rootScope.currentpaper.questionlist[parentindex].answer[index] = !$rootScope.currentpaper.questionlist[parentindex].answer[index];
 
@@ -168,7 +175,7 @@ libraryModule
 			function Back() {
 				//保存历史
 				var item = [{
-					PaperID: $rootScope.PaperID,
+					PaperID: $rootScope.currentpaper.paperID,
 					UserID: '',
 					Time: timeCount,
 					Soure: 0,

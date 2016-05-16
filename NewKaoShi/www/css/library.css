@@ -299,7 +299,13 @@
 	margin: 1rem 0px 1.5rem;
 }
 .answercard .content .answer{
+	display: inline-block;
+	width: 20%;
 	height: 3rem;
+}
+.answercard .content .showTitle{
+	display:block;
+	height: 6rem;
 }
 .answercard .content .haveAnswer{
 		display: block;

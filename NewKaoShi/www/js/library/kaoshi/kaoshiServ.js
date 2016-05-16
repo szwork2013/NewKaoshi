@@ -4,11 +4,9 @@ libraryModule
 			var timeCount; //秒
 			var timer; //setTimeout方法 
 			var serverdata = {
+				isShowTitle:false,//是否显示大题标题
 				title: '', //题型
-				rtime: '', //考试时间
 				isUpload: false, //是否交卷
-				answerContent: [] //试卷所有试题答案
-
 			}
 			var server = {
 				GetServerData: GetServerData,
@@ -28,7 +26,6 @@ libraryModule
 			}
 			//初始化数据
 			function InitList(bool) {
-
 				slideHasChanged(0);
 				//type=0表示历史考试
 				if (bool=='true') {
@@ -42,7 +39,7 @@ libraryModule
 				DataServ.GetHistoy($rootScope.currentpaper.paperID, 0).then(function(data) {
 					if (data && data.length > 0) {
 						//存在历史
-						serverdata.answerContent = eval("(" + data[0].Content+")");
+						$rootScope.currentpaper.answerContent = eval("(" + data[0].Content+")");
 						InitTime(parseInt(data[0].Time));
 						AssmbleList();
 					}
@@ -50,15 +47,15 @@ libraryModule
 			}
 			//组装历史记录
 			function AssmbleList() {
-				var len = serverdata.answerContent.length;
+				var len = $rootScope.currentpaper.answerContent.length;
 				for (var i = 0; i < len; i++) {
 					var length = $rootScope.questionlist.length;
 					for (var j = 0; j < length; j++) {
-						if (serverdata.answerContent[i].id == $rootScope.currentpaper.questionlist[j].ID) {
+						if ($rootScope.currentpaper.answerContent[i].id == $rootScope.currentpaper.questionlist[j].ID) {
 							//"1|3"多选答案
 							if ($rootScope.currentpaper.questionlist[j].QuestionType != 2) {
 								//单选0，多选1
-								var arr = serverdata.answerContent[i].answer.split("|");
+								var arr = $rootScope.currentpaper.answerContent[i].answer.split("|");
 								var lenk = arr.length;
 								var list = new Array($rootScope.currentpaper.questionlist[j].OptionContent.length);
 								for (var k = 0; k < lenk; k++) {
@@ -107,11 +104,10 @@ libraryModule
 				}
 				var str=arr.join("|");
 				//答案是否存在，修改答案
-				var length = serverdata.answerContent.length;
+				var length = $rootScope.currentpaper.answerContent.length;
 				for (var j = 0; j < length; j++) {
-					if (serverdata.answerContent[j].id == item.ID) {
-						serverdata.answerContent[j].answer = str;
-						CommFunServ.RefreshData(serverdata);
+					if ($rootScope.currentpaper.answerContent[j].id == item.ID) {
+						$rootScope.currentpaper.answerContent[j].answer = str;
 						if (item.QuestionType == 0) { //单选
 							NextTest();
 						}
@@ -123,8 +119,7 @@ libraryModule
 					id: item.ID,
 					answer: str
 				}
-				serverdata.answerContent.push(answeritem);
-				CommFunServ.RefreshData(serverdata);
+				$rootScope.currentpaper.answerContent.push(answeritem);
 				if (item.QuestionType == 0) { //单选
 					NextTest();
 				}
@@ -155,7 +150,7 @@ libraryModule
 					UserID:'',
 					Time:timeCount, 
 					Soure:0, 
-					Content:JSON.stringify(serverdata.answerContent),
+					Content:JSON.stringify($rootScope.currentpaper.answerContent),
 					Type:0,//考试
 					IsSync:false}]
 				DataServ.SaveHisData(item);

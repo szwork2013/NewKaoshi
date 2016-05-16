@@ -58,7 +58,7 @@ function($rootScope,CommFunServ,$state){
 		}else{
 			str="成绩优秀，请继续保持！"
 		}
-		serverdata.rate=serverdata.wrongcount/serverdata.rightcount*100;
+		serverdata.rate=100*serverdata.wrongcount/serverdata.rightcount;
 		serverdata.scoretext=str;
 		CommFunServ.RefreshData(serverdata);
 	}

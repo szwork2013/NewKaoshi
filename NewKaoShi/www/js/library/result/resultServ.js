@@ -58,7 +58,7 @@ function($rootScope,CommFunServ,$state){
 		}else{
 			str="成绩优秀，请继续保持！"
 		}
-		serverdata.rate=100*serverdata.wrongcount/serverdata.rightcount;
+		serverdata.rate=100*parseInt(serverdata.rightcount)/parseInt($rootScope.currentpaper.itemNum);
 		serverdata.scoretext=str;
 		CommFunServ.RefreshData(serverdata);
 	}

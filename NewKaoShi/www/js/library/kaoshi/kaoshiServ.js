@@ -141,10 +141,10 @@ libraryModule
 			//单选
 			function SelectAnswer(parentindex, index) {
 				var item = $rootScope.currentpaper.questionlist[parentindex];
-				if ($rootScope.currentpaper.questionlist[parentindex].answer == null || item.QuestionType == 0) {
-					$rootScope.currentpaper.questionlist[parentindex].answer = CommFunServ.InitArray(item.OptionContent.length, false)
+				if ($rootScope.currentpaper.questionlist[parentindex].answer == null || item.questionType == 'singleChoice') {
+					$rootScope.currentpaper.questionlist[parentindex].answer = CommFunServ.InitArray(item.optionContent.length, false)
 				}
-				if (item.QuestionType == 0) { //单选
+				if (item.questionType == 'singleChoice') { //单选
 					$rootScope.currentpaper.questionlist[parentindex].hasdo = !$rootScope.currentpaper.questionlist[parentindex].hasdo;
 				}
 				$rootScope.currentpaper.questionlist[parentindex].answer[index] = !$rootScope.currentpaper.questionlist[parentindex].answer[index];

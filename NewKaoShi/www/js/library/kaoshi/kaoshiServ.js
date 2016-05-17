@@ -5,7 +5,7 @@ libraryModule
 			var timer; //setTimeout方法 
 			var serverdata = {
 				isShowTitle: false, //是否显示大题标题
-				titleContent:'',//当前大题内容
+				titleContent:null,//当前大题内容
 				title: '', //题型
 				isUpload: false, //是否交卷
 			}
@@ -53,13 +53,14 @@ libraryModule
 				for (var i = 0; i < len; i++) {
 					var length = $rootScope.currentpaper.questionlist.length;
 					for (var j = 0; j < length; j++) {
-						if ($rootScope.currentpaper.answerContent[i].id == $rootScope.currentpaper.questionlist[j].ID) {
+						if ($rootScope.currentpaper.answerContent[i].id == $rootScope.currentpaper.questionlist[j].id) {
 							//"1|3"多选答案
-							if ($rootScope.currentpaper.questionlist[j].QuestionType != 2) {
+							var questiontype=$rootScope.currentpaper.questionlist[j].questionType
+							if ( questiontype== 'singleChoice'||questiontype== 'mutepliChoice'||questiontype== 'checking') {
 								//单选0，多选1
-								var arr = $rootScope.currentpaper.answerContent[i].answer.split("|");
+								var arr = $rootScope.currentpaper.answerContent[i].answer.split("");
 								var lenk = arr.length;
-								var list = new Array($rootScope.currentpaper.questionlist[j].OptionContent.length);
+								var list = new Array($rootScope.currentpaper.questionlist[j].optionContent.length);
 								var sd = false;
 								for (var k = 0; k < lenk; k++) {
 									list[arr[k]] = true;
@@ -79,22 +80,24 @@ libraryModule
 				//根据大题类型显示头
 				var item = $rootScope.currentpaper.questionlist[index];
 				if(index==0){
+					serverdata.titleContent=null;
 					serverdata.isShowTitle=true;
 				}
 				if(index>0){
 					//与前一题对比查看是否显示大题
 					var lastitem= $rootScope.currentpaper.questionlist[index-1];
-					if(item.PID==lastitem.PID){
+					if(item.pq_key==lastitem.pq_key){
 						serverdata.isShowTitle=false;
 					}else{
+						serverdata.titleContent=null;
 						serverdata.isShowTitle=true;
 					}
 				}
 				var len = $rootScope.currentpaper.questiontitle.length;
 				for (var i = 0; i < len; i++) {
-					if ($rootScope.currentpaper.questiontitle[i].ID == item.PID) {
-						serverdata.titleContent=$rootScope.currentpaper.questiontitle[i].QuestionContent;
-						switch ($rootScope.currentpaper.questiontitle[i].QuestionType) {
+					if ($rootScope.currentpaper.questiontitle[i].q_key == item.pq_key) {
+						AssmbleTitle(i);
+						switch ($rootScope.currentpaper.questiontitle[i].questionType) {
 							case '0':
 								serverdata.title = "单选题";
 								break;
@@ -112,7 +115,25 @@ libraryModule
 						return;
 					}
 				}
-
+			}
+			//显示头标题
+			function AssmbleTitle(index){
+				var item=$rootScope.currentpaper.questiontitle[index];
+				if(serverdata.titleContent==null){
+					serverdata.titleContent=new Array();
+				}
+				if(serverdata.titleContent.indexOf(item)==-1){
+					serverdata.titleContent.unshift(item);
+				}
+				if(item.questionIndex==0){
+					var len=$rootScope.currentpaper.questiontitle.length;
+					for(var i=0;i<len;i++){
+						if(item.pq_key==$rootScope.currentpaper.questiontitle[i].q_key){
+							AssmbleTitle(i);
+							return;
+						}
+					}
+				}
 			}
 			//单选
 			function SelectAnswer(parentindex, index) {
@@ -194,6 +215,7 @@ libraryModule
 					$timeout.cancel(timer);
 					timer = null;
 				}
+				Destory();
 				//返回试卷详细
 				$state.go('paperDetail');
 			}
@@ -232,6 +254,9 @@ libraryModule
 			//显示数字填补，即当显示的值为0-9时
 			function AssmbleTime(arg) {
 				return arg >= 10 ? arg : "0" + arg;
+			}
+			function Destory(){
+				serverdata.titleContent=null;
 			}
 		}
 	])

@@ -10,13 +10,13 @@
 	<ion-content class="kaoshi">
 		<ion-slide-box on-slide-changed="slideHasChanged($index)" >
 			<ion-slide ng-repeat="items in currentpaper.questionlist">
-				<span ng-show="serverdata.isShowTitle" class="bigtitle">
-					{{serverdata.titleContent}}
+				<span ng-repeat="title in serverdata.titleContent" ng-show="serverdata.isShowTitle" class="bigtitle">
+					{{title.c_key}}.{{title.questionContent}}
 				</span>
-				<choice-Question ng-if="items.QuestionType==0">
+				<choice-Question ng-if="items.questionType=='checking' || items.questionType=='singleChoice'">
 
 				</choice-Question>
-				<multiplechoice-Question ng-if="items.QuestionType==1">
+				<multiplechoice-Question ng-if="items.questionType=='mutepliChoice'">
 
 				</multiplechoice-Question>
 				<case-Question ng-if="items.QuestionType==2">

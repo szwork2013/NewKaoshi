@@ -86,8 +86,8 @@ libraryModule
 				$rootScope.currentpaper.questionlist=[];//试题列表
 				$rootScope.currentpaper.questiontitle=[];//标题列表
 				for (var i = 0; i < len; i++) {
-					if(data[i].PID!='0'){
-						data[i].OptionContent = eval("(" + data[i].OptionContent + ")");
+					if(data[i].analysis!='null' && data[i].analysis!=''){
+						data[i].optionContent = eval("(" + data[i].optionContent + ")");
 						$rootScope.currentpaper.questionlist.push(data[i]);
 					}else{
 						$rootScope.currentpaper.questiontitle.push(data[i]);

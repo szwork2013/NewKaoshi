@@ -78,7 +78,7 @@ SaveHisData:SaveHisData,
 				SqliteServ.transaction(function(tx) {
 					var len = data.length;
 					for (var i = 0; i < len; i++) {
-						SqliteServ.saveOrupadte(tx, 'tb_Question', ["ID", "PaperID", "QuestionType", "QuestionContent", "QuestionIndex", "Soure", "PID", "OptionContent", "Answer", "PictureAddress", "Analysis"], [data[i].ID, data[i].PaperID, data[i].QuestionType, data[i].QuestionContent, data[i].QuestionIndex, data[i].Soure, data[i].PID, data[i].OptionContent, data[i].Answer, data[i].PictureAddress, data[i].Analysis], "ID=?", [data[i].ID]);
+						SqliteServ.saveOrupadte(tx, 'tb_Question', ["id", "paperId", "c_key","q_key", "pq_key",  "questionContent", "questionIndex", "questionType", "soure","optionContent","answer","analysis","version"], [data[i].id,data[i].paperId,data[i].c_key,data[i].q_key,data[i].pq_key,data[i].questionContent,data[i].questionIndex,data[i].questionType,data[i].soure,data[i].optionContent,data[i].answer,data[i].analysis,data[i].version], "id=?", [data[i].id]);
 					}
 				})
 			}
@@ -147,7 +147,7 @@ SaveHisData:SaveHisData,
 			function GetPaperQuestions(id) {
 				var q = $q.defer();
 				//获取试题信息
-				SqliteServ.selectfree('tb_Question', ' where PaperID=? order by PID asc,QuestionIndex asc', [id]).then(function(data) {
+				SqliteServ.selectfree('tb_Question', " where paperId=? order by (case q_key when '一' then 1 when '二' then 2 when '三' then 3 when '四' then 4 when '五' then 5 when '六' then 6 when '七' then 7 when '八' then 8 when '九' then 9 else '' end)", [id]).then(function(data) {
 					q.resolve(data)
 				})
 				return q.promise;

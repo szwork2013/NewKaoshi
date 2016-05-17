@@ -1,7 +1,6 @@
 <!--简答题-->
 <div>
-	<span class="title content">{{items.QuestionIndex}}.{{items.QuestionContent}}</span>
-	<img ng-if="items.PictureAddress" ng-src="{{items.PictureAddress}}" class="itemimg"/>
+	<span class="title content">{{items.c_key}}.{{items.questionContent}}</span>
 	<button class="button button-full button-assertive inputbtn" ng-mode='isShowInput=false' ng-click="isShowInput=!isShowInput">自我评估</button>
 	<div class="inputdiv" ng-show='isShowInput'>
 		<span>评估分数</span>

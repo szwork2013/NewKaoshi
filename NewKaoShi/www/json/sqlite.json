@@ -8,7 +8,7 @@
 		"tablePrama": ["PaperID","PaperContent","ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "Status", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID"]
 	},{
 		"tableName": "tb_Question",
-		"tablePrama": ["ID", "PaperID","QuestionType", "QuestionContent", "QuestionIndex", "Soure", "PID", "OptionContent", "Answer", "PictureAddress","Analysis"]
+		"tablePrama": ["id", "paperId", "c_key","q_key", "pq_key",  "questionContent", "questionIndex", "questionType", "soure","optionContent","answer","analysis","version"]
 	},{
 		"tableName": "tb_Account",
 		"tablePrama": ["ID", "Name", "NickName", "IsVip","IsLogin"]

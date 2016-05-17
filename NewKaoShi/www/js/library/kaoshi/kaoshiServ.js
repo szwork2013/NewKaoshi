@@ -98,10 +98,13 @@ libraryModule
 					if ($rootScope.currentpaper.questiontitle[i].q_key == item.pq_key) {
 						AssmbleTitle(i);
 						switch ($rootScope.currentpaper.questiontitle[i].questionType) {
-							case '0':
+							case 'checking':
+								serverdata.title = "判断题";
+								break;
+							case 'singleChoice':
 								serverdata.title = "单选题";
 								break;
-							case '1':
+							case 'mutepliChoice':
 								serverdata.title = "多选题";
 								break;
 							case '2':

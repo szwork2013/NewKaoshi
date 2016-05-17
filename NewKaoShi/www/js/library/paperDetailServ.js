@@ -88,6 +88,9 @@ libraryModule
 				for (var i = 0; i < len; i++) {
 					if(data[i].analysis!='null' && data[i].analysis!=''){
 						data[i].optionContent = eval("(" + data[i].optionContent + ")");
+						for(var key in data[i].optionContent){
+							data[i].optionContent[key]=key+"."+data[i].optionContent[key];
+						}
 						$rootScope.currentpaper.questionlist.push(data[i]);
 					}else{
 						$rootScope.currentpaper.questiontitle.push(data[i]);

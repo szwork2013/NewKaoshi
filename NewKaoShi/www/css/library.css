@@ -307,6 +307,9 @@
 	display:block;
 	height: 6rem;
 }
+.answercard .content .instance{
+	margin-left: 1rem;
+}
 .answercard .content .haveAnswer{
 		display: block;
 		margin: auto;

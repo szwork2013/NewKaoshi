@@ -1,9 +1,9 @@
 <!--简答题-->
 <div>
-	<span class="title content">{{items.c_key}}.{{items.questionContent}}</span>
+	<span class="title content" ng-bind-html="items.questionContent"></span>
 	<div class="list content">
 		<label ng-repeat="item in items.optionContent" class="item" >
-			<input type="radio" name="{{items.id}}" ng-click="SelectAnswer($parent.$index,$index)" ng-checked='items.answer[$index]'/>
+			<input type="radio" name="{{items.id}}" ng-click="SelectAnswer($parent.$index,$index)" ng-checked='items.answerArr[$index]'/>
 			<span ng-class="{'havechecked':(items.rightAnswer[$index] && serverdata.showAnswer)}">{{item}}</span>
 		</label>
 	</div>

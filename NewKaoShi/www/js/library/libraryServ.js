@@ -10,8 +10,7 @@ libraryModule
 				passMark:0,//及格分数
 				rtime:0,//时间
 				questionlist:[],//试题列表
-				questiontitle:[],//标题列表
-				answerContent:[]//答案列表
+				questiontitle:[]//标题列表
 			}
 			var serverdata = {
 				paperlist: []

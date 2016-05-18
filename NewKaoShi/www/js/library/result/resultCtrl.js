@@ -12,13 +12,13 @@ function($scope,ResultServ,$state){
 		ResultServ.InitData();
 	})
 	function CheckAnswer(){
-		$state.go('resultCard');
+		ResultServ.CheckAnswer();
 		
 	}
 	function GoPaperDeatail(){
-		$state.go('paperDetail');
+		ResultServ.GoPaperDeatail();
 	}
 	function TestAgain(){
-		$state.go('kaoshi');
+		ResultServ.TestAgain();
 	}
 }])

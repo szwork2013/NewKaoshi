@@ -10,7 +10,7 @@
  * 用户试题关联表(错题、收藏)：
  * 关联ID、试题ID、用户ID、关联类型(错题、收藏)、是否已同步
  * 历史记录表：
- * 记录ID、试卷ID、用户ID、已用时间、得分、历史内容（[{ID:"1",answer:"A"},{ID:"23",answer:""}]）、是否已同步
+ * 记录ID、试卷ID、用户ID、已用时间、得分、历史内容（[{ID:"1",answer:"A"},{ID:"23",answer:""}]）、考试是否确认交卷（0未交，1已交）、是否已同步
  */
 commModule
 	.factory('SqliteServ', ['$q', '$cordovaSQLite', '$http',
@@ -28,7 +28,8 @@ commModule
 					insert: insert,
 					select: select,
 					selectfree: selectfree,
-					saveOrupadte: saveOrupadte
+					saveOrupadte: saveOrupadte,
+					deletehis:deletehis
 				};
 				return service;
 			}
@@ -135,6 +136,21 @@ commModule
 				});
 				return q.promise;
 			};
+			//删除数据
+			function deletehis(tablename, condition, param){
+				var q = $q.defer();
+				var where = "";
+				if (param.length > 0) {
+					where = " where " + condition;
+				}
+				var query = "delete from " + tablename + where;
+				$cordovaSQLite.execute(db, query, param).then(function(response) {
+					q.resolve(response);
+				}, function(err) {
+					q.reject(err); //成功返回
+				});
+				return q.promise;
+			}
 			//插入或修改数据
 			function saveOrupadte(tx, tablename, field, param, condition, cparam) {
 				var q = $q.defer();

@@ -194,14 +194,14 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
 		//结果
 		.state('result', {
 			url: '/result',
-			cache: false,
+			cache: true,
 			templateUrl: 'templates/paper/result.html',
 			controller: 'ResultCtrl'
 		})
 		//答案解析
 		.state('resultCard', {
 			url: '/resultCard',
-			cache: false,
+			cache: true,
 			templateUrl: 'templates/paper/resultCard.html',
 			controller: 'AnswerCardCtrl'
 		});

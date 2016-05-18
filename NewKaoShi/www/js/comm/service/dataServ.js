@@ -2,13 +2,16 @@ commModule
 	.factory("DataServ", ['$http', '$q', 'SqliteServ',
 		function($http, $q, SqliteServ) {
 			var server = {
-SaveHisData:SaveHisData,
+				SaveHisData: SaveHisData,
+				MarkExamEnd: MarkExamEnd, //更改试卷考试状态
 
 				GetExamType: GetExamType,
 				GetPaperList: GetPaperList,
 				GetPaperData: GetPaperData,
 				GetHistoy: GetHistoy,
-				GetPaperQuestions: GetPaperQuestions
+				GetPaperQuestions: GetPaperQuestions,
+				
+				DeletKaoshiHis:DeletKaoshiHis
 			}
 			return server;
 			/*
@@ -78,7 +81,7 @@ SaveHisData:SaveHisData,
 				SqliteServ.transaction(function(tx) {
 					var len = data.length;
 					for (var i = 0; i < len; i++) {
-						SqliteServ.saveOrupadte(tx, 'tb_Question', ["id", "paperId", "c_key","q_key", "pq_key",  "questionContent", "questionIndex", "questionType", "soure","optionContent","answer","analysis","version"], [data[i].id,data[i].paperId,data[i].c_key,data[i].q_key,data[i].pq_key,data[i].questionContent,data[i].questionIndex,data[i].questionType,data[i].soure,data[i].optionContent,data[i].answer,data[i].analysis,data[i].version], "id=?", [data[i].id]);
+						SqliteServ.saveOrupadte(tx, 'tb_Question', ["id", "paperId", "c_key", "q_key", "pq_key", "questionContent", "questionIndex", "questionType", "soure", "optionContent", "answer", "analysis", "version"], [data[i].id, data[i].paperId, data[i].c_key, data[i].q_key, data[i].pq_key, data[i].questionContent, data[i].questionIndex, data[i].questionType, data[i].soure, data[i].optionContent, data[i].answer, data[i].analysis, data[i].version], "id=?", [data[i].id]);
 					}
 				})
 			}
@@ -96,8 +99,14 @@ SaveHisData:SaveHisData,
 				SqliteServ.transaction(function(tx) {
 					var len = data.length;
 					for (var i = 0; i < len; i++) {
-						SqliteServ.saveOrupadte(tx, 'tb_History', ["PaperID", "UserID", "Time", "Soure", "Content", "Type", "IsSync"], [data[i].PaperID, data[i].UserID, data[i].Time, data[i].Soure, data[i].Content, data[i].Type, data[i].IsSync], "PaperID=? and Type=?", [data[i].PaperID, data[i].Type]);
+						SqliteServ.saveOrupadte(tx, 'tb_History', ["PaperID", "UserID", "Time", "Soure", "Content", "Type", "IsEnd", "IsSync"], [data[i].PaperID, data[i].UserID, data[i].Time, data[i].Soure, data[i].Content, data[i].Type, data[i].IsEnd, data[i].IsSync], "PaperID=? and Type=?", [data[i].PaperID, data[i].Type]);
 					}
+				})
+			}
+
+			function MarkExamEnd(paperid) {
+				SqliteServ.transaction(function(tx) {
+					SqliteServ.saveOrupadte(tx, 'tb_History', ["IsEnd"], [1], "PaperID=? and Type=?", [paperid, 0]);
 				})
 			}
 			//存储用户信息
@@ -136,11 +145,18 @@ SaveHisData:SaveHisData,
 				return q.promise;
 			}
 			//试卷id，历史类型0考试，1练习，获取试卷历史
-			function GetHistoy(id) {
+			function GetHistoy(id, type) {
 				var q = $q.defer();
-				SqliteServ.select('tb_History', 'PaperID=?', [id]).then(function(data) {
-					q.resolve(data)
-				})
+				if (type == null) {
+					SqliteServ.select('tb_History', 'PaperID=? ', [id]).then(function(data) {
+						q.resolve(data)
+					})
+				} else {
+					SqliteServ.select('tb_History', 'PaperID=? and Type=?', [id, type]).then(function(data) {
+						q.resolve(data)
+					})
+				}
+
 				return q.promise;
 			}
 			//试卷id，获取试题
@@ -161,6 +177,16 @@ SaveHisData:SaveHisData,
 				SqliteServ.select('tb_UserQuestions', 'PaperID=?', [id]).then(function(data) {
 
 				})
+			}
+			/*
+			 * 
+			 */
+			function DeletKaoshiHis(paperid){
+				var q=$q.defer();
+				SqliteServ.deletehis('tb_History', 'PaperID=? and Type=? and IsEnd=?', [paperid,0,1]).then(function(response){
+					q.resolve(response)
+				})
+				return q.promise;
 			}
 
 		}

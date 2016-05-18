@@ -12,10 +12,10 @@
 			共<span class="number">{{currentpaper.itemNum}}</span>题,已答<span class="number">{{serverdata.hasdoNum}}</span>题,用时<span class="number">{{serverdata.time}}</span>
 		</div>
 		<div class="content">
-			<div ng-repeat="items in currentpaper.questiontitle">
-				<span class="itemtitle">{{items.QuestionContent}}</span>
-				<a ng-repeat="item in currentpaper.questionlist" class="answer"  ng-if="item.PID==items.ID">
-					<span ng-class="{'haveAnswer':item.hasdo,'noAnswer':!item.hasdo}">{{item.QuestionIndex}}</span>
+			<div ng-repeat="items in currentpaper.questiontitle" >
+				<span class="itemtitle" ng-class="{'instance':items.pq_key}">{{items.questionContent}}</span>
+				<a ng-repeat="item in currentpaper.questionlist" class="answer"  ng-if="item.pq_key==items.q_key">
+					<span ng-class="{'haveAnswer':item.hasdo,'noAnswer':!item.hasdo}">{{item.c_key}}</span>
 				</a>
 			</div>
 		</div>

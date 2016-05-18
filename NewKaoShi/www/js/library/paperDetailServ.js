@@ -2,11 +2,12 @@ libraryModule
 	.factory('PaperDetailServ', ['$state', '$rootScope', 'DataServ', '$ionicLoading',
 
 		function($state, $rootScope, DataServ, $ionicLoading) {
-		
+
 			var serverdata = {
 				paperdetail: null, //试卷详情
 				haveExercise: false, //是否有练习历史
-				haveKaoshi: false //是否有考试历史
+				haveKaoshi: false, //是否有考试历史
+				isEnd: false //考试是否交卷
 			}
 			var server = {
 				GetServerData: GetServerData,
@@ -43,7 +44,10 @@ libraryModule
 						for (var i = 0; i < len; i++) {
 							if (data[i].Type == 0) { //存在考试记录
 								serverdata.haveKaoshi = true;
-								$rootScope.currentpaper.rtime=data[i].Time;
+								if (data[i].IsEnd == 1) {
+									serverdata.isEnd = true;
+								}
+								$rootScope.currentpaper.rtime = data[i].Time;
 							} else if (data[i].Type == 1) { //存在练习记录
 								serverdata.haveExercise = true;
 							}
@@ -83,16 +87,22 @@ libraryModule
 			//组装试题数据
 			function AssmbleQuestionData(data) {
 				var len = data.length;
-				$rootScope.currentpaper.questionlist=[];//试题列表
-				$rootScope.currentpaper.questiontitle=[];//标题列表
+				$rootScope.currentpaper.questionlist = []; //试题列表
+				$rootScope.currentpaper.questiontitle = []; //标题列表
 				for (var i = 0; i < len; i++) {
-					if(data[i].analysis!='null' && data[i].analysis!=''){
+					if (data[i].analysis != 'null' && data[i].analysis != '') {
 						data[i].optionContent = eval("(" + data[i].optionContent + ")");
-						for(var key in data[i].optionContent){
-							data[i].optionContent[key]=key+"."+data[i].optionContent[key];
+						//组装选项
+						for (var key in data[i].optionContent) {
+							//组装答案（img未完成）
+							data[i].optionContent[key] = key + "." + data[i].optionContent[key];
 						}
+						//组装题干(img未完成)
+						data[i].questionContent = data[i].c_key + '.' + data[i].questionContent;
 						$rootScope.currentpaper.questionlist.push(data[i]);
-					}else{
+					} else {
+						//组装题干(img未完成)
+						data[i].questionContent = data[i].c_key + '.' + data[i].questionContent;
 						$rootScope.currentpaper.questiontitle.push(data[i]);
 					}
 				}
@@ -104,9 +114,14 @@ libraryModule
 			//跳转到试题
 			function GoExam(type) {
 				if (type == 0) {
-					$state.go('kaoshi', {
-						history: serverdata.haveKaoshi
-					})
+					if (serverdata.isEnd) {//上一次考试已确认交卷
+						$state.go('result')
+					} else {
+						$state.go('kaoshi', {
+							history: serverdata.haveKaoshi
+						})
+					}
+
 				} else {
 					$state.go('exercise', {
 						history: serverdata.haveExercise,

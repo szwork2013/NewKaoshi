@@ -11,7 +11,7 @@
 		<ion-slide-box on-slide-changed="slideHasChanged($index)" >
 			<ion-slide ng-repeat="items in currentpaper.questionlist">
 				<span ng-repeat="title in serverdata.titleContent" ng-show="serverdata.isShowTitle" class="bigtitle">
-					{{title.c_key}}.{{title.questionContent}}
+					{{title.questionContent}}
 				</span>
 				<choice-Question ng-if="items.questionType=='checking' || items.questionType=='singleChoice'">
 

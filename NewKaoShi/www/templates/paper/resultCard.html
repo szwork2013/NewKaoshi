@@ -21,7 +21,7 @@
 				<span class="itemtitle">{{items.title}}</span>
 				<div class="row row-wrap">
 					<a ng-repeat="item in items.answer" class="col col-20 answer" >
-						<span ng-class="{'rightAnswer':item.result==item.answer,'wrongAnswer':item.result!=item.answer}">{{$index+1}}</span>
+						<span ng-class="{'rightAnswer':item.result==item.answer,'wrongAnswer':item.result!=item.answer}">{{item.c_key}}</span>
 					</a>
 				</div>
 			</div>

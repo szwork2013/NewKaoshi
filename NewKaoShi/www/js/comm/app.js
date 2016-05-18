@@ -203,7 +203,7 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
 			url: '/resultCard',
 			cache: true,
 			templateUrl: 'templates/paper/resultCard.html',
-			controller: 'AnswerCardCtrl'
+			controller: 'ResultCardCtrl'
 		});
 
   // if none of the above states are matched, use this as the fallback

@@ -18,5 +18,17 @@
             "url": "https://github.com/whiteoctober/cordova-plugin-app-version.git",
             "subdir": "."
         }
+    },
+    "cordova-plugin-file": {
+        "source": {
+            "type": "local",
+            "path": "E:\\ionicobject\\ngCordova\\cordova-plugin-file-master"
+        }
+    },
+    "cordova-plugin-file-transfer": {
+        "source": {
+            "type": "local",
+            "path": "E:\\ionicobject\\ngCordova\\cordova-plugin-file-transfer-master"
+        }
     }
 }

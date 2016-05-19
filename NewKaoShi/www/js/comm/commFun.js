@@ -46,7 +46,8 @@ commModule
 		function GetValueIndex(jsondata,value){
 			var arr=new Array();
 			for(var k in jsondata){
-				arr.push(jsondata[k]);
+				var str=jsondata[k].substr(2,jsondata[k].length-1)
+				arr.push(str);
 			}
 			var index=arr.indexOf(value);
 			return index;

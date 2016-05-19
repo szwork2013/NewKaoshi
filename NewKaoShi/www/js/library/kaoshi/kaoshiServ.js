@@ -76,8 +76,10 @@ libraryModule
 									}else{
 										index=CommFunServ.GetKeyIndex($rootScope.currentpaper.questionlist[j].optionContent,arr[k]);
 									}
-									list[index] = true;
-									sd=true;
+									if(index>=0){
+										list[index] = true;
+										sd=true;
+									}
 								}
 								$rootScope.currentpaper.questionlist[j].answerArr = list;
 								$rootScope.currentpaper.questionlist[j].hasdo = sd;
@@ -168,7 +170,8 @@ libraryModule
 					if ($rootScope.currentpaper.questionlist[parentindex].answerArr[i]) {
 						var value='';
 						if(item.questionType == 'checking'){
-							value=CommFunServ.GetValue(item.optionContent,i);
+							var str=CommFunServ.GetValue(item.optionContent,i);
+							value=str.substr(2,str.length-1);
 						}else{
 							value=CommFunServ.GetKey(item.optionContent,i);
 						}

@@ -4,7 +4,11 @@ commModule
 		var server={
 			CheckInit:CheckInit,
 			RefreshData:RefreshData,
-			InitArray:InitArray
+			InitArray:InitArray,
+			GetValue:GetValue,
+			GetKey:GetKey,
+			GetValueIndex:GetValueIndex,
+			GetKeyIndex:GetKeyIndex
 		}
 		return server;
 		//刷新界面数据
@@ -19,6 +23,42 @@ commModule
 				arr[i] = initdata;
 			}
 			return arr;
+		}
+		//通过索引获取json对象中的值
+		function GetValue(jsondata,index){
+			var arr=new Array();
+			for(var k in jsondata){
+				arr.push(jsondata[k]);
+			}
+			var value=arr[index];
+			return value;
+		}
+		//通过索引获取json对象中的值
+		function GetKey(jsondata,index){
+			var arr=new Array();
+			for(var k in jsondata){
+				arr.push(k);
+			}
+			var keyvalue=arr[index];
+			return keyvalue;
+		}
+		//获取json对象中值索引
+		function GetValueIndex(jsondata,value){
+			var arr=new Array();
+			for(var k in jsondata){
+				arr.push(jsondata[k]);
+			}
+			var index=arr.indexOf(value);
+			return index;
+		}
+		//获取json对象中键索引
+		function GetKeyIndex(jsondata,keyvalue){
+			var arr=new Array();
+			for(var k in jsondata){
+				arr.push(k);
+			}
+			var index=arr.indexOf(keyvalue);
+			return index;
 		}
 		//初始化检查
 		function CheckInit(){

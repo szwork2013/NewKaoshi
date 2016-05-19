@@ -67,10 +67,16 @@ libraryModule
 								//单选0，多选1
 								var arr = $rootScope.currentpaper.answerContent[i].answer.split("");
 								var lenk = arr.length;
-								var list = new Array($rootScope.currentpaper.questionlist[j].optionContent.length);
+								var list = CommFunServ.InitArray($rootScope.currentpaper.questionlist[j].optionContent.length,false);
 								var sd = false;
 								for (var k = 0; k < lenk; k++) {
-									list[arr[k]] = true;
+									var index=0;
+									if(questiontype== 'checking'){
+										index=CommFunServ.GetValueIndex($rootScope.currentpaper.questionlist[j].optionContent,arr[k]);
+									}else{
+										index=CommFunServ.GetKeyIndex($rootScope.currentpaper.questionlist[j].optionContent,arr[k]);
+									}
+									list[index] = true;
 									sd=true;
 								}
 								$rootScope.currentpaper.questionlist[j].answerArr = list;
@@ -160,10 +166,16 @@ libraryModule
 				var len = $rootScope.currentpaper.questionlist[parentindex].answerArr.length;
 				for (var i = 0; i < len; i++) {
 					if ($rootScope.currentpaper.questionlist[parentindex].answerArr[i]) {
-						arr.push(i);
+						var value='';
+						if(item.questionType == 'checking'){
+							value=CommFunServ.GetValue(i);
+						}else{
+							value=CommFunServ.GetKey(i);
+						}
+						arr.push(value);
 					}
 				}
-				var str = arr.join("|");
+				var str = arr.join("");
 				//答案是否存在，修改答案
 				if($rootScope.currentpaper.answerContent==null){
 							$rootScope.currentpaper.answerContent=new Array();

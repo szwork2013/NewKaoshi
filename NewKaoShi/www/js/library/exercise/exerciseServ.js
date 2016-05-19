@@ -54,17 +54,18 @@ libraryModule
 				var len = $rootScope.currentpaper.questionlist.length;
 				for (var i = 0; i < len; i++) {
 					var questiontype=$rootScope.currentpaper.questionlist[j].questionType
-					if(questiontype== 'checking'){
-						var len=$rootScope.currentpaper.questionlist[i].optionContent.length;
-						$rootScope.currentpaper.questionlist[i].rightAnswer = CommFunServ.InitArray(len, false);
-						
-					}
-					if ( questiontype== 'singleChoice'||questiontype== 'mutepliChoice') {
+					
+					if ( questiontype== 'singleChoice'||questiontype== 'mutepliChoice' || questiontype== 'checking') {
 						$rootScope.questionlist[i].rightAnswer = CommFunServ.InitArray($rootScope.questionlist[i].optionContent.length, false);
 						var answerlist = $rootScope.questionlist[i].answer.split("");
 						var length = answerlist.length;
 						for (var j = 0; j < length; j++) {
-							var index=parseInt(answerlist[j]);
+							var index=0;
+							if(questiontype== 'checking'){
+								index=CommFunServ.GetValueIndex($rootScope.currentpaper.questionlist[i].optionContent,answerlist[j]);
+							}else{
+								index=CommFunServ.GetKeyIndex($rootScope.currentpaper.questionlist[i].optionContent,answerlist[j]);
+							}
 							$rootScope.questionlist[i].rightAnswer[index] = true;
 						}
 					}

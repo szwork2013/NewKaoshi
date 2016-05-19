@@ -3,7 +3,6 @@ libraryModule
 		function($rootScope, CommFunServ, $state, DataServ,PaperDetailServ) {
 			var list = ['A', 'B', 'C', 'D', 'E', 'F', 'G'] //选项
 			var serverdata = {
-				answerlist: null, //已填答案
 				score: 0, //获得分数
 				scoretext: '', //分数描述
 				rightcount: 0, //答对题数
@@ -25,39 +24,46 @@ libraryModule
 			}
 			//初始化数据
 			function InitData(type) {
-				DataServ.GetHistoy($rootScope.currentpaper.paperID, 0).then(function(data) {
+				if($rootScope.currentpaper.answerContent==null){
+					DataServ.GetHistoy($rootScope.currentpaper.paperID, 0).then(function(data) {
 					if (data && data.length > 0) {
 						//存在历史
-						serverdata.answerlist = eval("(" + data[0].Content + ")");
+						$rootScope.currentpaper.answerContent = eval("(" + data[0].Content + ")");
 					} else {
-						serverdata.answerlist = [];
+						$rootScope.currentpaper.answerContent = [];
 					}
 					GetResult();
 					ShowTime();
 				})
+				}else{
+					GetResult();
+					ShowTime();
+				}
+				
 			}
 			//计算结果
 			function GetResult() {
+				$rootScope.currentpaper.score=0;
 				var score = 0;
 				var len = $rootScope.currentpaper.questionlist.length;
-				var length = serverdata.answerlist.length;
+				var length = $rootScope.currentpaper.answerContent.length;
 				for (var i = 0; i < len; i++) {
+					$rootScope.currentpaper.questionlist[i].isRight = 0;
 					for (var j = 0; j < length; j++) {
-						$rootScope.currentpaper.questionlist[i].isRight = 0;
-						if ($rootScope.currentpaper.questionlist[i].id == serverdata.answerlist[j].id) {
-							score += parseInt(GetScore($rootScope.currentpaper.questionlist[i], serverdata.answerlist[j].answer));
+						if ($rootScope.currentpaper.questionlist[i].id == $rootScope.currentpaper.answerContent[j].id) {
+							score += parseInt(GetScore(i, $rootScope.currentpaper.answerContent[j].answer));
 							continue;
 						}
 					}
 				}
-				serverdata.score = score;
+				$rootScope.currentpaper.score=score;
 				serverdata.wrongcount = parseInt($rootScope.currentpaper.itemNum) - parseInt(serverdata.rightcount);
 				var str = "";
 				var passmark = $rootScope.currentpaper.passMark;
 				var total = parseInt($rootScope.currentpaper.totalScore) - 20;
 				if (serverdata.score < passmark) {
 					str = "没有及格，请再接再厉！"
-				} else if (serverdata.score > passmark && serverdata.score < total) {
+				} else if ($rootScope.currentpaper.score > passmark && $rootScope.currentpaper.score < total) {
 					str = "恭喜你考试通过！"
 				} else {
 					str = "成绩优秀，请继续保持！"
@@ -67,8 +73,9 @@ libraryModule
 				CommFunServ.RefreshData(serverdata);
 			}
 			//计算单选多选分数
-			function GetScore(item, answer) {
-				var rightarr = item.answer.split(""); //正确答案
+			function GetScore(index, answer) {
+			
+				var rightarr = $rootScope.currentpaper.questionlist[index].answer.split(""); //正确答案
 				var answerarr = answer.split("|");; //回答答案
 				if (rightarr.length != answerarr.length) {
 					item.isRight = 0;
@@ -77,7 +84,7 @@ libraryModule
 				if (answerarr && answerarr.length > 0) {
 					var len = answerarr.length;
 					var count = 0; //匹配个数
-					switch (item.questionType) {
+					switch ($rootScope.currentpaper.questionlist[index].questionType) {
 						case 'checking':
 							if (rightarr[0] == "对" && answerarr[0]=="0") {
 								count++;
@@ -108,10 +115,10 @@ libraryModule
 				}
 				if (count == len) {
 					serverdata.rightcount++;
-					item.isRight = 1;
-					return item.soure;
+					$rootScope.currentpaper.questionlist[index].isRight = 1;
+					return $rootScope.currentpaper.questionlist[index].soure;
 				} else {
-					item.isRight = 0;
+					$rootScope.currentpaper.questionlist[index].isRight = 0;
 					return 0;
 				}
 				return 0;
@@ -148,6 +155,7 @@ libraryModule
 				Destory();
 				//提示是否重新考试
 				PaperDetailServ.Start(0);
+				$rootScope.currentpaper.answerContent=null;
 				//删除历史数据
 				DataServ.DeletKaoshiHis($rootScope.currentpaper.paperID).then(function(data){
 					$state.go('kaoshi',{
@@ -164,6 +172,7 @@ libraryModule
 				serverdata.wrongcount = 0; //打错题数
 				serverdata.rate = 0; //正确率
 				serverdata.time = 0; //考试已用时间
+				
 			}
 		}
 	])

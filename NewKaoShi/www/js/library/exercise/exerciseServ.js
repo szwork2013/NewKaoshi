@@ -29,23 +29,39 @@ libraryModule
 				return serverdata;
 			}
 			//初始化数据
-			function InitList(bool, type) {
-				currentType = type;
+			function InitList(obj) {
+				currentType = obj.type;
 				AssmbleRightAnswer();
 				//bool=true有历史记录，type=0试卷，type=1错题与收藏
-				if (bool == 'true' && type == '0') {
+				if (obj.history == 'true') {
 					GetHistory();
 				}else{
-					slideHasChanged(0);
+					var index=0;
+					if(obj.qKey){
+						var len=$rootScope.currentpaper.questionlist.length;
+						for(var i=0;i<len;i++){
+							if($rootScope.currentpaper.questionlist[i].q_key==obj.qKey){
+								index=i;
+								break;
+							}
+						}
+					}
+					slideHasChanged(index);
 				}
 			}
 
 			function AssmbleRightAnswer() {
-				var len = $rootScope.questionlist.length;
+				var len = $rootScope.currentpaper.questionlist.length;
 				for (var i = 0; i < len; i++) {
-					if ($rootScope.questionlist[i].QuestionType != 2) { //单选多选
-						$rootScope.questionlist[i].rightAnswer = CommFunServ.InitArray($rootScope.questionlist[i].OptionContent.length, false);
-						var answerlist = $rootScope.questionlist[i].Answer.split("|");
+					var questiontype=$rootScope.currentpaper.questionlist[j].questionType
+					if(questiontype== 'checking'){
+						var len=$rootScope.currentpaper.questionlist[i].optionContent.length;
+						$rootScope.currentpaper.questionlist[i].rightAnswer = CommFunServ.InitArray(len, false);
+						
+					}
+					if ( questiontype== 'singleChoice'||questiontype== 'mutepliChoice') {
+						$rootScope.questionlist[i].rightAnswer = CommFunServ.InitArray($rootScope.questionlist[i].optionContent.length, false);
+						var answerlist = $rootScope.questionlist[i].answer.split("");
 						var length = answerlist.length;
 						for (var j = 0; j < length; j++) {
 							var index=parseInt(answerlist[j]);
@@ -58,10 +74,13 @@ libraryModule
 			//获取历史
 			function GetHistory() {
 				//type=1表示历史试卷练习
-				DataServ.GetHistoy($rootScope.currentPaper.PaperID, 1).then(function(data) {
+				DataServ.GetHistoy($rootScope.currentpaper.paperID, 0).then(function(data) {
 					if (data && data.length > 0) {
 						//存在历史
-						serverdata.answerContent = eval("(" + data[0].Content + ")");
+						if($rootScope.currentpaper.answerContent==null){
+							$rootScope.currentpaper.answerContent=new Array();
+						}
+						$rootScope.currentpaper.answerContent = eval("(" + data[0].Content + ")");
 						AssmbleList();
 					}
 				})

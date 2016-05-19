@@ -13,7 +13,7 @@ libraryModule
 			$scope.Back = Back;
 			$scope.$on("$ionicView.enter", function() {
 				$scope.serverdata = ExerciseServ.GetServerData();
-				ExerciseServ.InitList($stateParams.history,$stateParams.type);
+				ExerciseServ.InitList($stateParams);
 			})
 
 			function slideHasChanged(index) {

@@ -177,9 +177,9 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
 			templateUrl: 'templates/paper/kaoshi.html',
 			controller: 'KaoshiCtrl'
 		})
-		//练习,history历史，false没有历史，true有历史；type:0试卷练习，1错题或收藏
+		//练习,history历史，false没有历史，true有历史;type 0试卷练习,1答案解析;cKey进入显示试题编号
 		.state('exercise', {
-			url: '/exercise/:history/:type',
+			url: '/exercise/:history/:type/:qKey',
 			cache: false,
 			templateUrl: 'templates/paper/exercises.html',
 			controller: 'ExerciseCtrl'

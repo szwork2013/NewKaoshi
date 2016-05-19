@@ -4,7 +4,6 @@ libraryModule
 			var timeCount; //秒
 			var timer; //setTimeout方法 
 			var serverdata = {
-				answerContent:null,//回答试题
 				isShowTitle: false, //是否显示大题标题
 				titleContent:null,//当前大题内容
 				title: '', //题型
@@ -43,10 +42,10 @@ libraryModule
 				DataServ.GetHistoy($rootScope.currentpaper.paperID, 0).then(function(data) {
 					if (data && data.length > 0) {
 						//存在历史
-						if(serverdata.answerContent==null){
-							serverdata.answerContent=new Array();
+						if($rootScope.currentpaper.answerContent==null){
+							$rootScope.currentpaper.answerContent=new Array();
 						}
-						serverdata.answerContent = eval("(" + data[0].Content + ")");
+						$rootScope.currentpaper.answerContent = eval("(" + data[0].Content + ")");
 						InitTime(parseInt(data[0].Time));
 						AssmbleList();
 					}
@@ -54,19 +53,19 @@ libraryModule
 			}
 			//组装历史记录
 			function AssmbleList() {
-				if(serverdata.answerContent==null){
-							serverdata.answerContent=new Array();
+				if($rootScope.currentpaper.answerContent==null){
+							$rootScope.currentpaper.answerContent=new Array();
 						}
-				var len = serverdata.answerContent.length;
+				var len = $rootScope.currentpaper.answerContent.length;
 				for (var i = 0; i < len; i++) {
 					var length = $rootScope.currentpaper.questionlist.length;
 					for (var j = 0; j < length; j++) {
-						if (serverdata.answerContent[i].id == $rootScope.currentpaper.questionlist[j].id) {
+						if ($rootScope.currentpaper.answerContent[i].id == $rootScope.currentpaper.questionlist[j].id) {
 							//"1|3"多选答案
 							var questiontype=$rootScope.currentpaper.questionlist[j].questionType
 							if ( questiontype== 'singleChoice'||questiontype== 'mutepliChoice'||questiontype== 'checking') {
 								//单选0，多选1
-								var arr = serverdata.answerContent[i].answer.split("");
+								var arr = $rootScope.currentpaper.answerContent[i].answer.split("");
 								var lenk = arr.length;
 								var list = new Array($rootScope.currentpaper.questionlist[j].optionContent.length);
 								var sd = false;
@@ -166,13 +165,13 @@ libraryModule
 				}
 				var str = arr.join("|");
 				//答案是否存在，修改答案
-				if(serverdata.answerContent==null){
-							serverdata.answerContent=new Array();
+				if($rootScope.currentpaper.answerContent==null){
+							$rootScope.currentpaper.answerContent=new Array();
 						}
-				var length = serverdata.answerContent.length;
+				var length = $rootScope.currentpaper.answerContent.length;
 				for (var j = 0; j < length; j++) {
-					if (serverdata.answerContent[j].id == item.id) {
-						serverdata.answerContent[j].answer = str;
+					if ($rootScope.currentpaper.answerContent[j].id == item.id) {
+						$rootScope.currentpaper.answerContent[j].answer = str;
 						if (item.questionType == 0) { //单选
 							NextTest();
 						}
@@ -184,7 +183,7 @@ libraryModule
 					id: item.id,
 					answer: str
 				}
-				serverdata.answerContent.push(answeritem);
+				$rootScope.currentpaper.answerContent.push(answeritem);
 				if (item.questionType == 0) { //单选
 					NextTest();
 				}
@@ -222,7 +221,7 @@ libraryModule
 					UserID: '',
 					Time: timeCount,
 					Soure: 0,
-					Content: JSON.stringify(serverdata.answerContent),
+					Content: JSON.stringify($rootScope.currentpaper.answerContent),
 					Type: 0, //考试
 					IsEnd:0,
 					IsSync: false
@@ -276,7 +275,6 @@ libraryModule
 			}
 			function Destory(){
 				serverdata.titleContent=null;
-				serverdata.answerContent=null;//回答试题
 				serverdata.isShowTitle=false; //是否显示大题标题
 				serverdata.titleContent=null;//当前大题内容
 				serverdata.title=''; //题型

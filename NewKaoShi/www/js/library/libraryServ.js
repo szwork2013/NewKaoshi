@@ -9,8 +9,10 @@ libraryModule
 				totalScore:0,//总分数
 				passMark:0,//及格分数
 				rtime:0,//时间
+				score:0,//得分
 				questionlist:[],//试题列表
-				questiontitle:[]//标题列表
+				questiontitle:[],//标题列表
+				answerContent:null//答案列表
 			}
 			var serverdata = {
 				paperlist: []

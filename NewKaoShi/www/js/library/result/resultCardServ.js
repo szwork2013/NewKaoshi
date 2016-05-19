@@ -1,18 +1,17 @@
 libraryModule
-.factory("ResultCardServ",["DataServ",'$rootScope'
-function(DataServ,$rootScope){
-	var serverdata={
-		
-	}
+.factory("ResultCardServ",['$rootScope','$state',
+function($rootScope,$state){
+	
 	var server={
-		GetServerdata:GetServerdata
+		GoExercise:GoExercise
 	}
 	return server;
-	function GetServerdata(){
-		return server;
-	}
-	//初始化数据
-	function InitData(){
-		DataServ.GetHistoy($rootScope.currentpaper.paperID)
+	//进入答案解析
+	function GoExercise(q_key){
+		$state.go('exercise',{
+			history:false,
+			type:1,
+			qKey:q_key
+		})
 	}
 }])

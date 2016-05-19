@@ -168,9 +168,9 @@ libraryModule
 					if ($rootScope.currentpaper.questionlist[parentindex].answerArr[i]) {
 						var value='';
 						if(item.questionType == 'checking'){
-							value=CommFunServ.GetValue(i);
+							value=CommFunServ.GetValue(item.optionContent,i);
 						}else{
-							value=CommFunServ.GetKey(i);
+							value=CommFunServ.GetKey(item.optionContent,i);
 						}
 						arr.push(value);
 					}

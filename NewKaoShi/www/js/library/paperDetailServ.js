@@ -39,6 +39,7 @@ libraryModule
 				DataServ.GetHistoy($rootScope.currentpaper.paperID).then(function(data) {
 					serverdata.haveKaoshi = false;
 					serverdata.haveExercise = false;
+					serverdata.isEnd = false;
 					if (data && data.length > 0) {
 						var len = data.length;
 						for (var i = 0; i < len; i++) {

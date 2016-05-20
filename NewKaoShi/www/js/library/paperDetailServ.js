@@ -90,6 +90,7 @@ libraryModule
 				var len = data.length;
 				$rootScope.currentpaper.questionlist = []; //试题列表
 				$rootScope.currentpaper.questiontitle = []; //标题列表
+				$rootScope.currentpaper.answerContent=null;//答案列表
 				for (var i = 0; i < len; i++) {
 					if (data[i].analysis != 'null' && data[i].analysis != '') {
 						data[i].optionContent = eval("(" + data[i].optionContent + ")");

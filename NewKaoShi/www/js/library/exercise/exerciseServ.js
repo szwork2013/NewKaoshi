@@ -35,10 +35,12 @@ libraryModule
 				currentType = obj.type;
 				AssmbleRightAnswer();
 				//bool=true有历史记录，type=0试卷，type=1错题与收藏，2考试答案解析
-				if (obj.history == 'true' && currentType=='0') {
-					GetHistory();
+				if (currentType=='0') {
+					if(obj.history == 'true'){
+						GetHistory();
+					}
 					slideHasChanged(0);
-				} else {
+				}else {
 					var index = 0;
 					if (obj.qKey && currentType=='2') {
 						serverdata.isShowAnswer=true;
@@ -128,9 +130,10 @@ libraryModule
 			}
 			//切换试题类型
 			function slideHasChanged(index) {
-		
+				currentIndex=index;
 				//根据大题类型显示头
 				var item = $rootScope.currentpaper.questionlist[index];
+				serverdata.showAnswer = item.hasdo;
 				if(index==0){
 					serverdata.titleContent=null;
 					serverdata.isShowTitle=true;
@@ -194,11 +197,12 @@ libraryModule
 			//单选
 			function SelectAnswer(parentindex, index) {
 				if(currentType == '2'){
+					serverdata.btnStatus=1;
 					return;
 				}
 				var item = $rootScope.currentpaper.questionlist[parentindex];
-				if (item.answer == null || item.questionType == 'singleChoice' || item.questionType == 'checking') {
-					item.answer = CommFunServ.InitArray(item.optionContent.length + 1, false)
+				if (item.answerArr == null || item.questionType == 'singleChoice' || item.questionType == 'checking') {
+					item.answerArr = CommFunServ.InitArray(item.optionContent.length + 1, false)
 				}
 				if (item.questionType == 'singleChoice' || item.questionType == 'checking') { //单选
 					item.hasdo = !item.hasdo;
@@ -270,10 +274,11 @@ libraryModule
 			}
 
 			function Back() {
+				Destory();
 				if (currentType == '0') {
 					//保存历史
 					var item = [{
-						PaperID: $rootScope.currentPaper.paperID,
+						PaperID: $rootScope.currentpaper.paperID,
 						UserID: '',
 						Time: 0,
 						Soure: 0,
@@ -296,10 +301,10 @@ libraryModule
 			//显示答案
 			function ShowAnswer() {
 				var item = $rootScope.currentpaper.questionlist[currentIndex];
-				if (item.QuestionType != 2) { //单选，多选
-					var len = item.OptionContent.length;
-					$rootScope.currentpaper.questionlist[currentIndex].hasdo = true;
-					SelectAnswer(currentIndex, len);
+				if (item.questionType== 'singleChoice'||item.questionType== 'mutepliChoice'||item.questionType== 'checking') { //单选，多选
+					item.hasdo = true;
+					serverdata.showAnswer=true;
+					serverdata.btnStatus = 1;
 				}
 
 			}
@@ -310,6 +315,16 @@ libraryModule
 				} else {
 					serverdata.btnStatus = 1;
 				}
+			}
+			function Destory(){
+				serverdata.isShowAnswer=false;//是否值显示解析，在考试答案解析用true
+				serverdata.isShowTitle=false; //是否显示大题标题
+				serverdata.titleContent=null; //当前大题内容
+				serverdata.title=''; //题型
+				serverdata.isUpload=false; //是否交卷
+				serverdata.showAnswer=false;//是否显示答案
+				serverdata.questiontitle=''; //题干
+				serverdata.btnStatus= 0;
 			}
 		}
 	])

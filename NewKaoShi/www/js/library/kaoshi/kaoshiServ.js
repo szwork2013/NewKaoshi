@@ -156,18 +156,18 @@ libraryModule
 			//单选
 			function SelectAnswer(parentindex, index) {
 				var item = $rootScope.currentpaper.questionlist[parentindex];
-				if ($rootScope.currentpaper.questionlist[parentindex].answerArr == null || item.questionType == 'singleChoice' || item.questionType == 'checking') {
-					$rootScope.currentpaper.questionlist[parentindex].answerArr = CommFunServ.InitArray(item.optionContent.length, false)
+				if (item.answerArr == null || item.questionType == 'singleChoice' || item.questionType == 'checking') {
+					item.answerArr = CommFunServ.InitArray(item.optionContent.length, false)
 				}
 				if (item.questionType == 'singleChoice' || item.questionType == 'checking') { //单选
-					$rootScope.currentpaper.questionlist[parentindex].hasdo = !$rootScope.currentpaper.questionlist[parentindex].hasdo;
+					item.hasdo = !item.hasdo;
 				}
-				$rootScope.currentpaper.questionlist[parentindex].answerArr[index] = !$rootScope.currentpaper.questionlist[parentindex].answerArr[index];
+				item.answerArr[index] = !item.answerArr[index];
 
 				var arr = []
-				var len = $rootScope.currentpaper.questionlist[parentindex].answerArr.length;
+				var len = item.answerArr.length;
 				for (var i = 0; i < len; i++) {
-					if ($rootScope.currentpaper.questionlist[parentindex].answerArr[i]) {
+					if (item.answerArr[i]) {
 						var value='';
 						if(item.questionType == 'checking'){
 							var str=CommFunServ.GetValue(item.optionContent,i);

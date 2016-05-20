@@ -4,11 +4,13 @@ libraryModule
 			var currentType; //currentType=0试卷，currentType=1错题与收藏
 			var currentIndex; //当前试题索引
 			var serverdata = {
+				isShowAnswer:false,//是否值显示解析，在考试答案解析用true
+				isShowTitle: false, //是否显示大题标题
+				titleContent: null, //当前大题内容
 				title: '', //题型
-				rtime: '', //考试时间
 				isUpload: false, //是否交卷
-				answerContent: [], //试卷所有试题答案
-				showAnswer: false,
+				showAnswer: false, //是否显示答案
+				questiontitle: '', //题干
 				btnStatus: 0
 
 			}
@@ -32,41 +34,42 @@ libraryModule
 			function InitList(obj) {
 				currentType = obj.type;
 				AssmbleRightAnswer();
-				//bool=true有历史记录，type=0试卷，type=1错题与收藏
-				if (obj.history == 'true') {
+				//bool=true有历史记录，type=0试卷，type=1错题与收藏，2考试答案解析
+				if (obj.history == 'true' && currentType=='0') {
 					GetHistory();
-				}else{
-					var index=0;
-					if(obj.qKey){
-						var len=$rootScope.currentpaper.questionlist.length;
-						for(var i=0;i<len;i++){
-							if($rootScope.currentpaper.questionlist[i].q_key==obj.qKey){
-								index=i;
+					slideHasChanged(0);
+				} else {
+					var index = 0;
+					if (obj.qKey && currentType=='2') {
+						serverdata.isShowAnswer=true;
+						var len = $rootScope.currentpaper.questionlist.length;
+						for (var i = 0; i < len; i++) {
+							if ($rootScope.currentpaper.questionlist[i].q_key == obj.qKey) {
+								index = i;
 								break;
 							}
 						}
 					}
-					slideHasChanged(index);
+					SildeTo(index);
 				}
 			}
 
 			function AssmbleRightAnswer() {
 				var len = $rootScope.currentpaper.questionlist.length;
 				for (var i = 0; i < len; i++) {
-					var questiontype=$rootScope.currentpaper.questionlist[j].questionType
-					
-					if ( questiontype== 'singleChoice'||questiontype== 'mutepliChoice' || questiontype== 'checking') {
-						$rootScope.questionlist[i].rightAnswer = CommFunServ.InitArray($rootScope.questionlist[i].optionContent.length, false);
-						var answerlist = $rootScope.questionlist[i].answer.split("");
+					var questiontype = $rootScope.currentpaper.questionlist[i].questionType
+					if (questiontype == 'singleChoice' || questiontype == 'mutepliChoice' || questiontype == 'checking') {
+						$rootScope.currentpaper.questionlist[i].rightAnswer = CommFunServ.InitArray($rootScope.currentpaper.questionlist[i].optionContent.length, false);
+						var answerlist = $rootScope.currentpaper.questionlist[i].answer.split("");
 						var length = answerlist.length;
 						for (var j = 0; j < length; j++) {
-							var index=0;
-							if(questiontype== 'checking'){
-								index=CommFunServ.GetValueIndex($rootScope.currentpaper.questionlist[i].optionContent,answerlist[j]);
-							}else{
-								index=CommFunServ.GetKeyIndex($rootScope.currentpaper.questionlist[i].optionContent,answerlist[j]);
+							var index = 0;
+							if (questiontype == 'checking') {
+								index = CommFunServ.GetValueIndex($rootScope.currentpaper.questionlist[i].optionContent, answerlist[j]);
+							} else {
+								index = CommFunServ.GetKeyIndex($rootScope.currentpaper.questionlist[i].optionContent, answerlist[j]);
 							}
-							$rootScope.questionlist[i].rightAnswer[index] = true;
+							$rootScope.currentpaper.questionlist[i].rightAnswer[index] = true;
 						}
 					}
 
@@ -75,11 +78,11 @@ libraryModule
 			//获取历史
 			function GetHistory() {
 				//type=1表示历史试卷练习
-				DataServ.GetHistoy($rootScope.currentpaper.paperID, 0).then(function(data) {
+				DataServ.GetHistoy($rootScope.currentpaper.paperID,1).then(function(data) {
 					if (data && data.length > 0) {
 						//存在历史
-						if($rootScope.currentpaper.answerContent==null){
-							$rootScope.currentpaper.answerContent=new Array();
+						if ($rootScope.currentpaper.answerContent == null) {
+							$rootScope.currentpaper.answerContent = new Array();
 						}
 						$rootScope.currentpaper.answerContent = eval("(" + data[0].Content + ")");
 						AssmbleList();
@@ -88,24 +91,32 @@ libraryModule
 			}
 			//组装历史记录
 			function AssmbleList() {
-				var len = serverdata.answerContent.length;
+				var len = $rootScope.currentpaper.answerContent.length;
 				for (var i = 0; i < len; i++) {
-					var length = $rootScope.questionlist.length;
+					var length = $rootScope.currentpaper.questionlist.length;
 					for (var j = 0; j < length; j++) {
-						if (serverdata.answerContent[i].id == $rootScope.questionlist[j].ID) {
-							//"1|3"多选答案
-							if ($rootScope.questionlist[j].QuestionType != 2) {
+						if ($rootScope.currentpaper.answerContent[i].id == $rootScope.currentpaper.questionlist[j].id) {
+							var questiontype=$rootScope.currentpaper.questionlist[j].questionType
+							if (questiontype== 'singleChoice'||questiontype== 'mutepliChoice'||questiontype== 'checking') {
 								//单选0，多选1
-								var arr = serverdata.answerContent[i].answer.split("|");
+								var arr = $rootScope.currentpaper.answerContent[i].answer.split("");
 								var lenk = arr.length;
-								var list = new Array($rootScope.questionlist[j].OptionContent.length + 1);
+								var list = CommFunServ.InitArray($rootScope.currentpaper.questionlist[j].optionContent.length,false);
 								var sd = false;
 								for (var k = 0; k < lenk; k++) {
-									list[arr[k]] = true;
-									sd = true;
+									var index=0;
+									if(questiontype== 'checking'){
+										index=CommFunServ.GetValueIndex($rootScope.currentpaper.questionlist[j].optionContent,arr[k]);
+									}else{
+										index=CommFunServ.GetKeyIndex($rootScope.currentpaper.questionlist[j].optionContent,arr[k]);
+									}
+									if(index>=0){
+										list[index] = true;
+										sd=true;
+									}
 								}
-								$rootScope.questionlist[j].answer = list; //[false,true,false],length为答案选项
-								$rootScope.questionlist[j].hasdo = sd;
+								$rootScope.currentpaper.questionlist[j].answerArr = list;
+								$rootScope.currentpaper.questionlist[j].hasdo = sd;
 								CommFunServ.RefreshData(serverdata);
 							}
 							//简答未实现
@@ -117,68 +128,127 @@ libraryModule
 			}
 			//切换试题类型
 			function slideHasChanged(index) {
-				currentIndex = index;
-				var item = $rootScope.questionlist[index];
+		
+				//根据大题类型显示头
+				var item = $rootScope.currentpaper.questionlist[index];
+				if(index==0){
+					serverdata.titleContent=null;
+					serverdata.isShowTitle=true;
+				}
+				if(index>0){
+					//与前一题对比查看是否显示大题
+					var lastitem= $rootScope.currentpaper.questionlist[index-1];
+					if(item.pq_key==lastitem.pq_key){
+						serverdata.isShowTitle=false;
+					}else{
+						serverdata.titleContent=null;
+						serverdata.isShowTitle=true;
+					}
+				}
+				var len = $rootScope.currentpaper.questiontitle.length;
+				for (var i = 0; i < len; i++) {
+					if ($rootScope.currentpaper.questiontitle[i].q_key == item.pq_key) {
+						AssmbleTitle(i);
+						switch ($rootScope.currentpaper.questiontitle[i].questionType) {
+							case 'checking':
+								serverdata.title = "判断题";
+								break;
+							case 'singleChoice':
+								serverdata.title = "单选题";
+								break;
+							case 'mutepliChoice':
+								serverdata.title = "多选题";
+								break;
+							case '2':
+								serverdata.title = "案例题";
+								break;
+							default:
+								serverdata.title = "";
+								break;
+						}
+						CommFunServ.RefreshData(serverdata);
+						return;
+					}
+				}
+			}
+			
+			//显示头标题
+			function AssmbleTitle(index){
+				var item=$rootScope.currentpaper.questiontitle[index];
+				if(serverdata.titleContent==null){
+					serverdata.titleContent=new Array();
+				}
+				if(serverdata.titleContent.indexOf(item)==-1){
+					serverdata.titleContent.unshift(item);
+				}
+				if(item.questionIndex==0){
+					var len=$rootScope.currentpaper.questiontitle.length;
+					for(var i=0;i<len;i++){
+						if(item.pq_key==$rootScope.currentpaper.questiontitle[i].q_key){
+							AssmbleTitle(i);
+							return;
+						}
+					}
+				}
+			}
+			//单选
+			function SelectAnswer(parentindex, index) {
+				if(currentType == '2'){
+					return;
+				}
+				var item = $rootScope.currentpaper.questionlist[parentindex];
+				if (item.answer == null || item.questionType == 'singleChoice' || item.questionType == 'checking') {
+					item.answer = CommFunServ.InitArray(item.optionContent.length + 1, false)
+				}
+				if (item.questionType == 'singleChoice' || item.questionType == 'checking') { //单选
+					item.hasdo = !item.hasdo;
+				}
 				serverdata.showAnswer = item.hasdo;
 				if (serverdata.showAnswer) {
 					serverdata.btnStatus = 1;
 				}
-				switch (item.QuestionType) {
-					case '0':
-						serverdata.title = "单选题";
-						break;
-					case '1':
-						serverdata.title = "多选题";
-						break;
-					case '2':
-						serverdata.title = "案例题";
-						break;
-					default:
-						serverdata.title = "";
-						break;
-				}
-				CommFunServ.RefreshData(serverdata);
-			}
-			//单选
-			function SelectAnswer(parentindex, index) {
-				var item = $rootScope.questionlist[parentindex];
-				if ($rootScope.questionlist[parentindex].answer == null || item.QuestionType == 0) {
-					$rootScope.questionlist[parentindex].answer = CommFunServ.InitArray(item.OptionContent.length + 1, false)
-				}
-				if (item.QuestionType == 0) { //单选
-					$rootScope.questionlist[parentindex].hasdo = !$rootScope.questionlist[parentindex].hasdo;
-				}
-				serverdata.showAnswer = $rootScope.questionlist[parentindex].hasdo;
-				if (serverdata.showAnswer) {
-					serverdata.btnStatus = 1;
-				}
-				$rootScope.questionlist[parentindex].answer[index] = !$rootScope.questionlist[parentindex].answer[index];
+				item.answerArr[index] = !item.answerArr[index];
 
 				var arr = []
-				var len = $rootScope.questionlist[parentindex].answer.length;
+				var len = item.answerArr.length;
 				for (var i = 0; i < len; i++) {
-					if ($rootScope.questionlist[parentindex].answer[i]) {
-						arr.push(i);
+					if (item.answerArr[i]) {
+						var value = '';
+						if (item.questionType == 'checking') {
+							var str = CommFunServ.GetValue(item.optionContent, i);
+							value = str.substr(2, str.length - 1);
+						} else {
+							value = CommFunServ.GetKey(item.optionContent, i);
+						}
+						arr.push(value);
 					}
 				}
-				var str = arr.join("|");
+				var str = arr.join("");
 
 				//答案是否存在，修改答案
-				var length = serverdata.answerContent.length;
+				if ($rootScope.currentpaper.answerContent == null) {
+					$rootScope.currentpaper.answerContent = new Array();
+				}
+				var length = $rootScope.currentpaper.answerContent.length;
 				for (var j = 0; j < length; j++) {
-					if (serverdata.answerContent[j].id == item.ID) {
-						serverdata.answerContent[j].answer = str;
+					if ($rootScope.currentpaper.answerContent[j].id == item.ID) {
+						$rootScope.currentpaper.answerContent[j].answer = str;
 						CommFunServ.RefreshData(serverdata);
 						return;
 					}
 				}
 				//添加答案
 				var answeritem = {
-					id: item.ID,
+					id: item.id,
 					answer: str
 				}
-				serverdata.answerContent.push(answeritem);
+				$rootScope.currentpaper.answerContent.push(answeritem);
 				CommFunServ.RefreshData(serverdata);
+			}
+			function SildeTo(index){
+				if(index<$ionicSlideBoxDelegate.slidesCount()){
+					$ionicSlideBoxDelegate.slide(index)
+				}
 			}
 			//上一题
 			function LastTest() {
@@ -190,7 +260,7 @@ libraryModule
 			}
 			//下一题
 			function NextTest() {
-				var length = $rootScope.questionlist.length - 1;
+				var length = $rootScope.currentpaper.questionlist.length - 1;
 				if ($ionicSlideBoxDelegate.currentIndex() >= length) {
 					//已到最后题
 					return;
@@ -200,31 +270,35 @@ libraryModule
 			}
 
 			function Back() {
-				//保存历史
-				var item = [{
-					PaperID: $rootScope.currentPaper.PaperID,
-					UserID: '',
-					Time: 0,
-					Soure: 0,
-					Content: JSON.stringify(serverdata.answerContent),
-					Type: 1, //练习
-					IsSync: false
-				}]
-				DataServ.SaveHisData(item);
 				if (currentType == '0') {
+					//保存历史
+					var item = [{
+						PaperID: $rootScope.currentPaper.paperID,
+						UserID: '',
+						Time: 0,
+						Soure: 0,
+						Content: JSON.stringify($rootScope.currentpaper.answerContent),
+						Type: 1, //练习
+						IsEnd: 0,
+						IsSync: false
+					}]
+					DataServ.SaveHisData(item);
 					//返回试卷详细
 					$state.go('paperDetail');
-				} else {
+				} else if(currentType == '1'){
 					//返回错误列表
 					$state.go('tab.error');
+				}else{
+					//返回答题卡
+					$state.go('resultCard');
 				}
 			}
 			//显示答案
 			function ShowAnswer() {
-				var item = $rootScope.questionlist[currentIndex];
+				var item = $rootScope.currentpaper.questionlist[currentIndex];
 				if (item.QuestionType != 2) { //单选，多选
 					var len = item.OptionContent.length;
-					$rootScope.questionlist[currentIndex].hasdo = true;
+					$rootScope.currentpaper.questionlist[currentIndex].hasdo = true;
 					SelectAnswer(currentIndex, len);
 				}
 

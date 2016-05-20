@@ -86,9 +86,7 @@ libraryModule
 					var count = 0; //匹配个数
 					switch ($rootScope.currentpaper.questionlist[index].questionType) {
 						case 'checking':
-							if (rightarr[0] == "对" && answerarr[0]=="0") {
-								count++;
-							} else if (rightarr[0] == "错" && answerarr[0]=="1") {
+							if (rightarr[0] ==answerarr[0]) {
 								count++;
 							}
 							break;

@@ -8,28 +8,28 @@
 	</ion-header-bar>
 	<ion-content class="kaoshi">
 		<ion-slide-box on-slide-changed="slideHasChanged($index)">
-			<ion-slide ng-repeat="items in questionlist">
-				<span class="bigtitle">
-					一、单项选择题(共80题,每题0.5分;下列每小题有四个答案,只有一项符合题目要求,请选择出来...)
+			<ion-slide ng-repeat="items in currentpaper.questionlist">
+				<span ng-repeat="title in serverdata.titleContent" ng-show="serverdata.isShowTitle" class="bigtitle">
+					{{title.questionContent}}
 				</span>
-				<choice-Question ng-if="items.QuestionType==0">
+				<choice-Question ng-if="items.questionType=='checking' || items.questionType=='singleChoice'">
 
 				</choice-Question>
-				<multiplechoice-Question ng-if="items.QuestionType==1">
+				<multiplechoice-Question ng-if="items.questionType=='mutepliChoice'">
 
 				</multiplechoice-Question>
-				<case-Question ng-if="items.QuestionType==2">
+				<case-Question ng-if="items.questionType==2">
 
 				</case-Question>
-				<div ng-show="serverdata.showAnswer">
+				<div ng-show="serverdata.showAnswer || serverdata.isShowAnswer">
 					<div>
 						<span>
-                          	  答案:{{items.Answer}}
+                          	  答案:{{items.answer}}
                         </span>
 					</div>
 					<div>
 						<span>
-                          	  解析:{{items.Analysis}}
+                          	  解析:{{items.analysis}}
                         </span>
 					</div>
 				</div>

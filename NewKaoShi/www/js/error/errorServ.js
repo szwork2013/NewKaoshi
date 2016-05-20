@@ -109,7 +109,8 @@ errorModule
 				CommFunServ.RefreshData(serverdata);
 			}
 			function TestAgain(paperid,type){
-				
+				//组装试题(未完成)
+				//跳转到exercise
 			}
 			//销毁
 			function Destory() {

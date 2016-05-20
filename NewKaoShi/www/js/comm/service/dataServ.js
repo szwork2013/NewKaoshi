@@ -6,10 +6,13 @@ commModule
 				MarkExamEnd: MarkExamEnd, //更改试卷考试状态
 
 				GetExamType: GetExamType,
+				GetExamName:GetExamName,
 				GetPaperList: GetPaperList,
 				GetPaperData: GetPaperData,
 				GetHistoy: GetHistoy,
 				GetPaperQuestions: GetPaperQuestions,
+				GetErrorData:GetErrorData,
+				GetCollectData:GetCollectData,
 				
 				DeletKaoshiHis:DeletKaoshiHis
 			}
@@ -128,6 +131,13 @@ commModule
 				})
 				return q.promise;
 			}
+			function GetExamName(examid){
+				var q = $q.defer();
+				SqliteServ.select('tb_ExamTypes', 'ExamTypeID=?', [examid]).then(function(data) {
+					q.resolve(data)
+				})
+				return q.promise;
+			}
 			//类型id，获取试卷
 			function GetPaperList(id) {
 				var q = $q.defer();
@@ -163,7 +173,7 @@ commModule
 			function GetPaperQuestions(id) {
 				var q = $q.defer();
 				//获取试题信息
-				SqliteServ.selectfree('tb_Question', " where paperId=? order by (case q_key when '一' then 1 when '二' then 2 when '三' then 3 when '四' then 4 when '五' then 5 when '六' then 6 when '七' then 7 when '八' then 8 when '九' then 9 else '' end)", [id]).then(function(data) {
+				SqliteServ.selectfree('tb_Question', "where paperId=? order by (case q_key when '一' then 1 when '二' then 2 when '三' then 3 when '四' then 4 when '五' then 5 when '六' then 6 when '七' then 7 when '八' then 8 when '九' then 9 else '' end)", [id]).then(function(data) {
 					q.resolve(data)
 				})
 				return q.promise;
@@ -172,11 +182,21 @@ commModule
 			function GetHomeData() {
 
 			}
-			//试题id,用于错题、收藏
-			function GetQuestionData(id) {
-				SqliteServ.select('tb_UserQuestions', 'PaperID=?', [id]).then(function(data) {
-
+			//用于错题
+			function GetErrorData() {
+				var q = $q.defer();
+				SqliteServ.selectsql('select *,count(QuestionID) as rows from tb_UserQuestions join tb_Papers on tb_UserQuestions.PaperID = tb_Papers.PaperID where  Type=? group by tb_UserQuestions.PaperID', ['0']).then(function(data) {
+					q.resolve(data)
 				})
+				return q.promise;
+			}
+			//用于收藏
+			function GetCollectData() {
+				var q = $q.defer();
+				SqliteServ.selectsql('select *,count(QuestionID) as rows from tb_UserQuestions join tb_Papers on tb_UserQuestions.PaperID = tb_Papers.PaperID where  Type=? group by tb_UserQuestions.PaperID', ['1']).then(function(data) {
+					q.resolve(data)
+				})
+				return q.promise;
 			}
 			/*
 			 * 

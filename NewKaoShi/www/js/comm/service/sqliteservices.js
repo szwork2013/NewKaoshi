@@ -8,7 +8,7 @@
  * 用户表：
  * 用户ID、用户名、用户昵称、是否VIP、是否登录
  * 用户试题关联表(错题、收藏)：
- * 关联ID、试题ID、用户ID、关联类型(错题、收藏)、是否已同步
+ * 关联ID、类型ID、试卷ID、试题ID、用户ID、关联类型(错题、收藏)、是否已同步
  * 历史记录表：
  * 记录ID、试卷ID、用户ID、已用时间、得分、历史内容（[{ID:"1",answer:"A"},{ID:"23",answer:""}]）、考试是否确认交卷（0未交，1已交）、是否已同步
  */
@@ -27,6 +27,7 @@ commModule
 					transaction: transaction,
 					insert: insert,
 					select: select,
+					selectsql:selectsql,
 					selectfree: selectfree,
 					saveOrupadte: saveOrupadte,
 					deletehis:deletehis
@@ -63,10 +64,29 @@ commModule
 				});
 				return q.promise;
 			};
+			//查找
+			function selectsql(sql,param){
+				var q = $q.defer();
+				$cordovaSQLite.execute(db, sql, param).then(function(response) {
+					var _length = response.rows.length;
+					if (_length == 0) {
+						q.resolve([]);
+					} else {
+						var _data = [];
+						for (var i = 0; i < _length; i++) {
+							_data.push(response.rows.item(i))
+						}
+						q.resolve(_data);
+					}
+				}, function(err) {
+					q.reject(err); //成功返回
+				});
+				return q.promise;
+			}
 			//查找数据
 			function selectfree(tablename, condition, param) {
 				var q = $q.defer();
-				var query = "select * from " + tablename + condition;
+				var query = "select * from " + tablename +" "+ condition;
 				$cordovaSQLite.execute(db, query, param).then(function(response) {
 					var _length = response.rows.length;
 					if (_length == 0) {
@@ -204,6 +224,17 @@ commModule
 					insert(tx, 'tb_ExamTypes', ["ExamTypeID", "ExamTypeName", "ParentID"], ['17', '材料', '6']);
 					insert(tx, 'tb_ExamTypes', ["ExamTypeID", "ExamTypeName", "ParentID"], ['18', '核价', '7']);
 					insert(tx, 'tb_ExamTypes', ["ExamTypeID", "ExamTypeName", "ParentID"], ['19', '总价', '7']);
+					//错题与收藏
+					insert(tx, 'tb_UserQuestions', ["ID","PaperID","QuestionID", "UserID", "Type","IsSync"], ['1', '1', '123213','','0','false']);
+					insert(tx, 'tb_UserQuestions', ["ID","PaperID","QuestionID", "UserID", "Type","IsSync"], ['2', '1', '123213','','1','false']);
+					insert(tx, 'tb_UserQuestions', ["ID","PaperID","QuestionID", "UserID", "Type","IsSync"], ['3', '1', '123567','','0','false']);
+					insert(tx, 'tb_UserQuestions', ["ID","PaperID","QuestionID", "UserID", "Type","IsSync"], ['4', '1', '123567','','1','false']);
+					insert(tx, 'tb_UserQuestions', ["ID","PaperID","QuestionID", "UserID", "Type","IsSync"], ['5', '1', '132176','','0','false']);
+					insert(tx, 'tb_UserQuestions', ["ID","PaperID","QuestionID", "UserID", "Type","IsSync"], ['6', '1', '132176','','1','false']);
+					insert(tx, 'tb_UserQuestions', ["ID","PaperID","QuestionID", "UserID", "Type","IsSync"], ['7', '2', '132342','','0','false']);
+					insert(tx, 'tb_UserQuestions', ["ID","PaperID","QuestionID", "UserID", "Type","IsSync"], ['8', '2', '23422','','0','false']);
+					
+					
 					//试卷
 					insert(tx, 'tb_Papers', ["PaperID", "PaperContent", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "Status", "PassMark", "UpLoaderID", "TotalTime", "Year", "ContainQuestionTypes", "CreateTime", "CreatorID", "UpdateTime", "UpdaterID"], ['1', '数学试卷', '10', '1', '100', '11', '23', '1', '60', '192.168', '150', '2016', '1|3', '2016.1.6', '192.128', '2016.1.2', '192.102']);
 					insert(tx, 'tb_Papers', ["PaperID", "PaperContent", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "Status", "PassMark", "UpLoaderID", "TotalTime", "Year", "ContainQuestionTypes", "CreateTime", "CreatorID", "UpdateTime", "UpdaterID"], ['2', '爱上大声地', '10', '2', '100', '11', '23', '0', '60', '192.168', '150', '2016', '1|3', '2016.1.6', '192.128', '2016.1.2', '192.102']);

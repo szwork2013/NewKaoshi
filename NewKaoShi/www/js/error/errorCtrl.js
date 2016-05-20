@@ -5,6 +5,10 @@ function($scope,ErrorServ,$state,$rootScope){
 		$scope.ChangeShow = ChangeShow;
 		$scope.ChangeShowItem = ChangeShowItem;
 		$scope.TestAgain = TestAgain;
+		$scope.serverdata=ErrorServ.GetServerdata();
+		$scope.$on("$ionicView.enter",function(){
+			ErrorServ.InitData();
+		})
 		function ChangeShow(bool) {
 			$scope.isError = bool;
 		}

@@ -14,7 +14,7 @@
 		"tablePrama": ["ID", "Name", "NickName", "IsVip","IsLogin"]
 	},{
 		"tableName": "tb_UserQuestions",
-		"tablePrama": ["ID", "QuestionID", "UserID", "Type","IsSync"]
+		"tablePrama": ["ID","PaperID","QuestionID", "UserID", "Type","IsSync"]
 	},{
 		"tableName": "tb_History",
 		"tablePrama": ["ID", "PaperID", "UserID", "Time", "Soure", "Content","Type","IsEnd","IsSync"]

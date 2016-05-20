@@ -6,13 +6,14 @@ commModule
 				MarkExamEnd: MarkExamEnd, //更改试卷考试状态
 
 				GetExamType: GetExamType,
-				GetExamName:GetExamName,
 				GetPaperList: GetPaperList,
 				GetPaperData: GetPaperData,
 				GetHistoy: GetHistoy,
 				GetPaperQuestions: GetPaperQuestions,
 				GetErrorData:GetErrorData,
 				GetCollectData:GetCollectData,
+				GetExamName:GetExamName,
+				GetQuestionData:GetQuestionData,
 				
 				DeletKaoshiHis:DeletKaoshiHis
 			}
@@ -196,6 +197,14 @@ commModule
 			function GetExamName(){
 				var q = $q.defer();
 				SqliteServ.selectsql('select * from tb_ExamTypes where ExamTypeID in (select ExamTypeID from tb_UserQuestions join tb_Papers on tb_UserQuestions.PaperID = tb_Papers.PaperID group by tb_Papers.ExamTypeID)', []).then(function(data) {
+					q.resolve(data)
+				})
+				return q.promise;
+			}
+			//获取试题
+			function GetQuestionData(paperid,type){
+				var q = $q.defer();
+				SqliteServ.selectsql('select * from tb_Question where id in (select QuestionID from tb_UserQuestions where PaperID=? and Type=?)', [paperid,type]).then(function(data) {
 					q.resolve(data)
 				})
 				return q.promise;

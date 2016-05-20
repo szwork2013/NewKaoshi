@@ -110,6 +110,9 @@ errorModule
 			}
 			function TestAgain(paperid,type){
 				//组装试题(未完成)
+				DataServ.GetQuestionData(paperid,type).then(function(data){
+					
+				})
 				//跳转到exercise
 			}
 			//销毁

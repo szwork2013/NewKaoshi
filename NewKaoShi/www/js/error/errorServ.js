@@ -1,6 +1,6 @@
 errorModule
-	.factory('ErrorServ', ['DataServ', 'CommFunServ','$q',
-		function(DataServ, CommFunServ,$q) {
+	.factory('ErrorServ', ['DataServ', 'CommFunServ', '$q','$state','$rootScope',
+		function(DataServ, CommFunServ, $q,$state,$rootScope) {
 			var serverdata = {
 				paperlist: null
 
@@ -8,7 +8,8 @@ errorModule
 			var server = {
 				GetServerdata: GetServerdata,
 				InitData: InitData,
-				Destory:Destory
+				ChangeShowItem:ChangeShowItem,
+				Destory: Destory
 			}
 			return server;
 
@@ -17,28 +18,28 @@ errorModule
 			}
 
 			function InitData() {
-				serverdata.paperlist=null;
 				//获取错题
 				DataServ.GetErrorData().then(function(errordata) {
-						if (errordata && errordata.length > 0) {
-							AssmblePaperList(errordata)
-						}
-					})
-					//获取收藏
-				DataServ.GetCollectData().then(function(data) {
-					if (data && data.length > 0) {
-						AssmblePaperList(data)
+					if (errordata && errordata.length > 0) {
+						AssmblePaperList(errordata)
 					}
+					//获取收藏
+					DataServ.GetCollectData().then(function(data) {
+						if (data && data.length > 0) {
+							AssmblePaperList(data)
+						}
+						GetExamName();
+					})
 				})
 			}
 			//组装显示数据
-			function AssmblePaperList( data) {
+			function AssmblePaperList(data) {
 				if (serverdata.paperlist == null) {
 					serverdata.paperlist = new Array();
 				}
 				var len = data.length;
 				for (var i = 0; i < len; i++) {
-					var listitem = JugeExamId(data[i].ExamTypeID,data[i].Type)
+					var listitem = JugeExamId(data[i].ExamTypeID, data[i].Type)
 					if (listitem != null) {
 						var item = {
 							paperID: data[i].PaperID,
@@ -63,21 +64,21 @@ errorModule
 							}]
 						}
 						serverdata.paperlist.push(examitem);
-						GetExamName();
-						examitem=null;
+
+						examitem = null;
 					}
 				}
 				CommFunServ.RefreshData(serverdata);
 			}
 			//判断是否有考试类型
-			function JugeExamId(examtypeid,type) {
+			function JugeExamId(examtypeid, type) {
 				if (serverdata.paperlist) {
 					var len = serverdata.paperlist.length;
-					for (var i = 0;i<len; i++) {
+					for (var i = 0; i < len; i++) {
 						if (examtypeid == serverdata.paperlist[i].examTypeID) {
-							if(type==serverdata.paperlist[i].listtype){
+							if (type == serverdata.paperlist[i].listtype) {
 								return serverdata.paperlist[i];
-							}else{
+							} else {
 								return null;
 							}
 						}
@@ -86,21 +87,33 @@ errorModule
 				return null;
 			}
 			//获取考试类型名
-			function GetExamName(){
-				var len=serverdata.paperlist.length;
-				for(var i=0;i<len;i++){
-					if(serverdata.paperlist[i].examTypeName=''){
-						DataServ.GetExamName(serverdata.paperlist[i].examTypeID).then(function(data){
-							if(data && data.length>0){
-								serverdata.paperlist[i].examTypeName=data[0].ExamTypeName;
+			function GetExamName() {
+				DataServ.GetExamName().then(function(data) {
+						if (data && data.length > 0) {
+							var len = serverdata.paperlist.length;
+							var length = data.length;
+							for (var i = 0; i < len; i++) {
+								for (var j = 0; j < length; j++) {
+									if (serverdata.paperlist[i].examTypeID == data[j].ExamTypeID) {
+										serverdata.paperlist[i].examTypeName = data[j].ExamTypeName;
+										continue;
+									}
+								}
 							}
-						})
-					}
-				}
+						}
+						CommFunServ.RefreshData(serverdata);
+				})
+			}
+			function ChangeShowItem(index){
+				serverdata.paperlist[index].isShow=!serverdata.paperlist[index].isShow;
+				CommFunServ.RefreshData(serverdata);
+			}
+			function TestAgain(paperid,type){
+				
 			}
 			//销毁
-			function Destory(){
-				serverdata.paperlist=null;
+			function Destory() {
+				serverdata.paperlist = null;
 			}
 		}
 	])

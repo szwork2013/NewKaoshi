@@ -131,13 +131,7 @@ commModule
 				})
 				return q.promise;
 			}
-			function GetExamName(examid){
-				var q = $q.defer();
-				SqliteServ.select('tb_ExamTypes', 'ExamTypeID=?', [examid]).then(function(data) {
-					q.resolve(data)
-				})
-				return q.promise;
-			}
+			
 			//类型id，获取试卷
 			function GetPaperList(id) {
 				var q = $q.defer();
@@ -194,6 +188,14 @@ commModule
 			function GetCollectData() {
 				var q = $q.defer();
 				SqliteServ.selectsql('select *,count(QuestionID) as rows from tb_UserQuestions join tb_Papers on tb_UserQuestions.PaperID = tb_Papers.PaperID where  Type=? group by tb_UserQuestions.PaperID', ['1']).then(function(data) {
+					q.resolve(data)
+				})
+				return q.promise;
+			}
+			//获取考试类型
+			function GetExamName(){
+				var q = $q.defer();
+				SqliteServ.selectsql('select * from tb_ExamTypes where ExamTypeID in (select ExamTypeID from tb_UserQuestions join tb_Papers on tb_UserQuestions.PaperID = tb_Papers.PaperID group by tb_Papers.ExamTypeID)', []).then(function(data) {
 					q.resolve(data)
 				})
 				return q.promise;

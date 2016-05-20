@@ -8,7 +8,7 @@
 	<ion-content class="error">
 		<div>
 			<div ng-repeat="items in serverdata.paperlist" ng-if="(isError && items.listtype==0) || (!isError && items.listtype==1)" class="itemb">
-				<div class="button button-full icon-right itemMain" ng-class="{'ion-ios-arrow-up':items.isShow,'ion-ios-arrow-down':!items.isShow}" ng-click="ChangeShowItem(items)" >
+				<div class="button button-full icon-right itemMain" ng-class="{'ion-ios-arrow-up':items.isShow,'ion-ios-arrow-down':!items.isShow}" ng-click="ChangeShowItem($index)" >
 					<span>{{items.examTypeName}}</span>
 					<span class="errorcount">{{items.errorlist.length}}</span>
 				</div>
@@ -17,7 +17,7 @@
 							<div class="itemMain">
 								<span class="errorpaper">{{item.paperName}}</span>
 								<span class="errorcount">{{item.count}}</span>
-								<a class="redo" ng-click="TestAgain(item.paperID)"> 重做</a>
+								<a class="redo" ng-click="TestAgain(item.paperID,items.listtype)"> 重做</a>
 							</div>
 						</div>
 				</div>

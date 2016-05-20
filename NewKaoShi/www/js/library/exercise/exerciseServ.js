@@ -104,7 +104,7 @@ libraryModule
 								var arr = $rootScope.currentpaper.answerContent[i].answer.split("");
 								var lenk = arr.length;
 								var list = CommFunServ.InitArray($rootScope.currentpaper.questionlist[j].optionContent.length,false);
-								var sd = false;
+								var sd = true;
 								for (var k = 0; k < lenk; k++) {
 									var index=0;
 									if(questiontype== 'checking'){
@@ -114,7 +114,7 @@ libraryModule
 									}
 									if(index>=0){
 										list[index] = true;
-										sd=true;
+										
 									}
 								}
 								$rootScope.currentpaper.questionlist[j].answerArr = list;
@@ -211,8 +211,9 @@ libraryModule
 				if (serverdata.showAnswer) {
 					serverdata.btnStatus = 1;
 				}
-				item.answerArr[index] = !item.answerArr[index];
-
+				if(index>=0){
+					item.answerArr[index] = !item.answerArr[index];
+				}
 				var arr = []
 				var len = item.answerArr.length;
 				for (var i = 0; i < len; i++) {
@@ -302,9 +303,10 @@ libraryModule
 			function ShowAnswer() {
 				var item = $rootScope.currentpaper.questionlist[currentIndex];
 				if (item.questionType== 'singleChoice'||item.questionType== 'mutepliChoice'||item.questionType== 'checking') { //单选，多选
-					item.hasdo = true;
+					SelectAnswer(currentIndex);
+					/*item.hasdo = true;
 					serverdata.showAnswer=true;
-					serverdata.btnStatus = 1;
+					serverdata.btnStatus = 1;*/
 				}
 
 			}

@@ -1,7 +1,13 @@
 commModule
 	.factory("DataServ", ['$http', '$q', 'SqliteServ',
 		function($http, $q, SqliteServ) {
+			var baseurl='http://p14600968p.imwork.net/kaohaodian/api/';
 			var server = {
+				PostExamTypes:PostExamTypes,
+				PostExamPaper:PostExamPaper,
+				PostQuestions:PostQuestions,
+				
+				
 				SaveHisData: SaveHisData,
 				MarkExamEnd: MarkExamEnd, //更改试卷考试状态
 
@@ -22,16 +28,53 @@ commModule
 			 * 服务器数据请求
 			 */
 			//获取所有数据（考试类型、试卷）
-			function PostAll() {
-
+			function PostExamTypes() {
+				var q=$q.defer();
+				BasePost('getExamTypes.do').then(function(response){
+					if(response && response.length>0){
+						SaveExamType(response);
+					}
+					q.resolve(response);
+				})
+				return q.promise;
+			}
+			//获取试卷
+			function PostExamPaper(typeid){
+				var q=$q.defer();
+				var parma={
+					examTypeId:typeid
+				}
+				BasePost('getExamPapers.do',parma).then(function(response){
+					if(response.status=="success"){
+						SavePaper(response.data)
+						q.resolve(response);
+					}else{
+						console.log("请求试卷失败:"+response.msg)
+					}
+					
+				})
+				return q.promise;
 			}
 			//获取历史数据
 			function PostHisData() {
 
 			}
 			//试卷id，获取试题
-			function PostQuestions(id) {
-				//请求数据
+			function PostQuestions(paperid) {
+				var q=$q.defer();
+				var parma={
+					paperId:paperid
+				}
+				BasePost('getExamQuestionsByPaper.do',parma).then(function(response){
+					console.log(response);
+					if(response.status=="success"){
+						SaveQuestion(response.data)
+					}else{
+						console.log("请求试题失败:"+response.msg)
+					}
+					q.resolve(response);
+				})
+				return q.promise;
 				//存储数据
 				//修改试卷数据下载状态
 			}
@@ -40,7 +83,7 @@ commModule
 				var q = $q.defer();
 				$http({
 					method: 'POST',
-					url: url,
+					url: baseurl+url,
 					params: parma,
 					headers: {
 						'Content-Type': 'application/x-www-form-urlencoded:charset=utf-8'

@@ -39,6 +39,7 @@ classifyModule
 				}
 				if (arr.length <= 0) {
 					$rootScope.examTypeID = id; //当前进入分类id
+					DataServ.PostExamPaper(id);
 					$state.go('tab.home');
 				} else {
 					$rootScope.currentList.children = arr;

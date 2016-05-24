@@ -62,9 +62,7 @@ libraryModule
 				DataServ.GetPaperQuestions($rootScope.currentpaper.paperID).then(function(data) {
 					if (data && data.length > 0) {
 						//组装试题数据
-						AssmbleQuestionData(data);
-						//跳转到试题
-						GoExam(type);
+						AssmbleQuestionData(data,type);
 					} else { //数据库无数据
 						//显示加载
 						$ionicLoading.show({
@@ -75,9 +73,8 @@ libraryModule
 							if (data && data.length > 0) {
 								$ionicLoading.hide(); //隐藏加载
 								//组装试题数据
-								AssmbleQuestionData(data)
-									//跳转到试题
-								GoExam(type);
+								AssmbleQuestionData(data,type)
+									
 							} else {
 								//提示加载失败(未完成)
 							}
@@ -86,7 +83,7 @@ libraryModule
 				})
 			}
 			//组装试题数据
-			function AssmbleQuestionData(data) {
+			function AssmbleQuestionData(data,type) {
 				var len = data.length;
 				$rootScope.currentpaper.questionlist = []; //试题列表
 				$rootScope.currentpaper.questiontitle = []; //标题列表
@@ -108,6 +105,8 @@ libraryModule
 						$rootScope.currentpaper.questiontitle.push(data[i]);
 					}
 				}
+				//跳转到试题
+				GoExam(type);
 			}
 			//返回题库
 			function BackLibrary() {
@@ -123,7 +122,6 @@ libraryModule
 							history: serverdata.haveKaoshi
 						})
 					}
-
 				} else {
 					$state.go('exercise', {
 						history: serverdata.haveExercise,

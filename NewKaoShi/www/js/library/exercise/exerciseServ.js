@@ -201,19 +201,22 @@ libraryModule
 					return;
 				}
 				var item = $rootScope.currentpaper.questionlist[parentindex];
-				if (item.answerArr == null || item.questionType == 'singleChoice' || item.questionType == 'checking') {
-					item.answerArr = CommFunServ.InitArray(item.optionContent.length + 1, false)
+				/*if(item.answerArr && item.answerArr[index]){
+					item.answerArr[index]=false;
+					item.hasdo=false;
 				}
-				if (item.questionType == 'singleChoice' || item.questionType == 'checking') { //单选
-					item.hasdo = !item.hasdo;
+				else*/ if (item.answerArr == null || item.questionType == 'singleChoice' || item.questionType == 'checking') {
+					item.answerArr = CommFunServ.InitArray(item.optionContent.length + 1, false)
+					if(index>=0){
+						item.answerArr[index] = true;
+						item.hasdo=true;
+					}
 				}
 				serverdata.showAnswer = item.hasdo;
 				if (serverdata.showAnswer) {
 					serverdata.btnStatus = 1;
 				}
-				if(index>=0){
-					item.answerArr[index] = !item.answerArr[index];
-				}
+				
 				var arr = []
 				var len = item.answerArr.length;
 				for (var i = 0; i < len; i++) {

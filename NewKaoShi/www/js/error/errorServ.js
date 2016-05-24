@@ -9,6 +9,7 @@ errorModule
 				GetServerdata: GetServerdata,
 				InitData: InitData,
 				ChangeShowItem:ChangeShowItem,
+				TestAgain:TestAgain,
 				Destory: Destory
 			}
 			return server;
@@ -109,8 +110,29 @@ errorModule
 				CommFunServ.RefreshData(serverdata);
 			}
 			function TestAgain(paperid,type){
+				$rootScope.currentpaper.questionlist = []; //试题列表
+				$rootScope.currentpaper.questiontitle = []; //标题列表
 				//组装试题(未完成)
 				DataServ.GetQuestionData(paperid,type).then(function(data){
+					if(data && data.length>0){
+						var len=data.length;
+						for(var i=0;i<len;i++){
+							data[i].optionContent = eval("(" + data[i].optionContent + ")");
+						//组装选项
+						for (var key in data[i].optionContent) {
+							//组装答案（img未完成）
+							data[i].optionContent[key] = key + "." + data[i].optionContent[key];
+						}
+						//组装题干(img未完成)
+						data[i].questionContent = data[i].c_key + '.' + data[i].questionContent;
+							$rootScope.currentpaper.questionlist.push(data[i]);
+						}
+					}
+					Destory();
+					$state.go('exercise',{
+						history:false,
+						type:1
+					})
 					
 				})
 				//跳转到exercise

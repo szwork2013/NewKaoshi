@@ -1,7 +1,8 @@
 commModule
-	.factory('CommFunServ', ['$timeout','LoaclStorageServ','$cordovaAppVersion','$q',
-	function($timeout,LoaclStorageServ,$cordovaAppVersion,$q) {
+	.factory('CommFunServ', ['$timeout','LoaclStorageServ','$cordovaAppVersion','$q','$rootScope',
+	function($timeout,LoaclStorageServ,$cordovaAppVersion,$q,$rootScope) {
 		var server={
+			InitData:InitData,
 			CheckInit:CheckInit,
 			RefreshData:RefreshData,
 			InitArray:InitArray,
@@ -11,6 +12,21 @@ commModule
 			GetKeyIndex:GetKeyIndex
 		}
 		return server;
+		function InitData(){
+			//当前试卷信息
+			$rootScope.currentpaper={
+				paperID:0,//当前试卷ID
+				itemNum:0,//总题数
+				totalTime:0,//总时间
+				totalScore:0,//总分数
+				passMark:0,//及格分数
+				rtime:0,//时间
+				score:0,//得分
+				questionlist:[],//试题列表
+				questiontitle:[],//标题列表
+				answerContent:null//答案列表
+			}
+		}
 		//刷新界面数据
 		function RefreshData(data){
 			$timeout(function(){

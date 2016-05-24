@@ -1,9 +1,10 @@
 loginModule
-	.controller('NavigationCtrl', ['$scope', '$state', '$ionicSlideBoxDelegate',
-		function($scope, $state, $ionicSlideBoxDelegate) {
+	.controller('NavigationCtrl', ['$scope', '$state', '$ionicSlideBoxDelegate','LoginServ',
+		function($scope, $state, $ionicSlideBoxDelegate,LoginServ) {
 			$scope.GoInit = GoInit;
 			$scope.$on('$ionicView.enter', function() {
 				$ionicSlideBoxDelegate.slide(0);
+				LoginServ.InitAppData();
 			})
 
 			function GoInit() {

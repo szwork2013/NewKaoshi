@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule','HomeModule','LibraryModule','ErrorModule','SearchModule','AccountModule','CommModule'])
 
-.run(function($ionicPlatform,$ionicPopup,$rootScope,$ionicHistory,SqliteServ) {
+.run(function($ionicPlatform,$ionicPopup,$rootScope,$ionicHistory,SqliteServ,CommFunServ) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -22,6 +22,7 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
     }
   });
   SqliteServ.createDB();
+  CommFunServ.InitData();
   $rootScope.BackView=function(){
   	if($ionicHistory.viewHistory()){
   		$ionicHistory.goBack();

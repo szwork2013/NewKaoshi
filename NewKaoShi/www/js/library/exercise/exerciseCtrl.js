@@ -1,8 +1,7 @@
 libraryModule
-	.controller('ExerciseCtrl', ['$scope', 'ExerciseServ', '$rootScope', '$stateParams',
-		function($scope, ExerciseServ, $rootScope, $stateParams) {
+	.controller('ExerciseCtrl', ['$scope', 'ExerciseServ', '$rootScope', '$stateParams','$ionicModal',
+		function($scope, ExerciseServ, $rootScope, $stateParams,$ionicModal) {
 			//试题练习按钮状态
-			$scope.btnStatus = 0; //0查看解析，1收藏，2取消收藏
 
 			$scope.slideHasChanged = slideHasChanged;
 			$scope.SelectAnswer = SelectAnswer; //单项选择答案
@@ -10,7 +9,8 @@ libraryModule
 			$scope.NextTest = NextTest;
 			$scope.ShowAnswer = ShowAnswer; //查看答案解析
 			$scope.Conllect = Conllect; //说收藏
-			$scope.Back = Back;
+			$scope.Back = Back; //返回
+			$scope.ExerciseMenu = ExerciseMenu; //右上角按钮
 			$scope.$on("$ionicView.enter", function() {
 				$scope.serverdata = ExerciseServ.GetServerData();
 				ExerciseServ.InitList($stateParams);
@@ -39,11 +39,22 @@ libraryModule
 
 			function ShowAnswer() {
 				ExerciseServ.ShowAnswer();
-				
+
 			}
 
 			function Conllect(bool) {
 				ExerciseServ.Conllect(bool);
+			}
+
+			function ExerciseMenu($event) {
+				$ionicModal.fromTemplateUrl('templates/paper/modal.html', {
+					scope: $scope,
+					animation: 'slide-in-right'
+					
+				}).then(function(modal) {
+					$scope.modal = modal;
+					$scope.modal.show();
+				})
 			}
 
 		}

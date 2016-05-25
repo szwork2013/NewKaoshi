@@ -239,6 +239,41 @@
 .kaoshi .slider-pager{
 	visibility: hidden;
 }
+/*.kaoshi .exercisemenu{
+	    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: #d9d9d9;
+}
+.kaoshi .exercisemenu a{
+	display: block;
+    border: solid 2px;
+}*/
+.popoverview{
+	width: 30%;
+    right: 0px;
+    min-height: 10rem;
+    background-color: #D9D9D9;
+}
+.popoverview a{
+	display: block;
+}
+.slide-in-right {
+   -webkit-transform: translateX(-100%);
+   transform: translateX(100%); 
+}
+.slide-in-right.ng-enter, .slide-in-right > .ng-enter {
+  -webkit-transition: all cubic-bezier(0.1, 0.7, 0.1, 1) 400ms;
+   transition: all cubic-bezier(0.1, 0.7, 0.1, 1) 400ms;
+}      
+.slide-in-right.ng-enter-active, .slide-in-right > .ng-enter-active {
+   -webkit-transform: translateX(0);
+   transform: translateX(0); 
+} 
+.slide-in-right.ng-leave, .slide-in-right > .ng-leave {
+  -webkit-transition: all ease-in-out 250ms;
+   transition: all ease-in-out 250ms; 
+}
 .kaoshi .bigtitle{
 	display: block;
 	width: 96%;

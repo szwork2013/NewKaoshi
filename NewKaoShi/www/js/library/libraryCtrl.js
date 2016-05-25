@@ -40,6 +40,7 @@ libraryModule
 			$rootScope.examTypeID=id;
 			LibraryServ.InitData($rootScope.examTypeID);
 			HideMenu();
+			SetHeight();
 		}
 		function ChangeType(index) {
 			$scope.selectindex = index;

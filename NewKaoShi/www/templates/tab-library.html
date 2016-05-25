@@ -1,12 +1,11 @@
 <ion-view>
+	<ion-header-bar align-title="center">
+		<span class="title">公共基础</span>
+		<button class="button  button-icon ion-ios-keypad-outline  " ng-click="TragetMenu()" >
+		</button>
+	</ion-header-bar>
 	<ion-content class="library" scroll=false>
 		<div>
-			<div>
-				<a class="item  item-icon-right contentoption">
-					<span>公共基础</span>
-					<i class="icon ion-ios-keypad-outline" ng-click="TragetMenu()"></i>
-				</a>
-			</div>
 			<div class="row row-wrap title">
 				<a class="col col-33" ng-class="{'selected':selectindex==1}" ng-click="ChangeType(1)">
 					<span>历年真题</span>

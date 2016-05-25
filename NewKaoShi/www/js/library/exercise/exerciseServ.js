@@ -11,7 +11,7 @@ libraryModule
 				isUpload: false, //是否交卷
 				showAnswer: false, //是否显示答案
 				questiontitle: '', //题干
-				btnStatus: 0
+				btnStatus: 0//0答案解析，1收藏，2取消收藏
 
 			}
 			var server = {
@@ -134,6 +134,9 @@ libraryModule
 				//根据大题类型显示头
 				var item = $rootScope.currentpaper.questionlist[index];
 				serverdata.showAnswer = item.hasdo;
+				if(serverdata.showAnswer){
+					serverdata.btnStatus=1;
+				}
 				if(index==0){
 					serverdata.titleContent=null;
 					serverdata.isShowTitle=true;

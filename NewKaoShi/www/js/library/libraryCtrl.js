@@ -1,6 +1,6 @@
 libraryModule
 	.controller('LibraryCtrl', ['$scope', 'LibraryServ', '$rootScope', function($scope, LibraryServ, $rootScope) {
-		$scope.selectindex = 1;
+		$scope.selectindex = 'LastExam';
 		$scope.ChangeType = ChangeType;
 		$scope.GoPaperDetail = GoPaperDetail;//进入试卷
 		$scope.TragetMenu = TragetMenu;//切换分类侧栏
@@ -42,8 +42,8 @@ libraryModule
 			HideMenu();
 			SetHeight();
 		}
-		function ChangeType(index) {
-			$scope.selectindex = index;
+		function ChangeType(type) {
+			$scope.selectindex = type;
 		}
 		//进入试卷
 		function GoPaperDetail(id) {

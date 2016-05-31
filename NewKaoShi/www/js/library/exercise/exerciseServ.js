@@ -62,6 +62,7 @@ libraryModule
 					var questiontype = $rootScope.currentpaper.questionlist[i].questionType
 					if (questiontype == 'singleChoice' || questiontype == 'mutepliChoice' || questiontype == 'checking') {
 						$rootScope.currentpaper.questionlist[i].rightAnswer = CommFunServ.InitArray($rootScope.currentpaper.questionlist[i].optionContent.length, false);
+						if($rootScope.currentpaper.questionlist[i].answer){
 						var answerlist = $rootScope.currentpaper.questionlist[i].answer.split("");
 						var length = answerlist.length;
 						for (var j = 0; j < length; j++) {
@@ -72,6 +73,7 @@ libraryModule
 								index = CommFunServ.GetKeyIndex($rootScope.currentpaper.questionlist[i].optionContent, answerlist[j]);
 							}
 							$rootScope.currentpaper.questionlist[i].rightAnswer[index] = true;
+						}
 						}
 					}
 

@@ -6,8 +6,7 @@ function(DataServ){
 	}
 	return server;
 	function InitAppData(){
-		DataServ.PostExamTypes().then(function(adata){
-			console.log(adata);
-		})
+		DataServ.InitDataBase();
+		DataServ.PostExamTypes()
 	}
 }])

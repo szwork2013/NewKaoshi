@@ -29,6 +29,7 @@ commModule
 					select: select,
 					selectsql:selectsql,
 					selectfree: selectfree,
+					update:update,
 					saveOrupadte: saveOrupadte,
 					deletehis:deletehis
 				};

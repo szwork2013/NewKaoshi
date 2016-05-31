@@ -2,7 +2,10 @@ commModule
 	.factory("DataServ", ['$http', '$q', 'SqliteServ',
 		function($http, $q, SqliteServ) {
 			var baseurl='http://p14600968p.imwork.net/kaohaodian/api/';
+			var database;
 			var server = {
+				InitDataBase:InitDataBase,
+				
 				PostExamTypes:PostExamTypes,
 				PostExamPaper:PostExamPaper,
 				PostQuestions:PostQuestions,
@@ -20,19 +23,38 @@ commModule
 				GetCollectData:GetCollectData,
 				GetExamName:GetExamName,
 				GetQuestionData:GetQuestionData,
+				BaseSelect:BaseSelect,
 				
+				UpdatePaperStatus:UpdatePaperStatus,//修改试卷状态
 				DeletKaoshiHis:DeletKaoshiHis
 			}
 			return server;
+			function InitDataBase(){
+				if(database==null){
+					database=new DataBase();
+				}
+				if(database.db==null){
+					database.OpenTransaction(function(tx){
+						database.InitDB(tx);
+					})
+					
+				}
+			}
 			/*
 			 * 服务器数据请求
 			 */
 			//获取所有数据（考试类型、试卷）
 			function PostExamTypes() {
 				var q=$q.defer();
+				/*var parma={
+					reqTimestamp: Date.parse(new Date()),
+					reqCode:'khd_app',
+					reqSign:''
+				}
+				parma.reqSign=MD5(parma.reqTimestamp+parma.reqCode+'0123456789qwertyuiop');*/
 				BasePost('getExamTypes.do').then(function(response){
-					if(response && response.length>0){
-						SaveExamType(response);
+					if(response.status=="success"){
+						SaveExamType(response.data);
 					}
 					q.resolve(response);
 				})
@@ -42,9 +64,10 @@ commModule
 			function PostExamPaper(typeid){
 				var q=$q.defer();
 				var parma={
-					examTypeId:typeid
+					//examTypeId:typeid
+					examTypeId:'4028188154ce38b40154ce3cc6690002'
 				}
-				BasePost('getExamPapers.do',parma).then(function(response){
+				BasePost('getExamPapers.do').then(function(response){
 					if(response.status=="success"){
 						SavePaper(response.data)
 						q.resolve(response);
@@ -66,17 +89,15 @@ commModule
 					paperId:paperid
 				}
 				BasePost('getExamQuestionsByPaper.do',parma).then(function(response){
-					console.log(response);
 					if(response.status=="success"){
 						SaveQuestion(response.data)
+						q.resolve(response.data);
 					}else{
 						console.log("请求试题失败:"+response.msg)
 					}
-					q.resolve(response);
+					
 				})
 				return q.promise;
-				//存储数据
-				//修改试卷数据下载状态
 			}
 
 			function BasePost(url, parma) {
@@ -107,46 +128,46 @@ commModule
 			}
 			//存储考试类型数据
 			function SaveExamType(data) {
-				SqliteServ.transaction(function(tx) {
+				database.OpenTransaction(function(tx) {
 					var len = data.length;
 					for (var i = 0; i < len; i++) {
-						SqliteServ.saveOrupadte(tx, 'tb_ExamTypes', ["ExamTypeID", "ExamTypeName", "ParentID"], [data[i].ExamTypeID, data[i].ExamTypeName, data[i].ParentID], "ExamTypeID=?", [data[i].ExamTypeID]);
+						database.SaveOrUpdateTable(tx, 'tb_ExamTypes', ["ExamTypeID", "ExamTypeName", "ParentID"], [data[i].id, data[i].name, data[i].pid], "ExamTypeID", [data[i].id]);
 					}
 				})
 			}
 			//存储试卷数据
 			function SavePaper(data) {
-				SqliteServ.transaction(function(tx) {
+				database.OpenTransaction(function(tx){
 					var len = data.length;
 					for (var i = 0; i < len; i++) {
-						SqliteServ.saveOrupadte(tx, 'tb_Papers', ["PaperID", "PaperContent", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "Status", "PassMark", "UpLoaderID", "TotalTime", "Year", "ContainQuestionTypes", "CreateTime", "CreatorID", "UpdateTime", "UpdaterID"], [data[i].PaperID, data[i].PaperContent, data[i].ExamTypeID, data[i].PaperTypeID, data[i].TotalScore, data[i].ItemNum, data[i].UserCount, data[i].IsVip, data[i].PassMark, data[i].UpLoaderID, data[i].TotalTime, data[i].Year, data[i].ContainQuestionTypes, data[i].CreateTime, data[i].CreatorID, data[i].UpdateTime, data[i].UpdaterID], "PaperID=?", [data[i].PaperID]);
+						database.SaveOrUpdateTable(tx, 'tb_Papers', ["PaperID", "PaperContent", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "Status", "PassMark", "UpLoaderID", "TotalTime", "Year", "ContainQuestionTypes", "CreateTime", "CreatorID", "UpdateTime", "UpdaterID"], [data[i].id, data[i].name, data[i].examTypeId, data[i].paperTypeId, data[i].totalScore, data[i].itemNum, data[i].useCount, data[i].isVIP, data[i].passmark, data[i].uploaderId, data[i].totalTime, data[i].year, data[i].containQustionTypes, data[i].createTime, data[i].creator, data[i].updateTime, data[i].uploaderId], "PaperID", [data[i].id]);
 					}
 				})
 			}
 			//存储试题数据
 			function SaveQuestion(data) {
-				SqliteServ.transaction(function(tx) {
+				database.OpenTransaction(function(tx) {
 					var len = data.length;
 					for (var i = 0; i < len; i++) {
-						SqliteServ.saveOrupadte(tx, 'tb_Question', ["id", "paperId", "c_key", "q_key", "pq_key", "questionContent", "questionIndex", "questionType", "soure", "optionContent", "answer", "analysis", "version"], [data[i].id, data[i].paperId, data[i].c_key, data[i].q_key, data[i].pq_key, data[i].questionContent, data[i].questionIndex, data[i].questionType, data[i].soure, data[i].optionContent, data[i].answer, data[i].analysis, data[i].version], "id=?", [data[i].id]);
+						database.SaveOrUpdateTable(tx, 'tb_Question', ["id", "paperId", "c_key", "q_key", "pq_key", "questionContent", "questionIndex", "questionType", "soure", "optionContent", "answer", "analysis", "version"], [data[i].id, data[i].paperId, data[i].c_key, data[i].q_key, data[i].pq_key, data[i].questionContent, data[i].questionIndex, data[i].questionType, data[i].soure, JSON.stringify(data[i].optionContent), data[i].answer, data[i].analysis, data[i].version], "id", [data[i].id]);
 					}
 				})
 			}
 			//存储错题与收藏数据
 			function SaveErrOrColl(data) {
-				SqliteServ.transaction(function(tx) {
+				database.OpenTransaction(function(tx) {
 					var len = data.length;
 					for (var i = 0; i < len; i++) {
-						SqliteServ.saveOrupadte(tx, 'tb_UserQuestions', ["ID", "QuestionID", "UserID", "Type", "IsSync"], [data[i].ID, data[i].QuestionID, data[i].UserID, data[i].Type, data[i].IsSync], "ID=?", [data[i].ID]);
+						database.SaveOrUpdateTable(tx, 'tb_UserQuestions', ["ID", "QuestionID", "UserID", "Type", "IsSync"], [data[i].ID, data[i].QuestionID, data[i].UserID, data[i].Type, data[i].IsSync], "ID=?", [data[i].ID]);
 					}
 				})
 			}
 			//存储历史数据
 			function SaveHisData(data) {
-				SqliteServ.transaction(function(tx) {
+				database.OpenTransaction(function(tx) {
 					var len = data.length;
 					for (var i = 0; i < len; i++) {
-						SqliteServ.saveOrupadte(tx, 'tb_History', ["PaperID", "UserID", "Time", "Soure", "Content", "Type", "IsEnd", "IsSync"], [data[i].PaperID, data[i].UserID, data[i].Time, data[i].Soure, data[i].Content, data[i].Type, data[i].IsEnd, data[i].IsSync], "PaperID=? and Type=?", [data[i].PaperID, data[i].Type]);
+						database.SaveOrUpdateTable(tx, 'tb_History', ["PaperID", "UserID", "Time", "Soure", "Content", "Type", "IsEnd", "IsSync"], [data[i].PaperID, data[i].UserID, data[i].Time, data[i].Soure, data[i].Content, data[i].Type, data[i].IsEnd, data[i].IsSync], "PaperID=? and Type=?", [data[i].PaperID, data[i].Type]);
 					}
 				})
 			}
@@ -165,12 +186,19 @@ commModule
 					}
 				})
 			}
+			function UpdatePaperStatus(id){
+				var q=$q.defer();
+				SqliteServ.update('tb_Papers',['Status'],[2],"PaperID=?",[id]).then(function(res){
+					q.resolve(res);
+				})
+				return q.promise
+			}
 			/*
 			 * 数据库读取数据
 			 */
 			function GetExamType() {
 				var q = $q.defer();
-				SqliteServ.select('tb_ExamTypes', '', []).then(function(data) {
+				SqliteServ.select('tb_ExamTypes', 'ParentID is null', []).then(function(data) {
 					q.resolve(data)
 				})
 				return q.promise;
@@ -248,6 +276,13 @@ commModule
 			function GetQuestionData(paperid,type){
 				var q = $q.defer();
 				SqliteServ.selectsql('select * from tb_Question where id in (select QuestionID from tb_UserQuestions where PaperID=? and Type=?)', [paperid,type]).then(function(data) {
+					q.resolve(data)
+				})
+				return q.promise;
+			}
+			function BaseSelect(sql,parma){
+				var q = $q.defer();
+				SqliteServ.selectsql(sql, parma).then(function(data) {
 					q.resolve(data)
 				})
 				return q.promise;

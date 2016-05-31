@@ -17,9 +17,17 @@ libraryModule
 			}
 			//初始化试卷列表
 			function InitData(id) {
+				id='4028188154ce38b40154ce3cc6690002'
 				DataServ.GetPaperList(id).then(function(data) {
-					serverdata.paperlist = data;
-					CommFunServ.RefreshData(serverdata)
+					if(data && data.length>0){
+						var len=data.length;
+						for(var i=0;i<len;i++){
+							data[i].UpdateTime=new Date(data[i].UpdateTime.replace(/-/g,"/"));
+						}
+						serverdata.paperlist = data;
+						CommFunServ.RefreshData(serverdata)
+					}
+					
 				})
 			}
 			function GoPaperDetail(id) {

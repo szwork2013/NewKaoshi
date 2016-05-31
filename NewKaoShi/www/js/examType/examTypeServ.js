@@ -23,9 +23,9 @@ classifyModule
 			}
 
 			function InitList() {
-				DataServ.GetExamType().then(function(data) {
+				DataServ.BaseSelect( "select * from tb_ExamTypes").then(function(data) {
 					examList = data;
-					ShowChildren(0, '考试分类')
+					ShowChildren(null, '考试分类')
 				})
 			}
 			//显示下级,父级id，父级name
@@ -48,7 +48,7 @@ classifyModule
 					$rootScope.currentList.name = name;
 				}
 				CommFunServ.RefreshData(serverdata);
-				if (id == 0) {
+				if (id == null) {
 					ShowGrandChildren();
 				}
 			}
@@ -73,14 +73,14 @@ classifyModule
 			//显示父级，子级id
 			function ShowParent() {
 				if ($rootScope.currentList) {
-					if ($rootScope.currentList.id == 0) {//当前列表已是基层考试类型，
+					if ($rootScope.currentList.id == null) {//当前列表已是基层考试类型，
 						Back();
 						return;
 					} else {
 						var len = examList.length;
 						for (var i = 0; i < len; i++) {
 							if (examList[i].ExamTypeID == $rootScope.currentList.id) {
-								if (examList[i].ParentID == 0) {//
+								if (examList[i].ParentID == null) {//
 									ShowChildren(examList[i].ParentID, '考试分类');
 									return;
 								} else {

@@ -7,13 +7,13 @@
 	<ion-content class="library" scroll=false>
 		<div>
 			<div class="row row-wrap title">
-				<a class="col col-33" ng-class="{'selected':selectindex==1}" ng-click="ChangeType(1)">
+				<a class="col col-33" ng-class="{'selected':selectindex=='LastExam'}" ng-click="ChangeType('LastExam')">
 					<span>历年真题</span>
 				</a>
-				<a class="col col-33" ng-class="{'selected':selectindex==2}" ng-click="ChangeType(2)">
+				<a class="col col-33" ng-class="{'selected':selectindex=='PracticeTest'}" ng-click="ChangeType('PracticeTest')">
 					<span>模拟试题</span>
 				</a>
-				<a class="col col-33" ng-class="{'selected':selectindex==3}" ng-click="ChangeType(3)">
+				<a class="col col-33" ng-class="{'selected':selectindex=='Practice'}" ng-click="ChangeType('Practice')">
 					<span>章节练习</span>
 				</a>
 			</div>

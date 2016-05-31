@@ -1,7 +1,7 @@
 libraryModule
-	.factory('PaperDetailServ', ['$state', '$rootScope', 'DataServ', '$ionicLoading',
+	.factory('PaperDetailServ', ['$state', '$rootScope', 'DataServ', '$ionicLoading','$timeout',
 
-		function($state, $rootScope, DataServ, $ionicLoading) {
+		function($state, $rootScope, DataServ, $ionicLoading,$timeout) {
 
 			var serverdata = {
 				paperdetail: null, //试卷详情
@@ -70,10 +70,11 @@ libraryModule
 							})
 							//请求服务器数据
 						DataServ.PostQuestions($rootScope.currentpaper.paperID).then(function(data) {
+							$ionicLoading.hide(); //隐藏加载
 							if (data && data.length > 0) {
-								$ionicLoading.hide(); //隐藏加载
 								//组装试题数据
-								AssmbleQuestionData(data,type)
+								AssmbleQuestionData(data,type);
+								DataServ.UpdatePaperStatus(data[0].paperId);
 									
 							} else {
 								//提示加载失败(未完成)
@@ -84,6 +85,7 @@ libraryModule
 			}
 			//组装试题数据
 			function AssmbleQuestionData(data,type) {
+				
 				var len = data.length;
 				$rootScope.currentpaper.questionlist = []; //试题列表
 				$rootScope.currentpaper.questiontitle = []; //标题列表
@@ -105,8 +107,11 @@ libraryModule
 						$rootScope.currentpaper.questiontitle.push(data[i]);
 					}
 				}
+				console.log($rootScope.currentpaper.questionlist)
 				//跳转到试题
-				GoExam(type);
+				$timeout(function(){
+					GoExam(type);
+				},2000)
 			}
 			//返回题库
 			function BackLibrary() {

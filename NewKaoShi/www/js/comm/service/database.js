@@ -4,46 +4,33 @@
  */
 var DataBase = function() {
 	this.options = {
-		dbname: 'bcdb',
+		dbname: 'khddb',
 		version: '1.0',
-		dbdesc: 'bcdb',
+		dbdesc: 'khddb',
 		dbsize: 30000,
 		db: null,
-		table_UserMessage: 'tb_UserMessage',
+		table_UserMessage: 'tb_ExamTypes',
 		//增加type区分公告与一般聊天
-		UserMessage: ['MessageID', 'SendUserID', 'Message', 'SendTime', 'Recipients', 'SendUserName', 'SendUserPicture', 'HeadPictureURI', 'MsgType', 'EnterpriseID', 'Time', 'Status','IsRead'],
+		UserMessage: ["ExamTypeID", "ExamTypeName", "ParentID"],
 		//登陆用户表
-		table_CurrentUsers: 'tb_CurrentUsers',
-		CurrentUsers: ['UserID', 'UserName', 'NickName', 'RoleIDs', 'EnterpriseID', 'EnterpriseName', 'DepartmentID', 'HeadImage', 'Token', 'Sign', 'FunctionIDs','LastTime'],
+		table_CurrentUsers: 'tb_Papers',
+		CurrentUsers: ["PaperID","PaperContent","ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "Status", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID"],
 		//企业人员表
-		table_FrontUsers: 'tb_FrontUsers',
-		FrontUsers: ['UserID', 'UserName', 'DepartmentID', 'EnterpriseID'],
+		table_FrontUsers: 'tb_Question',
+		FrontUsers: ["id", "paperId", "c_key","q_key", "pq_key",  "questionContent", "questionIndex", "questionType", "soure","optionContent","answer","analysis","version"],
 
 		//人员角色关系表：RoleName为角色名
-		table_UserRoles: 'tb_UserRoles',
-		UserRoles: ['UserID', 'RoleID', 'RoleName', 'EnterpriseID'],
+		table_UserRoles: 'tb_Account',
+		UserRoles: ["ID", "Name", "NickName", "IsVip","IsLogin"],
 
 		//部门表：ParentID为父级部门ID;
-		table_Departments: 'tb_Departments',
-		Departments: ['DepartmentID', 'DepartmentName', 'ParentID', 'EnterpriseID'],
+		table_Departments: 'tb_UserQuestions',
+		Departments: ["ID","PaperID","QuestionID", "UserID", "Type","IsSync"],
 		//项目表
-		table_Projects: 'tb_Projects',
+		table_Projects: 'tb_History',
 		//Roles项目角色,Departments设计部门ID
-		Projects: ['ProjectID', 'ProjectName', 'Departments', 'HaveScene', 'ProjectRoles', 'ProjectState', 'Manager', 'EnterpriseID','Status','Creator'],
-		//现场表:Type为现场类型
-		table_Scenes: 'tb_Scenes',
-		Scenes: ['SceneID', 'ParentID', 'SceneName', 'ProjectID', 'SceneWorker', 'SceneState', 'SceneType', 'Address', 'BeginDate', 'EndDate', 'SendStatus', 'HasData', 'AllWorkers','Status'],
-		//现场类型表
-		table_SceneTypes: 'tb_SceneTypes',
-		SceneTypes: ['SceneTypeID', 'SceneTypeName', 'ParentID', 'Available', 'EnterpriseID'],
-		//资料表
-		table_Materials: 'tb_Materials',
-		//Type资料类型（word、excel、pdf）为显示资料图片
-		Materials: ['ID', 'Name', 'KnowledgeType', 'DocumentType', 'EnterpriseID', 'UpdateTime','DocumentSize'],
-		//现场信息表
-		table_SceneMessageComments: 'tb_SceneMessageComments',
-		SceneMessageComments: ['MessageID', 'SceneID', 'UserID', 'UserPicture', 'UserPictureURI', 'UserName', 'Address', 'CreateTime', 'Description', 'Images', 'Comments', 'Status', 'Type', 'State', 'PictureGuid','Relation','IsExamine','Examines','Files'],
-	}
+		Projects: ["ID", "PaperID", "UserID", "Time", "Soure", "Content","Type","IsEnd","IsSync"],
+		}
 }
 DataBase.prototype = {
 	OpenDB: function(callback) {
@@ -82,47 +69,27 @@ DataBase.prototype = {
 			this.OpenDB();
 		}
 		this.CreateTable(tx, this.options.table_UserMessage, this.options.UserMessage, {
-			"MessageID": "primary key"
+			"ExamTypeID": "primary key"
 		});
 		this.CreateTable(tx, this.options.table_CurrentUsers, this.options.CurrentUsers, {
-			"UserID": "primary key",
-			"app_flow_no": "not null"
+			"PaperID": "primary key",
 		});
 		this.CreateTable(tx, this.options.table_FrontUsers, this.options.FrontUsers, {
-			"id": "INTEGER primary key",
+			"id": "primary key",
 			"app_flow_no": "not null"
 		});
 		this.CreateTable(tx, this.options.table_UserRoles, this.options.UserRoles, {
-			"RoleID": "Int"
+			"ID":"primary key",
 		});
 		this.CreateTable(tx, this.options.table_Departments, this.options.Departments, {
-			"DepartmentID": "Int primary key",
+			"ID": "primary key",
 			"app_flow_no": "not null"
 		});
 		this.CreateTable(tx, this.options.table_Projects, this.options.Projects, {
-			"ProjectID": "primary key",
+			"ID": "primary key",
 			"app_flow_no": "not null"
 		});
-		this.CreateTable(tx, this.options.table_Scenes, this.options.Scenes, {
-			"SceneID": "primary key",
-			"app_flow_no": "not null"
-		});
-		this.CreateTable(tx, this.options.table_SceneTypes, this.options.SceneTypes, {
-			"SceneTypeID": "Int primary key",
-			"app_flow_no": "not null"
-		});
-		this.CreateTable(tx, this.options.table_Materials, this.options.Materials, {
-			"MatterialID": "primary key",
-			"app_flow_no": "not null"
-		});
-		//企业表不确定是否需要
-		this.CreateTable(tx, this.options.table_Enterprises, this.options.Enterprises, {
-			"EnterpriseID": "primary key",
-			"app_flow_no": "not null"
-		});
-		this.CreateTable(tx, this.options.table_SceneMessageComments, this.options.SceneMessageComments, {
-			"MessageID": "primary key"
-		});
+		
 	},
 	CreateTable: function(tx, tableName, fields, constraint) {
 
@@ -198,6 +165,7 @@ DataBase.prototype = {
 			}
 			return true;
 		}, function(tx, error) {
+			console.log(error)
 			return false;
 		});
 	},

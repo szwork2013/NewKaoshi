@@ -9,7 +9,7 @@
 	</ion-header-bar>
 	<ion-content class="kaoshi">
 		<ion-slide-box on-slide-changed="slideHasChanged($index)" >
-			<ion-slide ng-repeat="items in currentpaper.questionlist">
+			<ion-slide ng-repeat="items in currentpaper.questionlist" style="width: 100%">
 				<span ng-repeat="title in serverdata.titleContent" ng-show="serverdata.isShowTitle" class="bigtitle">
 					{{title.questionContent}}
 				</span>
@@ -19,7 +19,7 @@
 				<multiplechoice-Question ng-if="items.questionType=='mutepliChoice'">
 
 				</multiplechoice-Question>
-				<case-Question ng-if="items.QuestionType==2">
+				<case-Question  ng-if="items.QuestionType==2">
 
 				</case-Question>
 			</ion-slide>

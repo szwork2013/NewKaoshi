@@ -6,9 +6,11 @@ commModule
 			var server = {
 				InitDataBase:InitDataBase,
 				
-				PostExamTypes:PostExamTypes,
-				PostExamPaper:PostExamPaper,
-				PostQuestions:PostQuestions,
+				PostExamTypes:PostExamTypes,//请求考试类型
+				PostExamPaper:PostExamPaper,//请求试卷
+				PostQuestions:PostQuestions,//请求试题
+				PostLogin:PostLogin,//登录
+				PostRegister:PostRegister,//注册
 				
 				
 				SaveHisData: SaveHisData,
@@ -91,9 +93,48 @@ commModule
 				BasePost('getExamQuestionsByPaper.do',parma).then(function(response){
 					if(response.status=="success"){
 						SaveQuestion(response.data)
+						console.log(response.data)
 						q.resolve(response.data);
 					}else{
 						console.log("请求试题失败:"+response.msg)
+					}
+					
+				})
+				return q.promise;
+			}
+			function PostLogin(name,pwd){
+				var q=$q.defer();
+				var parma={
+					name:name,
+					pwd:pwd
+				}
+				BasePost('validateUser.do',parma).then(function(response){
+					if(response.status=="success"){
+						SaveAccount(response.data)
+						console.log(response.data)
+						q.resolve(response.data);
+					}else{
+						q.reject(response.msg);
+					}
+					
+				})
+				return q.promise;
+			}
+			function PostRegister(name,nickname,pwd,email){
+				var q=$q.defer();
+				var parma={
+					name:name,
+					pwd:pwd,
+					nickName:nickname,
+					email:email
+				}
+				BasePost('validateUser.do',parma).then(function(response){
+					if(response.status=="success"){
+						SaveAccount(response.data)
+						console.log(response.data)
+						q.resolve(response.data);
+					}else{
+						q.reject(response.msg);
 					}
 					
 				})
@@ -111,6 +152,8 @@ commModule
 					}
 				}).success(function(response) {
 					q.resolve(response);
+				}).error(function(error){
+					q.reject(error)
 				});
 				return q.promise;
 			}
@@ -131,7 +174,7 @@ commModule
 				database.OpenTransaction(function(tx) {
 					var len = data.length;
 					for (var i = 0; i < len; i++) {
-						database.SaveOrUpdateTable(tx, 'tb_ExamTypes', ["ExamTypeID", "ExamTypeName", "ParentID"], [data[i].id, data[i].name, data[i].pid], "ExamTypeID", [data[i].id]);
+						database.SaveOrUpdateTable(tx, 'tb_ExamTypes', ["id", "name", "pid"], [data[i].id, data[i].name, data[i].pid], "id", [data[i].id]);
 					}
 				})
 			}

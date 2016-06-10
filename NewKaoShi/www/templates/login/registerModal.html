@@ -23,6 +23,7 @@
 						<i ng-class="{'ion-ios-circle-outline':!loginData.confim,'ion-ios-checkmark':loginData.confim}" ng-click="loginData.confim=!loginData.confim"></i>
 						<span>我已阅读并同意《用户管理款项》</span>
 					</div>
+					<span style="color: red;font-size: 0.8rem;" >{{servedata.registererr}}</span>
 				</div>
 				<div class="subbtn">
 					<button ng-click="Register()" class="button button-full button-assertive" type="submit" ng-disabled="loginForm.account.$error.required||loginForm.name.$error.required||loginForm.password.$error.required||loginForm.conpassword.$error.required">注册</button>

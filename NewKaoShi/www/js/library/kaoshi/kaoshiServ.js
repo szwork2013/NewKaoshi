@@ -30,6 +30,7 @@ libraryModule
 			//初始化数据
 			function InitList(bool) {
 				slideHasChanged(0);
+				
 				//type=0表示历史考试
 				if (bool == 'true') {
 					GetHistory();
@@ -89,6 +90,10 @@ libraryModule
 					}
 				}
 				CommFunServ.RefreshData(serverdata);
+				$timeout(function(){
+					$ionicSlideBoxDelegate.update();
+				},2000)
+				
 			}
 			//切换试题类型
 			function slideHasChanged(index) {
@@ -187,7 +192,7 @@ libraryModule
 				for (var j = 0; j < length; j++) {
 					if ($rootScope.currentpaper.answerContent[j].id == item.id) {
 						$rootScope.currentpaper.answerContent[j].answer = str;
-						if (item.questionType == 0) { //单选
+						if (item.questionType == 'checking' || item.questionType == 'singleChoice') { //单选
 							NextTest();
 						}
 						return;
@@ -199,7 +204,7 @@ libraryModule
 					answer: str
 				}
 				$rootScope.currentpaper.answerContent.push(answeritem);
-				if (item.questionType == 0) { //单选
+				if (item.questionType == 'checking' || item.questionType == 'singleChoice') { //判断，单选
 					NextTest();
 				}
 			}

@@ -8,8 +8,8 @@ function($scope,KaoshiServ,$stateParams){
 		$scope.Assignment=Assignment;
 		$scope.Back=Back;
 		$scope.Estimate=Estimate;//确定评估
-		$scope.$on("$ionicView.enter",function(){
-			$scope.serverdata=KaoshiServ.GetServerData();
+		$scope.serverdata=KaoshiServ.GetServerData();
+		$scope.$on("$ionicView.loaded",function(){
 			KaoshiServ.InitList($stateParams.history);
 		})
 		function slideHasChanged(index){
@@ -39,6 +39,7 @@ function($scope,KaoshiServ,$stateParams){
 		function Assignment(){
 			KaoshiServ.Assignment();
 		}
+		
 }])
 .directive('choiceQuestion',[function(){
 	return {

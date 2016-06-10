@@ -206,20 +206,12 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
 			templateUrl: 'templates/paper/resultCard.html',
 			controller: 'ResultCardCtrl'
 		});
-
+		$urlRouterProvider.otherwise('/navigation');
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise(function($injector) {
+  /*$urlRouterProvider.otherwise(function($injector) {
   		//获取到注入器,获取$state服务
 				var $state = $injector.get("$state");
-					var commfun = $injector.get("CommFunServ");
-			/*	commfun.CheckInit().then(function(bool){
-					if(bool){
-								$state.go('navigation');
-					}else{
-								$state.go('tab.home');
-					}
-				})*/
-					$state.go('navigation');
-  });
+				$state.go('navigation');
+  });*/
 
 });

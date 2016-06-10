@@ -1,6 +1,6 @@
 commModule
-	.factory('CommFunServ', ['$timeout','LoaclStorageServ','$cordovaAppVersion','$q','$rootScope',
-	function($timeout,LoaclStorageServ,$cordovaAppVersion,$q,$rootScope) {
+	.factory('CommFunServ', ['$timeout','$cordovaAppVersion','$q','$rootScope',
+	function($timeout,$cordovaAppVersion,$q,$rootScope) {
 		var server={
 			InitData:InitData,
 			CheckInit:CheckInit,
@@ -9,7 +9,10 @@ commModule
 			GetValue:GetValue,
 			GetKey:GetKey,
 			GetValueIndex:GetValueIndex,
-			GetKeyIndex:GetKeyIndex
+			GetKeyIndex:GetKeyIndex,
+			ShowConfirm:ShowConfirm,//确认框
+			ShowAlert:ShowAlert//提示框
+			
 		}
 		return server;
 		function InitData(){
@@ -91,48 +94,31 @@ commModule
       		});
       		return q.promise;*/
 		}
+		//  confirm 对话框
+			function ShowConfirm(title, content) {
+				var q = $q.defer();
+				var confirmPopup = $ionicPopup.confirm({
+					title: title,
+					template: content
+				});
+				confirmPopup.then(function(res) {
+					q.resolve(res)
+					confirmPopup.close();
+				});
+				return q.promise;
+			};
+			//alert警告框
+			function ShowAlert(title, content) {
+				var q = $q.defer();
+				var alertPopup = $ionicPopup.alert({
+					title: title,
+					template: content
+				});
+				alertPopup.then(function(res) {
+					q.resolve(res)
+					alertPopup.close();
+				});
+				return q.promise;
+			}
 		
 	}])
-	.factory('LoaclStorageServ', ['$window', 
-		function($window) {
-			/*
-			 * 说明：LocalStorage缓存服务
-			 */
-			return {
-				set: function(key, value) {
-					//添加缓存
-					$window.localStorage[key] = value;
-				},
-				get: function(key, defaultValue) {
-					//得到缓存
-					return $window.localStorage[key] || defaultValue;
-				},
-				setObject: function(key, value) {
-					//添加json格式缓存
-					$window.localStorage[key] = angular.toJson(value);
-				},
-				getObject: function(key, defaultValue) {
-					//得到json格式缓存
-					return angular.fromJson($window.localStorage[key] || defaultValue);
-				},
-				getBoolean: function(key, defaultValue) {
-					//添加bool缓存
-					if ($window.localStorage[key] == "true") {
-						return true;
-					} else if ($window.localStorage[key] == "false") {
-						return false;
-					} else {
-						return defaultValue;
-					}
-				},
-				removeItem: function(key) {
-					//得到bool缓存
-					return $window.localStorage.removeItem(key);
-				},
-				clear: function() {
-					//清除bool缓存
-					return $window.localStorage.clear();
-				}
-			}
-		}
-	])

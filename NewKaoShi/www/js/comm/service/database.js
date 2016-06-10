@@ -174,7 +174,7 @@ DataBase.prototype = {
 		if (typeof(key) != "undefined" && typeof(keyVal) != "undefined" && key != "") {
 			var sql = "SELECT " + insertFields[0] + " FROM " + tableName;
 			if (typeof(key) != "undefined" && typeof(keyVal) != "undefined" && key != "") {
-				sql += " where " + key + "=?";
+				sql += " where " + key ;
 			}
 			me.SelectTable(tx, sql, [keyVal], function(rows) {
 				if (rows) {

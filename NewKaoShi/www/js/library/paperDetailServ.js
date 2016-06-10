@@ -74,6 +74,7 @@ libraryModule
 							if (data && data.length > 0) {
 								//组装试题数据
 								AssmbleQuestionData(data,type);
+								//修改试卷状态
 								DataServ.UpdatePaperStatus(data[0].paperId);
 									
 							} else {
@@ -91,27 +92,16 @@ libraryModule
 				$rootScope.currentpaper.questiontitle = []; //标题列表
 				$rootScope.currentpaper.answerContent=null;//答案列表
 				for (var i = 0; i < len; i++) {
-					if (data[i].analysis != 'null' && data[i].analysis != '') {
+					if (data[i].answer != null && data[i].answer != '') {
 						data[i].optionContent = eval("(" + data[i].optionContent + ")");
 						//组装选项
-						for (var key in data[i].optionContent) {
-							//组装答案（img未完成）
-							data[i].optionContent[key] = key + "." + data[i].optionContent[key];
-						}
-						//组装题干(img未完成)
-						data[i].questionContent = data[i].c_key + '.' + data[i].questionContent;
 						$rootScope.currentpaper.questionlist.push(data[i]);
 					} else {
-						//组装题干(img未完成)
-						data[i].questionContent = data[i].c_key + '.' + data[i].questionContent;
 						$rootScope.currentpaper.questiontitle.push(data[i]);
 					}
 				}
-				console.log($rootScope.currentpaper.questionlist)
 				//跳转到试题
-				$timeout(function(){
-					GoExam(type);
-				},2000)
+				GoExam(type);
 			}
 			//返回题库
 			function BackLibrary() {

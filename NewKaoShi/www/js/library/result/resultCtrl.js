@@ -8,7 +8,7 @@ function($scope,ResultServ,$state){
 	$scope.GoPaperDeatail=GoPaperDeatail;
 	$scope.TestAgain=TestAgain;
 	$scope.serverdata=ResultServ.GetServerdata();
-	$scope.$on("$ionicView.loaded",function(){
+	$scope.$on("$ionicView.enter",function(){
 		ResultServ.InitData();
 	})
 	function CheckAnswer(){

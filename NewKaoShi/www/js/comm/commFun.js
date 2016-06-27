@@ -1,88 +1,93 @@
 commModule
-	.factory('CommFunServ', ['$timeout','$cordovaAppVersion','$q','$rootScope',
-	function($timeout,$cordovaAppVersion,$q,$rootScope) {
-		var server={
-			InitData:InitData,
-			CheckInit:CheckInit,
-			RefreshData:RefreshData,
-			InitArray:InitArray,
-			GetValue:GetValue,
-			GetKey:GetKey,
-			GetValueIndex:GetValueIndex,
-			GetKeyIndex:GetKeyIndex,
-			ShowConfirm:ShowConfirm,//确认框
-			ShowAlert:ShowAlert//提示框
-			
-		}
-		return server;
-		function InitData(){
-			//当前试卷信息
-			$rootScope.currentpaper={
-				paperID:0,//当前试卷ID
-				itemNum:0,//总题数
-				totalTime:0,//总时间
-				totalScore:0,//总分数
-				passMark:0,//及格分数
-				rtime:0,//时间
-				score:0,//得分
-				questionlist:[],//试题列表
-				questiontitle:[],//标题列表
-				answerContent:null//答案列表
+	.factory('CommFunServ', ['$timeout', '$cordovaAppVersion', '$q', '$rootScope',
+		function($timeout, $cordovaAppVersion, $q, $rootScope) {
+			var server = {
+				InitData: InitData,
+				CheckInit: CheckInit,
+				RefreshData: RefreshData,
+				InitArray: InitArray,
+				GetValue: GetValue,
+				GetKey: GetKey,
+				GetValueIndex: GetValueIndex,
+				GetKeyIndex: GetKeyIndex,
+				ShowConfirm: ShowConfirm, //确认框
+				ShowAlert: ShowAlert,//提示框
+				JsonSort:JsonSort,
+				format: format,
+				secondFormat: secondFormat//设置时间格式
+
 			}
-		}
-		//刷新界面数据
-		function RefreshData(data){
-			$timeout(function(){
-				data=data;
-			},0)
-		}
-		function InitArray(length, initdata) {
-			var arr = new Array();
-			for (var i = 0; i < length; i++) {
-				arr[i] = initdata;
+			return server;
+
+			function InitData() {
+				//当前试卷信息
+				$rootScope.currentpaper = {
+					paperID: 0, //当前试卷ID
+					itemNum: 0, //总题数
+					totalTime: 0, //总时间
+					totalScore: 0, //总分数
+					passMark: 0, //及格分数
+					rtime: 0, //时间
+					score: 0, //得分
+					questionlist: [], //试题列表
+					questiontitle: [], //标题列表
+					answerContent: null //答案列表
+				}
 			}
-			return arr;
-		}
-		//通过索引获取json对象中的值
-		function GetValue(jsondata,index){
-			var arr=new Array();
-			for(var k in jsondata){
-				arr.push(jsondata[k]);
+			//刷新界面数据
+			function RefreshData(data) {
+				$timeout(function() {
+					data = data;
+				}, 0)
 			}
-			var value=arr[index];
-			return value;
-		}
-		//通过索引获取json对象中的值
-		function GetKey(jsondata,index){
-			var arr=new Array();
-			for(var k in jsondata){
-				arr.push(k);
+
+			function InitArray(length, initdata) {
+				var arr = new Array();
+				for (var i = 0; i < length; i++) {
+					arr[i] = initdata;
+				}
+				return arr;
 			}
-			var keyvalue=arr[index];
-			return keyvalue;
-		}
-		//获取json对象中值索引
-		function GetValueIndex(jsondata,value){
-			var arr=new Array();
-			for(var k in jsondata){
-				var str=jsondata[k];
-				arr.push(str);
+			//通过索引获取json对象中的值
+			function GetValue(jsondata, index) {
+				var arr = new Array();
+				for (var k in jsondata) {
+					arr.push(jsondata[k]);
+				}
+				var value = arr[index];
+				return value;
 			}
-			var index=arr.indexOf(value);
-			return index;
-		}
-		//获取json对象中键索引
-		function GetKeyIndex(jsondata,keyvalue){
-			var arr=new Array();
-			for(var k in jsondata){
-				arr.push(k);
+			//通过索引获取json对象中的值
+			function GetKey(jsondata, index) {
+				var arr = new Array();
+				for (var k in jsondata) {
+					arr.push(k);
+				}
+				var keyvalue = arr[index];
+				return keyvalue;
 			}
-			var index=arr.indexOf(keyvalue);
-			return index;
-		}
-		//初始化检查
-		function CheckInit(){
-			/*var q=$q.defer();
+			//获取json对象中值索引
+			function GetValueIndex(jsondata, value) {
+				var arr = new Array();
+				for (var k in jsondata) {
+					var str = jsondata[k].substr(2, jsondata[k].length - 1)
+					arr.push(str);
+				}
+				var index = arr.indexOf(value);
+				return index;
+			}
+			//获取json对象中键索引
+			function GetKeyIndex(jsondata, keyvalue) {
+				var arr = new Array();
+				for (var k in jsondata) {
+					arr.push(k);
+				}
+				var index = arr.indexOf(keyvalue);
+				return index;
+			}
+			//初始化检查
+			function CheckInit() {
+				/*var q=$q.defer();
 			var oldversion=LoaclStorageServ.get('version',null)
 			$cordovaAppVersion.getVersionNumber().then(function (version) {
        			var appVersion = version;
@@ -93,8 +98,8 @@ commModule
        			}
       		});
       		return q.promise;*/
-		}
-		//  confirm 对话框
+			}
+			//  confirm 对话框
 			function ShowConfirm(title, content) {
 				var q = $q.defer();
 				var confirmPopup = $ionicPopup.confirm({
@@ -120,5 +125,63 @@ commModule
 				});
 				return q.promise;
 			}
-		
-	}])
+			function JsonSort(jsondata){
+				var arr=new Array();
+				if(jsondata){
+					for(var item in jsondata){
+						arr.push({key:item,value:jsondata[item]})
+					}
+				}
+				
+				return arr.sort();
+			}
+			//时间格式化
+			function format(_date, format) {
+				var o = {
+					"M+": _date.getMonth() + 1, //month 
+					"d+": _date.getDate(), //day 
+					"h+": _date.getHours(), //hour 
+					"m+": _date.getMinutes(), //minute 
+					"s+": _date.getSeconds(), //second 
+					"q+": Math.floor((_date.getMonth() + 3) / 3), //quarter 
+					"S": _date.getMilliseconds() //millisecond 
+				}
+
+				if (/(y+)/.test(format)) {
+					format = format.replace(RegExp.$1, (_date.getFullYear() + "").substr(4 - RegExp.$1.length));
+				}
+
+				for (var k in o) {
+					if (new RegExp("(" + k + ")").test(format)) {
+						format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+					}
+				}
+				format = format.substring(0, format.length - 3);
+				return format;
+			};
+			//时间格式化
+			function secondFormat(_date, format) {
+				var o = {
+					"M+": _date.getMonth() + 1, //month 
+					"d+": _date.getDate(), //day 
+					"h+": _date.getHours(), //hour 
+					"m+": _date.getMinutes(), //minute 
+					"s+": _date.getSeconds(), //second 
+					"q+": Math.floor((_date.getMonth() + 3) / 3), //quarter 
+					"S": _date.getMilliseconds() //millisecond 
+				}
+
+				if (/(y+)/.test(format)) {
+					format = format.replace(RegExp.$1, (_date.getFullYear() + "").substr(4 - RegExp.$1.length));
+				}
+
+				for (var k in o) {
+					if (new RegExp("(" + k + ")").test(format)) {
+						format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+					}
+				}
+				//format = format.substring(0,format.length-3);
+				return format;
+			};
+		}
+	])

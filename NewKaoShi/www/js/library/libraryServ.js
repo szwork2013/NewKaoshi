@@ -18,12 +18,15 @@ libraryModule
 			//初始化试卷列表
 			function InitData(id) {
 				id='4028188154ce38b40154ce3cc6690002'
-				DataServ.GetPaperList(id).then(function(data) {
+				DataServ.BaseSelect('select * from tb_Papers where ExamTypeID=?',[id]).then(function(data) {
 					if(data && data.length>0){
 						var len=data.length;
 						for(var i=0;i<len;i++){
-							data[i].UpdateTime=new Date(data[i].UpdateTime.replace(/-/g,"/"));
+						 	 var datea=new Date(data[i].UpdateTime.replace(/-/g,"/"));
+							//data[i].UpdateTime=CommFunServ.format(datea,"yyyy-MM-dd hh:mm:ss");
+							data[i].UpdateTime=datea;
 						}
+						
 						serverdata.paperlist = data;
 						CommFunServ.RefreshData(serverdata)
 					}

@@ -91,7 +91,7 @@ libraryModule
 							}
 							break;
 						case 'singleChoice':
-						case 'mutepliChoice':
+						case 'multipleChoice':
 							for (var i = 0; i < len; i++) {
 								for (var j = 0; j < len; j++) {
 									if (list[answerarr[i]] == rightarr[j]) {

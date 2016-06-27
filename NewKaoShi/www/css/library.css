@@ -236,6 +236,9 @@
 .assignment{
 	line-height: 2rem;
 }
+.kaoshi .scroll{
+	height: 100%;
+}
 .kaoshi .slider-pager{
 	visibility: hidden;
 }
@@ -257,7 +260,6 @@
 }
 .popoverview a{
 	display: block;
-	padding:0px;
 }
 .slide-in-right {
    -webkit-transform: translateX(-100%);

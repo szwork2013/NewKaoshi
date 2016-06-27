@@ -6617,6 +6617,7 @@ angular.module('ngCordova.plugins.sqlite', [])
       	 	callback(tx);
       	 });
       },
+
       insertCollection: function (db, query, bindings) {
         var q = $q.defer();
         var coll = bindings.slice(0); // clone collection

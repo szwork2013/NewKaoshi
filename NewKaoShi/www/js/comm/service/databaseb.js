@@ -89,6 +89,7 @@ DataBase.prototype = {
 			"ID": "primary key",
 			"app_flow_no": "not null"
 		});
+		
 	},
 	CreateTable: function(tx, tableName, fields, constraint) {
 
@@ -164,6 +165,7 @@ DataBase.prototype = {
 			}
 			return true;
 		}, function(tx, error) {
+			console.log(error)
 			return false;
 		});
 	},
@@ -172,7 +174,7 @@ DataBase.prototype = {
 		if (typeof(key) != "undefined" && typeof(keyVal) != "undefined" && key != "") {
 			var sql = "SELECT " + insertFields[0] + " FROM " + tableName;
 			if (typeof(key) != "undefined" && typeof(keyVal) != "undefined" && key != "") {
-				sql += " where " + key + "=?";
+				sql += " where " + key ;
 			}
 			me.SelectTable(tx, sql, [keyVal], function(rows) {
 				if (rows) {

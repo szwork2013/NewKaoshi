@@ -1,7 +1,7 @@
 libraryModule
-	.factory('PaperDetailServ', ['$state', '$rootScope', 'DataServ', '$ionicLoading','$timeout',
+	.factory('PaperDetailServ', ['$state', '$rootScope', 'DataServ', '$ionicLoading', '$timeout', 'CommFunServ',
 
-		function($state, $rootScope, DataServ, $ionicLoading,$timeout) {
+		function($state, $rootScope, DataServ, $ionicLoading, $timeout, CommFunServ) {
 
 			var serverdata = {
 				paperdetail: null, //试卷详情
@@ -62,7 +62,7 @@ libraryModule
 				DataServ.GetPaperQuestions($rootScope.currentpaper.paperID).then(function(data) {
 					if (data && data.length > 0) {
 						//组装试题数据
-						AssmbleQuestionData(data,type);
+						AssmbleQuestionData(data, type);
 					} else { //数据库无数据
 						//显示加载
 						$ionicLoading.show({
@@ -73,10 +73,10 @@ libraryModule
 							$ionicLoading.hide(); //隐藏加载
 							if (data && data.length > 0) {
 								//组装试题数据
-								AssmbleQuestionData(data,type);
+								AssmbleQuestionData(data, type);
 								//修改试卷状态
 								DataServ.UpdatePaperStatus(data[0].paperId);
-									
+								
 							} else {
 								//提示加载失败(未完成)
 							}
@@ -85,15 +85,16 @@ libraryModule
 				})
 			}
 			//组装试题数据
-			function AssmbleQuestionData(data,type) {
-				
+			function AssmbleQuestionData(data, type) {
+
 				var len = data.length;
 				$rootScope.currentpaper.questionlist = []; //试题列表
 				$rootScope.currentpaper.questiontitle = []; //标题列表
-				$rootScope.currentpaper.answerContent=null;//答案列表
+				$rootScope.currentpaper.answerContent = null; //答案列表
 				for (var i = 0; i < len; i++) {
 					if (data[i].answer != null && data[i].answer != '') {
-						data[i].optionContent = eval("(" + data[i].optionContent + ")");
+						data[i].optionContent = JSON.parse(data[i].optionContent); //eval("(" + + ")");
+						
 						//组装选项
 						$rootScope.currentpaper.questionlist.push(data[i]);
 					} else {
@@ -110,7 +111,7 @@ libraryModule
 			//跳转到试题
 			function GoExam(type) {
 				if (type == 0) {
-					if (serverdata.isEnd) {//上一次考试已确认交卷
+					if (serverdata.isEnd) { //上一次考试已确认交卷
 						$state.go('result')
 					} else {
 						$state.go('kaoshi', {

@@ -64,7 +64,7 @@ libraryModule
 						if ($rootScope.currentpaper.answerContent[i].id == $rootScope.currentpaper.questionlist[j].id) {
 							//"1|3"多选答案
 							var questiontype=$rootScope.currentpaper.questionlist[j].questionType
-							if ( questiontype== 'singleChoice'||questiontype== 'mutepliChoice'||questiontype== 'checking') {
+							if ( questiontype== 'singleChoice'||questiontype== 'multipleChoice'||questiontype== 'checking') {
 								//单选0，多选1
 								var arr = $rootScope.currentpaper.answerContent[i].answer.split("");
 								var lenk = arr.length;
@@ -124,7 +124,7 @@ libraryModule
 							case 'singleChoice':
 								serverdata.title = "单选题";
 								break;
-							case 'mutepliChoice':
+							case 'multipleChoice':
 								serverdata.title = "多选题";
 								break;
 							case '2':
@@ -175,7 +175,8 @@ libraryModule
 					if (item.answerArr[i]) {
 						var value='';
 						if(item.questionType == 'checking'){
-							value=CommFunServ.GetValue(item.optionContent,i);
+							var str=CommFunServ.GetValue(item.optionContent,i);
+							value=str.substr(2,str.length-1);
 						}else{
 							value=CommFunServ.GetKey(item.optionContent,i);
 						}
@@ -235,17 +236,11 @@ libraryModule
 			function SaveAnswer(){
 				
 				//保存历史
-				var item = [{
-					PaperID: $rootScope.currentpaper.paperID,
-					UserID: '',
-					Time: timeCount,
-					Soure: 0,
-					Content: JSON.stringify($rootScope.currentpaper.answerContent),
-					Type: 0, //考试
-					IsEnd:0,
-					IsSync: false
-				}]
-				DataServ.SaveHisData(item);
+				var paperid=$rootScope.currentpaper.paperID;
+				var content=JSON.stringify($rootScope.currentpaper.answerContent);
+				DataServ.BaseSaveUpdate('tb_History', ["PaperID", "UserID", "Time", "Soure", "Content", "Type", "IsEnd", "IsSync"],[paperid,'',timeCount,0,content,0,0,false],'PaperID=? and Type=?',[paperid,0]).then(function(res){
+					
+				})
 			}
 			function Back() {
 				SaveAnswer();

@@ -17,10 +17,12 @@ loginModule
 
 			function GoInit() {
 				//测试删除
-				//localStorage.removeItem("examlist");
+				//localStorage.removeItem("examTypeList");
+//localStorage.removeItem("examTypeId");
 
 				var str = localStorage.getItem("examTypeList");
 				var id= localStorage.getItem("examTypeId"); //当前进入分类id
+				DataServ.PostExamTypes();
 				if (str && id) {
 					$rootScope.currentList = JSON.parse(str);
 					$state.go('tab.home');
@@ -31,7 +33,7 @@ loginModule
 						type: 0
 					});
 				}
-				DataServ.PostExamTypes();
+				
 			}
 			function Login(name,pwd){
 				DataServ.PostLogin(name,pwd).then(function(res){

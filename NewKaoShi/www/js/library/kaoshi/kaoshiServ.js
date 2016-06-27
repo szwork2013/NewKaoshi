@@ -175,8 +175,7 @@ libraryModule
 					if (item.answerArr[i]) {
 						var value='';
 						if(item.questionType == 'checking'){
-							var str=CommFunServ.GetValue(item.optionContent,i);
-							value=str.substr(2,str.length-1);
+							value=CommFunServ.GetValue(item.optionContent,i);
 						}else{
 							value=CommFunServ.GetKey(item.optionContent,i);
 						}

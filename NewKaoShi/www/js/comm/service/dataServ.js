@@ -29,7 +29,7 @@ commModule
 				BaseSelect:BaseSelect,
 				
 				UpdatePaperStatus:UpdatePaperStatus,//修改试卷状态
-				DeletKaoshiHis:DeletKaoshiHis
+				DeletPaperHistory:DeletPaperHistory
 			}
 			return server;
 			function InitDataBase(){
@@ -346,7 +346,7 @@ commModule
 			/*
 			 * 
 			 */
-			function DeletKaoshiHis(paperid){
+			function DeletPaperHistory(paperid){
 				var q=$q.defer();
 				SqliteServ.deletehis('tb_History', 'PaperID=? and Type=? and IsEnd=?', [paperid,0,1]).then(function(response){
 					q.resolve(response)

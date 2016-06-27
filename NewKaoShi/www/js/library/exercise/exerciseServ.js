@@ -1,6 +1,6 @@
 libraryModule
-	.factory('ExerciseServ', ['$rootScope', 'DataServ', 'CommFunServ', '$ionicSlideBoxDelegate', '$state',
-		function($rootScope, DataServ, CommFunServ, $ionicSlideBoxDelegate, $state) {
+	.factory('ExerciseServ', ['$rootScope', 'DataServ', 'CommFunServ', '$ionicSlideBoxDelegate', '$state','PaperDetailServ',
+		function($rootScope, DataServ, CommFunServ, $ionicSlideBoxDelegate, $state,PaperDetailServ) {
 			var currentType; //currentType=0试卷，currentType=1错题与收藏
 			var currentIndex; //当前试题索引
 			var serverdata = {
@@ -22,7 +22,9 @@ libraryModule
 				LastTest: LastTest, //上一题
 				NextTest: NextTest, //下一题
 				Back: Back, //返回
-				ShowAnswer: ShowAnswer //显示答案
+				ShowAnswer: ShowAnswer, //显示答案
+				ExercisesAgain:ExercisesAgain,//重新开始
+				ResultCard:ResultCard//
 
 			}
 			return server;
@@ -324,6 +326,23 @@ libraryModule
 				} else {
 					serverdata.btnStatus = 1;
 				}
+			}
+			
+			function ExercisesAgain(){
+				//提示是否重新考试
+				PaperDetailServ.Start(0);
+				serverdata.isShowAnswer = false;
+				serverdata.showAnswer = false;
+				$rootScope.currentpaper.answerContent = null;
+				//删除历史数据
+				DataServ.DeletPaperHistory($rootScope.currentpaper.paperID).then(function(data) {
+					$state.go('exercise', {
+						history: false
+					});
+				});
+			}
+			function ResultCard(){
+				$state.go('resultCard');
 			}
 
 			function Destory() {

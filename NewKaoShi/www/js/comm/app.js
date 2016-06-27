@@ -202,7 +202,7 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
 		//答案解析
 		.state('resultCard', {
 			url: '/resultCard',
-			cache: true,
+			cache: false,
 			templateUrl: 'templates/paper/resultCard.html',
 			controller: 'ResultCardCtrl'
 		});

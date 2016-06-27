@@ -11,6 +11,9 @@ libraryModule
 			$scope.Conllect = Conllect; //说收藏
 			$scope.Back = Back; //返回
 			$scope.ExerciseMenu = ExerciseMenu; //右上角按钮
+			
+			$scope.ExercisesAgain=ExercisesAgain;//重新开始
+			$scope.ResultCard=ResultCard;//答题卡
 			$scope.$on("$ionicView.enter", function() {
 				$scope.serverdata = ExerciseServ.GetServerData();
 				ExerciseServ.InitList($stateParams);
@@ -55,6 +58,19 @@ libraryModule
 					$scope.modal = modal;
 					$scope.modal.show();
 				})
+			}
+			function HideExerciseMenu(){
+				if($scope.modal){
+					$scope.modal.hide();
+				}
+			}
+			function ExercisesAgain(){
+				ExerciseServ.ExercisesAgain();
+				HideExerciseMenu();
+			}
+			function ResultCard(){
+				ExerciseServ.ResultCard();
+				HideExerciseMenu();
 			}
 
 		}

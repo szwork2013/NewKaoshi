@@ -257,6 +257,7 @@
 }
 .popoverview a{
 	display: block;
+	padding:0px;
 }
 .slide-in-right {
    -webkit-transform: translateX(-100%);

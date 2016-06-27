@@ -214,8 +214,8 @@ libraryModule
 					item.answerArr = CommFunServ.InitArray(item.optionContent.length + 1, false)
 					if(index>=0){
 						item.answerArr[index] = true;
-						item.hasdo=true;
 					}
+					item.hasdo=true;
 				}
 				serverdata.showAnswer = item.hasdo;
 				if (serverdata.showAnswer) {
@@ -228,8 +228,7 @@ libraryModule
 					if (item.answerArr[i]) {
 						var value = '';
 						if (item.questionType == 'checking') {
-							var str = CommFunServ.GetValue(item.optionContent, i);
-							value = str.substr(2, str.length - 1);
+							value = CommFunServ.GetValue(item.optionContent, i);
 						} else {
 							value = CommFunServ.GetKey(item.optionContent, i);
 						}
@@ -244,7 +243,7 @@ libraryModule
 				}
 				var length = $rootScope.currentpaper.answerContent.length;
 				for (var j = 0; j < length; j++) {
-					if ($rootScope.currentpaper.answerContent[j].id == item.ID) {
+					if ($rootScope.currentpaper.answerContent[j].id == item.id) {
 						$rootScope.currentpaper.answerContent[j].answer = str;
 						CommFunServ.RefreshData(serverdata);
 						return;

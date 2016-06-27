@@ -78,7 +78,7 @@ libraryModule
 				var rightarr = $rootScope.currentpaper.questionlist[index].answer.split(""); //正确答案
 				var answerarr = answer.split("|");; //回答答案
 				if (rightarr.length != answerarr.length) {
-					item.isRight = 0;
+					$rootScope.currentpaper.questionlist[index].isRight = 0;
 					return 0; //选多或选少不得分
 				}
 				if (answerarr && answerarr.length > 0) {
@@ -94,7 +94,7 @@ libraryModule
 						case 'multipleChoice':
 							for (var i = 0; i < len; i++) {
 								for (var j = 0; j < len; j++) {
-									if (list[answerarr[i]] == rightarr[j]) {
+									if (answerarr[i] == rightarr[j]) {
 										count++;
 										continue;
 									}

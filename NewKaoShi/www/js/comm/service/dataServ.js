@@ -94,7 +94,6 @@ commModule
 				BasePost('getExamQuestionsByPaper.do',parma).then(function(response){
 					if(response.status=="success"){
 						SaveQuestion(response.data)
-						console.log(response.data)
 						q.resolve(response.data);
 					}else{
 						console.log("请求试题失败:"+response.msg)
@@ -145,7 +144,7 @@ commModule
 				var parma={
 					placeId:placeid
 				}
-				BasePost('validateUser.do',parma).then(function(response){
+				BasePost('getQuestionPic.do',parma).then(function(response){
 					if(response.status=="success"){
 						//SaveAccount(response.data)
 						console.log(response.data)
@@ -223,9 +222,9 @@ commModule
 				})
 			}
 			function MarkExamEnd(paperid) {
-				SqliteServ.transaction(function(tx) {
-					SqliteServ.saveOrupadte(tx, 'tb_History', ["IsEnd"], [1], "PaperID=? and Type=?", [paperid, 0]);
-				})
+				database.OpenTransaction(function(tx) {
+						database.SaveOrUpdateUerRoleTable(tx, 'tb_History', ["IsEnd"], [1], "PaperID=? and Type=?", [paperid, 0]);
+					})
 			}
 			//存储用户信息
 			function SaveAccount(data) {

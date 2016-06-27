@@ -60,6 +60,7 @@ libraryModule
 			function Start(type) {
 				//获取试卷所有试题
 				DataServ.GetPaperQuestions($rootScope.currentpaper.paperID).then(function(data) {
+					DataServ.PostQuestionPic("0f5ac1d4c612408ab9cbb4912f3be38d")
 					if (data && data.length > 0) {
 						//组装试题数据
 						AssmbleQuestionData(data, type);
@@ -72,6 +73,8 @@ libraryModule
 						DataServ.PostQuestions($rootScope.currentpaper.paperID).then(function(data) {
 							$ionicLoading.hide(); //隐藏加载
 							if (data && data.length > 0) {
+								//请求图片
+								
 								//组装试题数据
 								AssmbleQuestionData(data, type);
 								//修改试卷状态

@@ -218,8 +218,8 @@ libraryModule
 					item.answerArr = CommFunServ.InitArray(item.optionContent.length + 1, false)
 					if (index >= 0) {
 						item.answerArr[index] = true;
-						item.hasdo = true;
 					}
+					item.hasdo = true;
 				}
 				serverdata.showAnswer = item.hasdo;
 				if (serverdata.showAnswer) {
@@ -248,7 +248,7 @@ libraryModule
 				}
 				var length = $rootScope.currentpaper.answerContent.length;
 				for (var j = 0; j < length; j++) {
-					if ($rootScope.currentpaper.answerContent[j].id == item.ID) {
+					if ($rootScope.currentpaper.answerContent[j].id == item.id) {
 						$rootScope.currentpaper.answerContent[j].answer = str;
 						CommFunServ.RefreshData(serverdata);
 						return;

@@ -1,6 +1,6 @@
 commModule
-	.factory('CommFunServ', ['$timeout', '$cordovaAppVersion', '$q', '$rootScope',
-		function($timeout, $cordovaAppVersion, $q, $rootScope) {
+	.factory('CommFunServ', ['$timeout', '$cordovaAppVersion', '$q', '$rootScope','$cordovaFile','$cordovaFileTransfer',
+		function($timeout, $cordovaAppVersion, $q, $rootScope,$cordovaFile,$cordovaFileTransfer) {
 			var server = {
 				InitData: InitData,
 				CheckInit: CheckInit,
@@ -14,7 +14,11 @@ commModule
 				ShowAlert: ShowAlert,//提示框
 				JsonSort:JsonSort,
 				format: format,
-				secondFormat: secondFormat//设置时间格式
+				secondFormat: secondFormat,//设置时间格式
+				
+				CreateDir:CreateDir,//创建目录
+				Download:Download//下载
+				
 
 			}
 			return server;
@@ -183,5 +187,57 @@ commModule
 				//format = format.substring(0,format.length-3);
 				return format;
 			};
+			function CreateDir() {
+				$cordovaFile.getFreeDiskSpace()
+					.then(function(success) {
+						$cordovaFile.checkDir(cordova.file.externalRootDirectory, "KaoHaoDian")
+							.then(function(success) {
+
+							}, function(error) {
+								$cordovaFile.createDir(cordova.file.externalRootDirectory, "KaoHaoDian", false)
+									.then(function(success) {
+										// success
+									}, function(error) {
+										ShowAlert("提示", "文件创建失败,清理内存重试");
+									});
+							});
+					}, function(error) {
+						ShowAlert("提示", "无内存空间")
+					});
+			}
+
+			function Download(url) {
+				var q = $q.defer();
+				if (!CheckPlatform()) {
+					var fileName = "";
+					if (url.indexOf("=") == -1) {
+						var filesurl = url.split('/');
+						fileName = filesurl[filesurl.length - 1];
+					} else {
+						var filesurl = url.split('=');
+						fileName = filesurl[filesurl.length - 1];
+					}
+					var targetPath = cordova.file.externalRootDirectory + "KaoHaoDian/" + fileName;
+					var trustHosts = true;
+					var options = {};
+					$cordovaFile.checkFile(cordova.file.externalRootDirectory + "KaoHaoDian/", fileName)
+						.then(function(success) {
+							q.resolve(success)
+						}, function(error) {
+							$cordovaFileTransfer.download(url, targetPath, options, trustHosts)
+								.then(function(result) {
+									q.resolve(result);
+								}, function(err) {
+									q.reject(err);
+								}, function(progress) {
+									downloadProgress = (progress.loaded / progress.total) * 100;
+									q.resolve(downloadProgress);
+								});
+						});
+				}
+
+				return q.promise;
+			}
+
 		}
 	])

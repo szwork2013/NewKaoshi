@@ -195,7 +195,7 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
 		//结果
 		.state('result', {
 			url: '/result',
-			cache: true,
+			cache: false,
 			templateUrl: 'templates/paper/result.html',
 			controller: 'ResultCtrl'
 		})

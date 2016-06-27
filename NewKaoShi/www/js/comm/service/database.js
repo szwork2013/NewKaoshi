@@ -9,7 +9,7 @@ var DataBase = function() {
 		dbdesc: 'khddb',
 		dbsize: 30000,
 		db: null,
-		table_UserMessage: 'tb_ExamTypes',
+			table_UserMessage: 'tb_ExamTypes',
 		//增加type区分公告与一般聊天
 		UserMessage: ["ExamTypeID", "ExamTypeName", "ParentID"],
 		//登陆用户表

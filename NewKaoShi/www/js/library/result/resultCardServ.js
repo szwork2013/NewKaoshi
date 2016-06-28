@@ -35,7 +35,7 @@ libraryModule
 					if ($rootScope.currentpaper.questionlist) {
 						var len = $rootScope.currentpaper.questionlist.length;
 						for (var i = 0; i < len; i++) {
-							$rootScope.currentpaper.questionlist[i].isRight = 0;
+							$rootScope.currentpaper.questionlist[i].isRight = 2;
 							for (var j = 0; j < length; j++) {
 								if ($rootScope.currentpaper.questionlist[i].id == $rootScope.currentpaper.answerContent[j].id) {
 									var paperid = $rootScope.currentpaper.questionlist[i].paperId;
@@ -45,6 +45,14 @@ libraryModule
 							}
 						}
 					}
+				}else{
+					var lena = $rootScope.currentpaper.questionlist.length;
+					serverdata.hasdocount=0;
+					serverdata.rightdocount=0;
+					for(var k=0;k<lena;k++){
+						$rootScope.currentpaper.questionlist[k].isRight=0;
+					}
+					
 				}
 				CommFunServ.RefreshData(serverdata);
 
@@ -88,7 +96,9 @@ libraryModule
 				if (count == len) {
 					serverdata.rightdocount++;
 					$rootScope.currentpaper.questionlist[index].isRight = 1;
-				} 
+				}else{
+					$rootScope.currentpaper.questionlist[index].isRight = 0;
+				}
 			}
 			//进入答案解析
 			function GoExercise(q_key) {
@@ -144,7 +154,8 @@ libraryModule
 			}
 			//销毁
 			function Destory(){
-				
+				serverdata.hasdocount=0;
+				serverdata.rightdocount=0;
 			}
 		}
 	])

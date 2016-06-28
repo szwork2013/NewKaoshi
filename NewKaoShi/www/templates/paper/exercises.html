@@ -3,7 +3,7 @@
 		<button class="button button-icon ion-ios-arrow-back" ng-click="Back()">
 		</button>
 		<span class="title"> {{serverdata.title}}</span>
-		<button class="button  button-icon ion-ios-keypad-outline  " ng-click="ExerciseMenu()" >
+		<button class="button  button-icon ion-ios-keypad-outline" ng-click="ExerciseMenu()" ng-if="serverdata.currentType!='2'" >
 		</button>
 	</ion-header-bar>
 	<ion-content class="kaoshi">

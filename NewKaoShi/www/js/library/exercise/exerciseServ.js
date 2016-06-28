@@ -1,9 +1,10 @@
 libraryModule
 	.factory('ExerciseServ', ['$rootScope', 'DataServ', 'CommFunServ', '$ionicSlideBoxDelegate', '$state','PaperDetailServ',
 		function($rootScope, DataServ, CommFunServ, $ionicSlideBoxDelegate, $state,PaperDetailServ) {
-			var currentType; //currentType=0试卷，currentType=1错题与收藏
+			 
 			var currentIndex; //当前试题索引
 			var serverdata = {
+				currentType:0,//currentType=0试卷，currentType=1错题与收藏
 				isShowAnswer: false, //是否值显示解析，在考试答案解析用true
 				isShowTitle: false, //是否显示大题标题
 				titleContent: null, //当前大题内容
@@ -34,17 +35,17 @@ libraryModule
 			}
 			//初始化数据
 			function InitList(obj) {
-				currentType = obj.type;
+				serverdata.currentType = obj.type;
 				AssmbleRightAnswer();
 				//bool=true有历史记录，type=0试卷，type=1错题与收藏，2考试答案解析
-				if (currentType == '0') {
+				if (serverdata.currentType == '0') {
 					if (obj.history == 'true') {
 						GetHistory();
 					}
 					slideHasChanged(0);
 				} else {
 					var index = 0;
-					if (obj.qKey && currentType == '2') {
+					if (obj.qKey && serverdata.currentType == '2') {
 						serverdata.isShowAnswer = true;
 						var len = $rootScope.currentpaper.questionlist.length;
 						for (var i = 0; i < len; i++) {
@@ -206,7 +207,7 @@ libraryModule
 			}
 			//单选
 			function SelectAnswer(parentindex, index) {
-				if (currentType == '2') {
+				if (serverdata.currentType == '2') {
 					serverdata.btnStatus = 1;
 					return;
 				}
@@ -290,22 +291,25 @@ libraryModule
 
 			function Back() {
 				Destory();
-				if (currentType == '0') {
+				if (serverdata.currentType == '0') {
 					//保存历史
-					var paperid=$rootScope.currentpaper.paperID;
-					var content = JSON.stringify($rootScope.currentpaper.answerContent);
-					DataServ.BaseSaveUpdate('tb_History', ["PaperID", "UserID", "Time", "Soure", "Content", "Type", "IsEnd", "IsSync"], [paperid, '', 0, 0, content, 1, 0, false],'PaperID=? and Type=?',[paperid,1]).then(function(res) {
-
-						})
+					SaveHistory();
 						//返回试卷详细
 					$state.go('paperDetail');
-				} else if (currentType == '1') {
+				} else if (serverdata.currentType == '1') {
 					//返回错误列表
 					$state.go('tab.error');
 				} else {
 					//返回答题卡
 					$state.go('resultCard');
 				}
+			}
+			function SaveHistory(){
+				var paperid=$rootScope.currentpaper.paperID;
+					var content = JSON.stringify($rootScope.currentpaper.answerContent);
+					DataServ.BaseSaveUpdate('tb_History', ["PaperID", "UserID", "Time", "Soure", "Content", "Type", "IsEnd", "IsSync"], [paperid, '', 0, 0, content, 1, 0, false],'PaperID=? and Type=?',[paperid,1]).then(function(res) {
+
+						})
 			}
 			//显示答案
 			function ShowAnswer() {
@@ -336,9 +340,11 @@ libraryModule
 				});
 			}
 			function ResultCard(){
-				$state.go('resultCard');
+				SaveHistory();
+				$state.go('resultCard',{
+					type:1
+				});
 			}
-
 			function Destory() {
 				serverdata.isShowAnswer = false; //是否值显示解析，在考试答案解析用true
 				serverdata.isShowTitle = false; //是否显示大题标题

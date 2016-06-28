@@ -143,7 +143,9 @@ libraryModule
 
 			function CheckAnswer() {
 				Destory();
-				$state.go('resultCard');
+				$state.go('resultCard',{
+					type:0
+				});
 			}
 
 			function GoPaperDeatail() {

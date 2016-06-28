@@ -57,6 +57,7 @@ libraryModule
 						$rootScope.currentpaper.totalTime = data[0].TotalTime;
 						$rootScope.currentpaper.passMark = data[0].PassMark;
 						$rootScope.currentpaper.totalScore = data[0].TotalScore;
+						$rootScope.currentpaper.status=data[0].Status;
 						$state.go('paperDetail');
 					}
 				})

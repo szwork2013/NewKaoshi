@@ -60,7 +60,7 @@ libraryModule
 			function Start(type) {
 				//试卷内容有更新
 				if ($rootScope.currentpaper && $rootScope.currentpaper.status == "3") {
-					PostPaperQuestion();
+					PostPaperQuestion(type);
 				} else {
 					//获取试卷所有试题
 					DataServ.GetPaperQuestions($rootScope.currentpaper.paperID).then(function(data) {
@@ -69,12 +69,12 @@ libraryModule
 							//组装试题数据
 							AssmbleQuestionData(data, type);
 						} else { //数据库无数据
-							PostPaperQuestion();
+							PostPaperQuestion(type);
 						}
 					})
 				}
 			}
-			function PostPaperQuestion() {
+			function PostPaperQuestion(type) {
 				//显示加载
 				$ionicLoading.show({
 						template: '加载试题中...'
@@ -84,6 +84,7 @@ libraryModule
 					$ionicLoading.hide(); //隐藏加载
 					if (data && data.length > 0) {
 						//请求图片
+						//CommFunServ.Download()
 						//DataServ.PostQuestionPic("0f5ac1d4c612408ab9cbb4912f3be38d")
 						//组装试题数据
 						AssmbleQuestionData(data, type);
@@ -93,6 +94,9 @@ libraryModule
 					} else {
 						//提示加载失败(未完成)
 					}
+				},function(err){
+					$ionicLoading.hide(); //隐藏加载
+					CommFunServ.ShowAlert('提示','加载试题失败!')
 				});
 			}
 			//组装试题数据

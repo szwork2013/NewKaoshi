@@ -309,7 +309,10 @@ libraryModule
 					var content = JSON.stringify($rootScope.currentpaper.answerContent);
 					DataServ.BaseSaveUpdate('tb_History', ["PaperID", "UserID", "Time", "Soure", "Content", "Type", "IsEnd", "IsSync"], [paperid, '', 0, 0, content, 1, 0, false],'PaperID=? and Type=?',[paperid,1]).then(function(res) {
 
-						})
+					})
+			}
+			function SaveError(){
+				
 			}
 			//显示答案
 			function ShowAnswer() {

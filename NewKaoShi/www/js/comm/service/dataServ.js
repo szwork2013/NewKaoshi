@@ -97,6 +97,7 @@ commModule
 						SaveQuestion(response.data)
 						q.resolve(response.data);
 					} else {
+						q.reject(response.msg)
 						console.log("请求试题失败:" + response.msg)
 					}
 

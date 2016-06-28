@@ -1,57 +1,69 @@
-<ion-view >
+<ion-view>
 	<ion-header-bar align-title="center">
-		
-		<span class="title"> 我的</span>
-		
-	</ion-header-bar>
-  <ion-content class="account">
 
-  	<div class="list head" >
-  		<div ng-show="!isLogin">
-  			<button class="button button-full button-small button-assertive" ng-click="GoLogin()">还未登录,请登录</button>
-  		</div>
-  			<div class="item item-icon-right" ng-show="isLogin">
-				
+		<span class="title"> 我的</span>
+
+	</ion-header-bar>
+	<ion-content class="account">
+
+		<div class="list head">
+			<div ng-show="!isLogin">
+				<button class="button button-full button-small button-assertive" ng-click="GoLogin()">还未登录,请登录</button>
+			</div>
+			<div class="item item-icon-right" ng-show="isLogin">
+
 				<img ng-src="img/user.png" class="item-note headimg" />
 				<span>
   					<span class="headname">我的黄花菜</span>
-    				<span class="heademail">123456@qq.com</span>
-  				</span>
-  					<a ng-click="ShowUpdatepsd()">
-    					<i class="ion-ios-unlocked-outline unclockimg"></i><span class="unclockbtn">修改密码</span>
-    				</a>
-    				<a class="unclockvip" ng-click="ShowUpdatevip()">
-    					<i class="ion-ios-unlocked-outline unclockimg"></i><span class="unclockbtn">解锁软件</span>
-    				</a>
+				<span class="heademail">123456@qq.com</span>
+				</span>
+				<a ng-click="ShowUpdatepsd()">
+					<i class="ion-ios-unlocked-outline unclockimg"></i><span class="unclockbtn">修改密码</span>
+				</a>
+				<a class="unclockvip" ng-click="ShowUpdatevip()">
+					<i class="ion-ios-unlocked-outline unclockimg"></i><span class="unclockbtn">解锁软件</span>
+				</a>
 				<i class="icon ion-ios-arrow-forward"></i>
 			</div>
-  	</div>
-   <div class="list content">
-    	<a class="item item-icon-left item-icon-right contentoption" ng-click="ChangeTest()">
-    		<i class="icon ion-ios-loop "></i>
-    		<span>切换考试</span>
-    		<i class="icon ion-ios-arrow-forward"></i>
-    	</a>
-    	<a class="item item-icon-left item-icon-right contentoption">
-    		<i class="icon ion-ios-download-outline"></i>
-    		<span>我的下载</span>
-    		<i class="icon ion-ios-arrow-forward"></i>
-    	</a>
-    	<a class="item item-icon-left item-icon-right contentoption">
-    		<i class="icon ion-ios-list-outline"></i>
-    		<span>最近练习</span>
-    		<i class="icon ion-ios-arrow-forward"></i>
-    	</a>
-    	<a class="item item-icon-left item-icon-right contentoption">
-    		<i class="icon ion-ios-alarm-outline"></i>
-    			<span>模拟考试</span>
-    		<i class="icon ion-ios-arrow-forward"></i>
-    		</a>
-    	<a class="item item-icon-left item-icon-right contentoption">
-    		<i class="icon ion-ios-information-outline"></i>
-    			<span>关于</span>
-    		<i class="icon ion-ios-arrow-forward"></i>
-    	</a>
-    </div>
-  </ion-content>
+		</div>
+		<div class="list content">
+			<div class="item item-icon-left item-icon-right contentoption" ng-click="ChangeTest()">
+				<i class="icon ion-ios-loop "></i>
+				<span>切换考试</span>
+				<i class="icon ion-ios-arrow-forward"></i>
+			</div>
+			<div class="item item-icon-left item-icon-right contentoption" ng-model='downlistshow' ng-init="downlistshow=false" ng-click="downlistshow=!downlistshow">
+				<i class="icon ion-ios-download-outline"></i>
+				<span>我的下载</span>
+				<i class="icon" ng-class="{'ion-ios-arrow-forward':!downlistshow,'ion-ios-arrow-down':downlistshow}"></i>
+			</div>
+			<div ng-show="downlistshow" ng-repeat="item in serverdata.downlist" class="accountlist" ng-click="GoDetail(item.PaperID)">
+				<span class="errorpaper textblock">{{item.PaperContent}}
+				</span><i class="redo icon ion-ios-arrow-forward"></i>
+			</div>
+			<div class="item item-icon-left item-icon-right contentoption" ng-model='lastlistshow' ng-init="lastlistshow=false" ng-click="lastlistshow=!lastlistshow">
+				<i class="icon ion-ios-list-outline"></i>
+				<span>最近练习</span>
+				<i class="icon" ng-class="{'ion-ios-arrow-forward':!lastlistshow,'ion-ios-arrow-down':lastlistshow}"></i>
+			</div>
+			<div ng-show="lastlistshow" ng-repeat="item in serverdata.lastlist" class="accountlist" ng-click="GoDetail(item.PaperID)">
+				<span class="errorpaper textblock">{{item.PaperContent}}
+			</span><i class="redo icon ion-ios-arrow-forward" ></i>
+			</div>
+			<div class="item item-icon-left item-icon-right contentoption" ng-model='testlistshow' ng-init="testlistshow=false" ng-click="testlistshow=!testlistshow">
+				<i class="icon ion-ios-alarm-outline"></i>
+				<span>模拟考试</span>
+				<i class="icon" ng-class="{'ion-ios-arrow-forward':!testlistshow,'ion-ios-arrow-down':testlistshow}"></i>
+			</div>
+			<div ng-show="testlistshow" ng-repeat="item in serverdata.testlist" class="accountlist" ng-click="GoDetail(item.PaperID)">
+				<span class="errorpaper textblock">{{item.PaperContent}}
+			</span><i class="redo icon ion-ios-arrow-forward" ></i>
+			</div>
+			<div class="item item-icon-left item-icon-right contentoption">
+				<i class="icon ion-ios-information-outline"></i>
+				<span>关于</span>
+				<i class="icon ion-ios-arrow-forward"></i>
+			</div>
+		</div>
+	</ion-content>
 </ion-view>

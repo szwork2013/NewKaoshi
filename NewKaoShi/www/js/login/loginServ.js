@@ -1,13 +1,14 @@
 loginModule
-	.factory('LoginServ', ['DataServ', '$state','$rootScope','CommFunServ',
-		function(DataServ, $state,$rootScope,CommFunServ) {
+	.factory('LoginServ', ['DataServ', '$state','$rootScope','CommFunServ','$q',
+		function(DataServ, $state,$rootScope,CommFunServ,$q) {
 			var serverdata={
 				registererr:''
 			}
 			var server = {
 				InitAppData: InitAppData,//初始化数据库
 				GoInit:GoInit,//从引导页进入应用
-				Login:Login//登录
+				Login:Login,//登录
+				Register:Register
 			}
 			return server;
 
@@ -64,13 +65,17 @@ loginModule
 					CommFunServ.RefreshData(serverdata);
 					return;
 				}
-				DataServ.PostRegister(name,nickname,pwd,email).then(function(){
+				var q=$q.defer();
+				DataServ.PostRegister(name,nickname,pwd,email).then(function(data){
+					console.log(data)
+					q.resolve(data);
 					//设置userinfo
 					//$rootScope.userInfo=
 					//跳转页面
 				},function(err){
-					
+					q.resolve(err)
 				});
+				return q.promise;
 			}
 		}
 	])

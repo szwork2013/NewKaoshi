@@ -8,11 +8,18 @@ accountModule
 			$scope.HideVIP=HideVIP;
 			$scope.UpdatePsd=UpdatePsd;
 			$scope.UpdateVIP=UpdateVIP;
-
+			
+			$scope.ChangeTest=ChangeTest;//切换考试
+			$scope.GoDetail=GoDetail;
+			$scope.serverdata=AccountServ.GetServerData();
+			
+			$scope.$on("$ionicView.loaded",function(){
+				AccountServ.InitData();
+			})
 			function GoLogin() {
-				$state.go('login');
+				AccountServ.GoLogin();
+			
 			}
-
 			function ShowUpdatepsd() {
 				$ionicModal.fromTemplateUrl('templates/login/updatePsdModal.html', {
 					scope: $scope,
@@ -47,6 +54,13 @@ accountModule
 			}
 			function UpdateVIP(){
 				HideVIP();
+			}
+			
+			function ChangeTest(){
+				AccountServ.ChangeTest();
+			}
+			function GoDetail(paperid){
+				AccountServ.GoDetail(paperid);
 			}
 
 		}

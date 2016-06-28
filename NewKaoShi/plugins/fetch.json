@@ -27,8 +27,18 @@
     },
     "cordova-plugin-file-transfer": {
         "source": {
-            "type": "local",
-            "path": "E:\\ionicobject\\ngCordova\\cordova-plugin-file-transfer-master"
-        }
+            "type": "registry",
+            "id": "cordova-plugin-file-transfer"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-compat": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-compat"
+        },
+        "is_top_level": false,
+        "variables": {}
     }
 }

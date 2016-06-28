@@ -126,8 +126,6 @@
 }
 .library .testcontent .papernumber{
 	font-size: 0.6rem;
-    display: block;
-    float: left;
     width: 40%;
     color: #999999;
 }
@@ -136,6 +134,7 @@
 }
 .library .testcontent .papertime{
 	 font-size: 0.6rem;
+	 width: 60%;
 	  color: #999999;
 }
 .library .testcontent .haveupdate{

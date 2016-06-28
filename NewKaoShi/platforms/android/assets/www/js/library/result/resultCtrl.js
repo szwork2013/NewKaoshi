@@ -7,14 +7,18 @@ function($scope,ResultServ,$state){
 	$scope.CheckAnswer=CheckAnswer;
 	$scope.GoPaperDeatail=GoPaperDeatail;
 	$scope.TestAgain=TestAgain;
+	$scope.serverdata=ResultServ.GetServerdata();
+	$scope.$on("$ionicView.loaded",function(){
+		ResultServ.InitData();
+	})
 	function CheckAnswer(){
-		$state.go('resultCard');
+		ResultServ.CheckAnswer();
 		
 	}
 	function GoPaperDeatail(){
-		$state.go('paperDetail');
+		ResultServ.GoPaperDeatail();
 	}
 	function TestAgain(){
-		$state.go('kaoshi');
+		ResultServ.TestAgain();
 	}
 }])

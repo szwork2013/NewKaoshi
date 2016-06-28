@@ -14,7 +14,7 @@ accountModule
 			}
 
 			function ShowUpdatepsd() {
-				$ionicModal.fromTemplateUrl('templates/login/updatePsd.html', {
+				$ionicModal.fromTemplateUrl('templates/login/updatePsdModal.html', {
 					scope: $scope,
 					animation: 'slide-in-up'
 				}).then(function(modal) {
@@ -24,7 +24,7 @@ accountModule
 			}
 
 			function ShowUpdatevip() {
-				$ionicModal.fromTemplateUrl('templates/login/unlockVIP.html', {
+				$ionicModal.fromTemplateUrl('templates/login/unlockVIPModal.html', {
 					scope: $scope,
 					animation: 'slide-in-up'
 				}).then(function(modal) {

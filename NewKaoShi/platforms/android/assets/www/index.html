@@ -17,28 +17,28 @@
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
-
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
-
+	<script src="lib/angular-animate/angular-animate.js"></script>
+	<script src="lib/angular-sanitize/angular-sanitize.js"></script>
+	<script src="lib/ngCordova/dist/ng-cordova.js"></script>
     <!-- your app's js -->
     <script src="js/comm/app.js"></script>
     <script src="js/comm/module.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/comm/service/sqliteservices.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/comm/service/dataServ.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/comm/commFun.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/comm/service/database.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/comm/webtoolkit.md5.js" type="text/javascript" charset="utf-8"></script>
     <!--登录-->
     <script src="js/login/loginCtrl.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/login/loginServ.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/login/registerCtrl.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/login/registerServ.js" type="text/javascript" charset="utf-8"></script>
     <!--分类 -->
-    <script src="js/classify/qualificationCtrl.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/classify/qualificationServ.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/classify/typeItemCtrl.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/classify/typeItemServ.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/classify/testTypeCtrl.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/classify/testTypeServ.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/examType/examTypeCtrl.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/examType/examTypeServ.js" type="text/javascript" charset="utf-8"></script>
      <!--首页 -->
     <script src="js/home/homeCtrl.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/home/homeServ.js" type="text/javascript" charset="utf-8"></script>
@@ -49,10 +49,14 @@
     <script src="js/library/paperDetailServ.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/library/kaoshi/kaoshiCtrl.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/library/kaoshi/kaoshiServ.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/library/exercise/exerciseCtrl.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/library/exercise/exerciseServ.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/library/card/answerCardCtrl.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/library/card/answerCardServ.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/library/result/resultCtrl.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/library/result/resultServ.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/library/result/resultCardCtrl.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/library/result/resultCardServ.js" type="text/javascript" charset="utf-8"></script>
       <!--错题 -->
     <script src="js/error/errorCtrl.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/error/errorServ.js" type="text/javascript" charset="utf-8"></script>
@@ -63,7 +67,7 @@
     <script src="js/account/accountCtrl.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/account/accountServ.js" type="text/javascript" charset="utf-8"></script>
   </head>
-  <body ng-app="NewKaoShi" class="platform-android platform-cordova platform-webview">
+  <body ng-app="NewKaoShi">
     <!--
       The nav bar that will be updated as we navigate between views.
     -->

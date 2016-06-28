@@ -5,9 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule','LibraryModule','ErrorModule','SearchModule','AccountModule','CommModule'])
+angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule','HomeModule','LibraryModule','ErrorModule','SearchModule','AccountModule','CommModule'])
 
-.run(function($ionicPlatform,$ionicPopup,$rootScope,$ionicHistory) {
+.run(function($ionicPlatform,$ionicPopup,$rootScope,$ionicHistory,SqliteServ,CommFunServ) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -21,6 +21,8 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
       StatusBar.styleDefault();
     }
   });
+  SqliteServ.createDB();
+  CommFunServ.InitData();
   $rootScope.BackView=function(){
   	if($ionicHistory.viewHistory()){
   		$ionicHistory.goBack();
@@ -88,44 +90,23 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
   /*导航页路由*/
 				.state('navigation', {
 					url: '/navigation',
-					cache: true,
+					cache: false,
 					templateUrl: 'templates/navigation.html',
-					controller: 'InitCtrl'
+					controller: 'NavigationCtrl'
 			})
   //登录
 		.state('login', {
 			url: '/login',
-			cache: true,
+			cache: false,
 			templateUrl: 'templates/login/login.html',
 			controller: 'LoginCtrl'
 		})
-		 //注册
-		.state('register', {
-			url: '/register',
-			cache: true,
-			templateUrl: 'templates/login/register.html',
-			controller: 'RegisterCtrl'
-		})
-	//搜索考试分类（金融）
-		.state('testType', {
-			url: '/testType/:type',
+	//考试分类
+		.state('examType', {
+			url: '/examType/:type',
 			cache: false,
-			templateUrl: 'templates/classfiy/testType.html',
-			controller: 'TestTypeCtrl'
-		})
-		//类型细项（银行、保险）
-		.state('typeItem', {
-			url: '/typeItem/:typeId/:typeName',
-			cache: true,
-			templateUrl: 'templates/classfiy/typeItem.html',
-			controller: 'TypeItemCtrl'
-		})
-		//资格考试（个人理财、风险管理）
-		.state('qualification', {
-			url: '/qualification/:typeItemId/:typeItemName',
-			cache: true,
-			templateUrl: 'templates/classfiy/qualification.html',
-			controller: 'QualificationCtrl'
+			templateUrl: 'templates/examType/examType.html',
+			controller: 'ExamTypeCtrl'
 		})
   // setup an abstract state for the tabs directive
    .state('tab', {
@@ -190,12 +171,19 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
 			templateUrl: 'templates/paper/paperDetail.html',
 			controller: 'PaperDetailCtrl'
 		})
-		//考试,暂时性参数，后续会去掉
+		//考试,history历史，false没有历史，true有历史
 		.state('kaoshi', {
-			url: '/kaoshi/:type',
+			url: '/kaoshi/:history',
 			cache: false,
 			templateUrl: 'templates/paper/kaoshi.html',
 			controller: 'KaoshiCtrl'
+		})
+		//练习,history历史，false没有历史，true有历史;type 0试卷练习,1错题收藏,2答案解析;cKey进入显示试题编号
+		.state('exercise', {
+			url: '/exercise/:history/:type/:qKey',
+			cache: false,
+			templateUrl: 'templates/paper/exercises.html',
+			controller: 'ExerciseCtrl'
 		})
 		//答题卡
 		.state('answerCard', {
@@ -216,14 +204,14 @@ angular.module('NewKaoShi', ['ionic','LoginModule','ClassifyModule','HomeModule'
 			url: '/resultCard',
 			cache: false,
 			templateUrl: 'templates/paper/resultCard.html',
-			controller: 'AnswerCardCtrl'
+			controller: 'ResultCardCtrl'
 		});
-
+		$urlRouterProvider.otherwise('/navigation');
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise(function($injector) {
+  /*$urlRouterProvider.otherwise(function($injector) {
   		//获取到注入器,获取$state服务
 				var $state = $injector.get("$state");
 				$state.go('navigation');
-  });
+  });*/
 
 });

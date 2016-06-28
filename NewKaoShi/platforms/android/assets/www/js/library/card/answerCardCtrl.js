@@ -1,131 +1,15 @@
 libraryModule
-.controller('AnswerCardCtrl',['$scope','AnswerCardServ','$state',
-function($scope,AnswerCardServ,$state){
-	$scope.ConfirmAssignment=ConfirmAssignment;
-	$scope.TestAgain=TestAgain;
-	function ConfirmAssignment(){
-		$state.go('result');
-	}
-	function TestAgain(){
-		$state.go('paperDetail');
-	}
-	$scope.paperquestions=[
-	{
-		title:'一、单项选择题',
-		answer:[{
-			isAnswer:0,
-			result:1,
-			answer:0
-		},
-		{
-			isAnswer:1,
-			result:1,
-			answer:1
-		},
-		{
-			isAnswer:1,
-			result:1,
-			answer:2
-		},
-		{
-			isAnswer:0,
-			result:1,
-			answer:2
-		},
-		{
-			isAnswer:1,
-			result:1,
-			answer:1
-		},{
-			isAnswer:0,
-			result:1,
-			answer:3
-		},{
-			isAnswer:0,
-			result:1,
-			answer:1
-		},{
-			isAnswer:0,
-			result:1,
-			answer:1
-		},]
-	},{
-		title:'二、多项选择题',
-		answer:[{
-			isAnswer:0,
-			result:1,
-			answer:1
-		},
-		{
-			isAnswer:0,
-			result:1,
-			answer:1
-		},
-		{
-			isAnswer:1,
-			result:1,
-			answer:0
-		},
-		{
-			isAnswer:1,
-			result:1,
-			answer:2
-		},
-		{
-			isAnswer:1,
-			result:1,
-			answer:1
-		},{
-			isAnswer:0,
-			result:1,
-			answer:3
-		},{
-			isAnswer:0,
-			result:1,
-			answer:1
-		},{
-			isAnswer:0,
-			result:1,
-			answer:1
-		},]
-	},{
-		title:'三、不定项选择题',
-		answer:[{
-			isAnswer:0,
-			result:1,
-			answer:0
-		},
-		{
-			isAnswer:0,
-			result:1,
-			answer:0
-		},
-		{
-			isAnswer:0,
-			result:1,
-			answer:1
-		},
-		{
-			isAnswer:1,
-			result:1,
-			answer:0
-		},
-		{
-			isAnswer:0,
-			result:1,
-			answer:1
-		},{
-			isAnswer:1,
-			result:1,
-			answer:0
-		},{
-			isAnswer:1,
-			result:1,
-			answer:1
-		},{
-			isAnswer:0,
-			result:1,
-			answer:1
-		}]
-	}]
-}])
+	.controller('AnswerCardCtrl', ['$scope', 'AnswerCardServ',
+		function($scope, AnswerCardServ) {
+			$scope.ConfirmAssignment = ConfirmAssignment;
+			$scope.serverdata = AnswerCardServ.GetServerData();
+			$scope.$on('$ionicView.enter', function() {
+				AnswerCardServ.InitData();
+			})
+
+			function ConfirmAssignment() {
+				AnswerCardServ.ConfirmAssignment();
+			}
+
+		}
+	])

@@ -1,10 +1,22 @@
 [
 	{
-		"tableName": "Messages",
-		"tablePrama": ["SendID", "Img","Type" ,"Content","AudioTime","Time", "ReceiveID"]
+		"tableName": "tb_ExamTypes",
+		"tablePrama": ["ExamTypeID", "ExamTypeName", "ParentID"]
 	},
 	{
-		"tableName": "Contacts",
-		"tablePrama": ["ID Primary key", "Img", "Account","Name", "NickName", "Address","IsCurrent boolean","CurrentContent","CurrentTime"]
+		"tableName": "tb_Papers",
+		"tablePrama": ["PaperID","PaperContent","ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "Status", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID"]
+	},{
+		"tableName": "tb_Question",
+		"tablePrama": ["id", "paperId", "c_key","q_key", "pq_key",  "questionContent", "questionIndex", "questionType", "soure","optionContent","answer","analysis","version"]
+	},{
+		"tableName": "tb_Account",
+		"tablePrama": ["ID", "Name", "NickName", "IsVip","IsLogin"]
+	},{
+		"tableName": "tb_UserQuestions",
+		"tablePrama": ["ID","PaperID","QuestionID", "UserID", "Type","IsSync"]
+	},{
+		"tableName": "tb_History",
+		"tablePrama": ["ID", "PaperID", "UserID", "Time", "Soure", "Content","Type","IsEnd","IsSync"]
 	}
 ]

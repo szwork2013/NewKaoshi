@@ -3,6 +3,13 @@
 	color: #666666;
 	font-size: 0.8rem;
 }
+.textblock{
+	display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
 .slider {
 	height: 100%;
 }

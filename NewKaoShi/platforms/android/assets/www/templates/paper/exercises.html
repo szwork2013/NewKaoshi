@@ -1,0 +1,47 @@
+<ion-view>
+	<ion-header-bar align-title="center">
+		<button class="button button-icon ion-ios-arrow-back" ng-click="Back()">
+		</button>
+		<span class="title"> {{serverdata.title}}</span>
+		<button class="button  button-icon ion-ios-keypad-outline  " ng-click="ExerciseMenu()" >
+		</button>
+	</ion-header-bar>
+	<ion-content class="kaoshi">
+		<ion-slide-box on-slide-changed="slideHasChanged($index)">
+			<ion-slide ng-repeat="items in currentpaper.questionlist">
+				<span ng-repeat="title in serverdata.titleContent" ng-show="serverdata.isShowTitle" class="bigtitle">
+					{{title.questionContent}}
+				</span>
+				<choice-Question ng-if="items.questionType=='checking' || items.questionType=='singleChoice'">
+
+				</choice-Question>
+				<multiplechoice-Question ng-if="items.questionType=='mutepliChoice'">
+
+				</multiplechoice-Question>
+				<case-Question ng-if="items.questionType==2">
+
+				</case-Question>
+				<div ng-show="serverdata.showAnswer || serverdata.isShowAnswer">
+					<div>
+						<span>
+                          	  答案:{{items.answer}}
+                        </span>
+					</div>
+					<div>
+						<span>
+                          	  解析:{{items.analysis}}
+                        </span>
+					</div>
+				</div>
+
+			</ion-slide>
+		</ion-slide-box>
+	</ion-content>
+	<ion-footer-bar>
+		<button class="button button-icon ion-ios-undo-outline" ng-click="LastTest()"></button>
+		<span ng-if="!serverdata.showAnswer" class="title" ng-click="ShowAnswer()">答案解析</span>
+		<span ng-if="serverdata.btnStatus==1 && serverdata.showAnswer" class="title" ng-click="Conllect(true)">收藏</span>
+		<span ng-if="serverdata.btnStatus==2 && serverdata.showAnswer" class="title" ng-click="Conllect(false)">取消收藏</span>
+		<button class="button button-icon ion-ios-redo-outline" ng-click="NextTest()"></button>
+	</ion-footer-bar>
+</ion-view>

@@ -28,6 +28,7 @@ commModule
 				GetQuestionData:GetQuestionData,
 				BaseSelect:BaseSelect,
 				
+				SaveErrOrColl:SaveErrOrColl,//存储错题，收藏
 				UpdatePaperStatus:UpdatePaperStatus,//修改试卷状态
 				DeletPaperHistory:DeletPaperHistory
 			}
@@ -217,7 +218,7 @@ commModule
 				database.OpenTransaction(function(tx) {
 					var len = data.length;
 					for (var i = 0; i < len; i++) {
-						database.SaveOrUpdateTable(tx, 'tb_UserQuestions', ["ID", "QuestionID", "UserID", "Type", "IsSync"], [data[i].ID, data[i].QuestionID, data[i].UserID, data[i].Type, data[i].IsSync], "ID=?", [data[i].ID]);
+						database.SaveOrUpdateUerRoleTable(tx, 'tb_UserQuestions', ["PaperID","QuestionID", "UserID", "Type","IsSync"], [data[i].PaperID, data[i].QuestionID, data[i].UserID, data[i].Type, data[i].IsSync], "PaperID=? and QuestionID=?", [data[i].PaperID,data[i].QuestionID]);
 					}
 				})
 			}
@@ -307,7 +308,7 @@ commModule
 			//用于错题
 			function GetErrorData() {
 				var q = $q.defer();
-				SqliteServ.selectsql('select *,count(QuestionID) as rows from tb_UserQuestions join tb_Papers on tb_UserQuestions.PaperID = tb_Papers.PaperID where  Type=? group by tb_UserQuestions.PaperID', ['0']).then(function(data) {
+				SqliteServ.selectsql('select *,count(QuestionID) as rows from tb_UserQuestions join tb_Papers on tb_UserQuestions.PaperID = tb_Papers.PaperID where  Type=? group by tb_UserQuestions.PaperID', [0]).then(function(data) {
 					q.resolve(data)
 				})
 				return q.promise;

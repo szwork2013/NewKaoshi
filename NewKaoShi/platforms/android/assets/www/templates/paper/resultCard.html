@@ -14,16 +14,14 @@
 	</ion-header-bar>
 	<ion-content class="answercard">
 		<div class="title">
-			总分<span class="number">100</span>,及格分<span class="number">50</span>,您的得分<span class="number">20</span>
+			总分<span class="number">{{currentpaper.totalScore}}</span>,及格分<span class="number">{{currentpaper.passMark}}</span>,您的得分<span class="number">{{currentpaper.score}}</span>
 		</div>
 		<div class="content">
-			<div ng-repeat="items in paperquestions">
-				<span class="itemtitle">{{items.title}}</span>
-				<div class="row row-wrap">
-					<a ng-repeat="item in items.answer" class="col col-20 answer" >
-						<span ng-class="{'rightAnswer':item.result==item.answer,'wrongAnswer':item.result!=item.answer}">{{$index+1}}</span>
-					</a>
-				</div>
+			<div ng-repeat="items in currentpaper.questiontitle" >
+				<span class="itemtitle" ng-class="{'instance':items.pq_key}">{{items.questionContent}}</span>
+				<a ng-repeat="item in currentpaper.questionlist" class="answer"  ng-if="item.pq_key==items.q_key" ng-click="GoExercise(item.q_key)">
+					<span ng-class="{'rightAnswer':item.isRight==1,'wrongAnswer':item.isRight==0}">{{item.c_key}}</span>
+				</a>
 			</div>
 		</div>
 	</ion-content>

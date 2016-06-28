@@ -234,8 +234,7 @@ libraryModule
 					if (item.answerArr[i]) {
 						var value = '';
 						if (item.questionType == 'checking') {
-							var str = CommFunServ.GetValue(item.optionContent, i);
-							value = str.substr(2, str.length - 1);
+							value= CommFunServ.GetValue(item.optionContent, i);
 						} else {
 							value = CommFunServ.GetKey(item.optionContent, i);
 						}
@@ -311,15 +310,11 @@ libraryModule
 			//显示答案
 			function ShowAnswer() {
 				var item = $rootScope.currentpaper.questionlist[currentIndex];
-				if (item.questionType == 'singleChoice' || item.questionType == 'multipleChoice' || item.questionType == 'checking') { //单选，多选
-					SelectAnswer(currentIndex);
-					/*item.hasdo = true;
-					serverdata.showAnswer=true;
-					serverdata.btnStatus = 1;*/
+				if(item.questionType == 'multipleChoice'){
+					item.hasdo = true;
 				}
-
+				SelectAnswer(currentIndex);
 			}
-
 			function Conllect(bool) {
 				if (bool) {
 					serverdata.btnStatus = 2;
@@ -327,10 +322,9 @@ libraryModule
 					serverdata.btnStatus = 1;
 				}
 			}
-			
 			function ExercisesAgain(){
 				//提示是否重新考试
-				PaperDetailServ.Start(0);
+				PaperDetailServ.Start(1);
 				serverdata.isShowAnswer = false;
 				serverdata.showAnswer = false;
 				$rootScope.currentpaper.answerContent = null;

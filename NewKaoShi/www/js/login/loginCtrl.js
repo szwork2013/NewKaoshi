@@ -19,12 +19,12 @@ loginModule
 			$scope.BackAccount = BackAccount;
 			$scope.Register = Register;
 			$scope.loginData={
-				account:'',
+				name:'',
 				password:''
 			}
 			$scope.registeData={
-				account:'',
 				name:'',
+				nickname:'',
 				password:'',
 				conpassword:'',
 				confirm:false
@@ -32,7 +32,7 @@ loginModule
 			//登陆
 			function Login() {
 				//请求登陆，未完成
-				var name = $scope.loginData.account;
+				var name = $scope.loginData.name;
 				var pwd = $scope.loginData.password;
 				LoginServ.Login(name, pwd);
 				$rootScope.isLogin = true;
@@ -57,8 +57,8 @@ loginModule
 			function Register() {
 				
 				
-				var name = $scope.registeData.account;
-				var nickname= $scope.registeData.name;
+				var name = $scope.registeData.name;
+				var nickname= $scope.registeData.nickname;
 				var pwd = $scope.registeData.password;
 				var conpassword = $scope.registeData.conpassword;
 				var email = $scope.registeData.account;

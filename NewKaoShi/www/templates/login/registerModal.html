@@ -8,16 +8,16 @@
 			<div class="content">
 				<div >
 					<div class="item item-input itemaccount">
-						<input type="email" name="account" ng-model="registeData.account" placeholder="输入邮箱" required>
+						<input type="text" name="name" ng-model="registeData.name" placeholder="输入用户名(3-12字符)" required>
 					</div>
 					<div class="item item-input">
-						<input type="text" name="name" ng-model="registeData.name" placeholder="输入昵称(2-14字符)" required>
+						<input type="text" name="nickname" ng-model="registeData.nickname" placeholder="输入昵称(3-12字符)" required>
 					</div>
 					<div class="item item-input ">
-						<input type="password" name="password" ng-model="registeData.password" placeholder="输入密码(2-14字符)" required>
+						<input type="password" name="password" ng-model="registeData.password" placeholder="输入密码(3-12字符)" required>
 					</div>
 					<div class="item item-input itempsd">
-						<input type="password" name="conpassword" ng-model="registeData.conpassword" placeholder="确认密码(2-14字符)" required>
+						<input type="password" name="conpassword" ng-model="registeData.conpassword" placeholder="确认密码(3-12字符)" required>
 					</div>
 					<div ng-model="registeData.confirm" class="confimrule">
 						<i ng-class="{'ion-ios-circle-outline':!registeData.confirm,'ion-ios-checkmark':registeData.confirm}" ng-click="registeData.confirm=!registeData.confirm"></i>
@@ -26,7 +26,7 @@
 					<span style="color: red;font-size: 0.8rem;" >{{servedata.registererr}}</span>
 				</div>
 				<div class="subbtn">
-					<button ng-click="Register()" class="button button-full button-assertive" type="submit" ng-disabled="loginForm.account.$error.required||loginForm.name.$error.required||loginForm.password.$error.required||loginForm.conpassword.$error.required">注册</button>
+					<button ng-click="Register()" class="button button-full button-assertive" type="submit" ng-disabled="loginForm.name.$error.required||loginForm.nickname.$error.required||loginForm.password.$error.required||loginForm.conpassword.$error.required">注册</button>
 				</div>
 			</div>
 		</form>

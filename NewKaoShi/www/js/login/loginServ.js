@@ -39,41 +39,46 @@ loginModule
 			function Login(name,pwd){
 				DataServ.PostLogin(name,pwd).then(function(res){
 					$rootScope.isLogin = true;
+					localStorage.setItem("userInfo",JSON.stringify(res))
 					$state.go('tab.home');
 				},function(err){
 					CommFunServ.ShowAlert('提示','登录失败,'+err)
 				})
 			}
 			function Register(name,nickname,pwd,conpassword,email,isConfirm){
+				var q=$q.defer();
 				if(name==null || name==''){
 					serverdata.registererr='请填写邮箱';
 					CommFunServ.RefreshData(serverdata);
-					return;
+					return q.promise;
 				}
 				if(nickname==null || nickname==''){
 					serverdata.registererr='请填写昵称';
 					CommFunServ.RefreshData(serverdata);
-					return;
+					q.reject()
+					return q.promise;
 				}
 				if(pwd!=conpassword){
 					serverdata.registererr='确认密码与密码不符';
 					CommFunServ.RefreshData(serverdata);
-					return;
+					q.reject()
+					return q.promise;
 				}
 				if(!isConfirm){
 					serverdata.registererr='请阅读用户协议';
 					CommFunServ.RefreshData(serverdata);
-					return;
+					q.reject()
+					return q.promise;
 				}
-				var q=$q.defer();
 				DataServ.PostRegister(name,nickname,pwd,email).then(function(data){
-					console.log(data)
+					CommFunServ.ShowAlert("提示","注册成功!")
 					q.resolve(data);
 					//设置userinfo
 					//$rootScope.userInfo=
 					//跳转页面
 				},function(err){
-					q.resolve(err)
+					serverdata.registererr=err;
+					q.reject(err)
 				});
 				return q.promise;
 			}

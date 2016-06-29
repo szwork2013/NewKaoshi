@@ -12,6 +12,8 @@ commModule
 				PostLogin: PostLogin, //登录
 				PostRegister: PostRegister, //注册
 				PostQuestionPic: PostQuestionPic, //请求图片
+				PostUpdatePsd:PostUpdatePsd,//修改密码
+				PostUpdateVip:PostUpdateVip,//注册VIP
 
 				MarkExamEnd: MarkExamEnd, //更改试卷考试状态
 				BaseUpdate: BaseUpdate,
@@ -131,10 +133,9 @@ commModule
 					nickName: nickname,
 					email: email
 				}
-				BasePost('validateUser.do', parma).then(function(response) {
+				BasePost('userRegister.do', parma).then(function(response) {
 					if (response.status == "success") {
-						SaveAccount(response.data)
-						q.resolve(response.data);
+						q.resolve(response);
 					} else {
 						q.reject(response.msg);
 					}
@@ -149,6 +150,45 @@ commModule
 					placeId: placeid
 				}
 				BasePost('getQuestionPic.do', parma).then(function(response) {
+					if (response.status == "success") {
+						//SaveAccount(response.data)
+						console.log(response.data)
+						q.resolve(response.data);
+					} else {
+						q.reject(response.msg);
+					}
+
+				})
+				return q.promise;
+			}
+			function PostUpdatePsd(oldpsd,newpsd){
+				var q = $q.defer();
+				var userinfo=JSON.parse(localStorage.getItem("userInfo"));
+				var parma = {
+					userId: userinfo.id,
+					newPwd:newpsd,
+					oldPwd:oldpsd
+				}
+				BasePost('changeUserPwd.do', parma).then(function(response) {
+					if (response.status == "success") {
+						//SaveAccount(response.data)
+						console.log(response.data)
+						q.resolve(response.data);
+					} else {
+						q.reject(response.msg);
+					}
+
+				})
+				return q.promise;
+			}
+			function PostUpdateVip(num){
+				var q = $q.defer();
+				var userinfo=JSON.parse(localStorage.getItem("userInfo"));
+				var parma = {
+					id: userinfo.id,
+					activationCode:num
+				}
+				BasePost('relateActivationCode.do', parma).then(function(response) {
 					if (response.status == "success") {
 						//SaveAccount(response.data)
 						console.log(response.data)

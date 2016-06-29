@@ -8,14 +8,14 @@
 			<div class="content">
 				<div >
 					<div class="item item-input itemaccount">
-						<input type="email" name="account" ng-model="loginData.account" placeholder="请输入邮箱" required>
+						<input type="text" name="name" ng-model="loginData.name" placeholder="请输入用户名" required>
 					</div>
 					<div class="item item-input itempsd">
 						<input type="password" name="password" ng-model="loginData.password" placeholder="请输入密码" required>
 					</div>
 				</div>
 				<div class="subbtn">
-					<button ng-click="Login()" class="button button-full button-assertive" type="submit" ng-disabled="loginForm.account.$error.required||loginForm.password.$error.required">登录</button>
+					<button ng-click="Login()" class="button button-full button-assertive" type="submit" ng-disabled="loginForm.name.$error.required||loginForm.password.$error.required">登录</button>
 				</div>
 			</div>
 			<div class="goregistbtn">

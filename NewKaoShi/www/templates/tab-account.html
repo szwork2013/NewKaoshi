@@ -7,22 +7,25 @@
 	<ion-content class="account">
 
 		<div class="list head">
-			<div ng-show="!isLogin">
+			<div ng-show="!serverdata.isLogin">
 				<button class="button button-full button-small button-assertive" ng-click="GoLogin()">还未登录,请登录</button>
 			</div>
-			<div class="item item-icon-right" ng-show="isLogin">
-
-				<img ng-src="img/user.png" class="item-note headimg" />
-				<span>
-  					<span class="headname">我的黄花菜</span>
-				<span class="heademail">123456@qq.com</span>
-				</span>
-				<a ng-click="ShowUpdatepsd()">
-					<i class="ion-ios-unlocked-outline unclockimg"></i><span class="unclockbtn">修改密码</span>
-				</a>
-				<a class="unclockvip" ng-click="ShowUpdatevip()">
-					<i class="ion-ios-unlocked-outline unclockimg"></i><span class="unclockbtn">解锁软件</span>
-				</a>
+			<div class="item item-icon-right " ng-show="serverdata.isLogin">
+				<img ng-src="img/user.png" class="headimg" />
+				<div class="userdetail">
+				<div>
+  					<span class="headname">{{serverdata.userinfo.nickName}}</span>
+					<span class="heademail" ng-show="serverdata.userinfo.email">{{serverdata.userinfo.email}}</span>
+				</div>
+				<div>
+					<a ng-click="ShowUpdatepsd()">
+						<i class="ion-ios-unlocked-outline unclockimg"></i><span class="unclockbtn">修改密码</span>
+					</a>
+					<a class="unclockvip" ng-click="ShowUpdatevip()">
+						<i class="ion-ios-unlocked-outline unclockimg"></i><span class="unclockbtn">解锁软件</span>
+					</a>
+				</div>
+				</div>
 				<i class="icon ion-ios-arrow-forward"></i>
 			</div>
 		</div>
@@ -38,7 +41,7 @@
 				<i class="icon" ng-class="{'ion-ios-arrow-forward':!downlistshow,'ion-ios-arrow-down':downlistshow}"></i>
 			</div>
 			<div ng-show="downlistshow" ng-repeat="item in serverdata.downlist" class="accountlist" ng-click="GoDetail(item.PaperID)">
-				<span class="errorpaper textblock">{{item.PaperContent}}
+				<span class="lista textblock">{{item.PaperContent}}
 				</span><i class="redo icon ion-ios-arrow-forward"></i>
 			</div>
 			<div class="item item-icon-left item-icon-right contentoption" ng-model='lastlistshow' ng-init="lastlistshow=false" ng-click="lastlistshow=!lastlistshow">
@@ -47,7 +50,7 @@
 				<i class="icon" ng-class="{'ion-ios-arrow-forward':!lastlistshow,'ion-ios-arrow-down':lastlistshow}"></i>
 			</div>
 			<div ng-show="lastlistshow" ng-repeat="item in serverdata.lastlist" class="accountlist" ng-click="GoDetail(item.PaperID)">
-				<span class="errorpaper textblock">{{item.PaperContent}}
+				<span class="lista textblock">{{item.PaperContent}}
 			</span><i class="redo icon ion-ios-arrow-forward" ></i>
 			</div>
 			<div class="item item-icon-left item-icon-right contentoption" ng-model='testlistshow' ng-init="testlistshow=false" ng-click="testlistshow=!testlistshow">
@@ -56,7 +59,7 @@
 				<i class="icon" ng-class="{'ion-ios-arrow-forward':!testlistshow,'ion-ios-arrow-down':testlistshow}"></i>
 			</div>
 			<div ng-show="testlistshow" ng-repeat="item in serverdata.testlist" class="accountlist" ng-click="GoDetail(item.PaperID)">
-				<span class="errorpaper textblock">{{item.PaperContent}}
+				<span class="lista textblock">{{item.PaperContent}}
 			</span><i class="redo icon ion-ios-arrow-forward" ></i>
 			</div>
 			<div class="item item-icon-left item-icon-right contentoption">

@@ -11,6 +11,17 @@ accountModule
 			
 			$scope.ChangeTest=ChangeTest;//切换考试
 			$scope.GoDetail=GoDetail;
+			//修改密码信息
+			$scope.psd={
+				oldpsd:'',
+				newpsd:'',
+				connewpsd:''
+			}
+			//获取VIP信息
+			$scope.vip={
+				num:'',
+				connum:''
+			}
 			$scope.serverdata=AccountServ.GetServerData();
 			
 			$scope.$on("$ionicView.loaded",function(){
@@ -50,12 +61,20 @@ accountModule
 				}
 			}
 			function UpdatePsd(){
-				HidePsd();
+				var oldpsd=$scope.psd.oldpsd;
+				var newpsd=$scope.psd.newpsd;
+				var connewpsd=$scope.psd.connewpsd;
+				AccountServ.UpdatePsd(oldpsd,newpsd,connewpsd).then(function(res){
+					HidePsd();
+				});
 			}
 			function UpdateVIP(){
-				HideVIP();
+				var num=$scope.vip.num;
+				var connum=$scope.vip.connum;
+				AccountServ.UpdateVip(num,connum).then(function(res){
+					HideVIP();
+				});
 			}
-			
 			function ChangeTest(){
 				AccountServ.ChangeTest();
 			}

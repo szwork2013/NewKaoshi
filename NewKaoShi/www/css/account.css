@@ -9,13 +9,18 @@
 }
 .account .head{
 	width: 96%;
-	margin:2rem auto 0px;
+	margin:1rem auto 0px;
 	padding: 0;
 }
 .account .headimg{
-    float: left;
+	display: inline-block;
+    width: 30%;
     vertical-align: middle;
 	
+}
+.account .userdetail{
+	display: inline-block;
+    vertical-align: middle;
 }
 .account .headbtn{
 	margin: 0px;
@@ -23,7 +28,6 @@
 }
 .account .headname{
 	display: block;
-	margin-top: 1rem;
 	line-height: 2rem;
 }
 .account .heademail{
@@ -45,15 +49,32 @@
 }
 .account  .content{
 	width: 96%;
-	margin:2rem auto 0px;
+	margin:1rem auto 0px;
 }
 .account .content a{
 	margin: 0.5rem 0 0.5rem 0;
 }
 .account .content .contentoption{
 	margin: 0px;
+	padding: 0.8rem 54px;
 }
 .account .content .contentoption a{
 	text-align: left;
+}
+.account  .accountlist{
+	line-height: 2.5rem;
+    background-color: #FFFFFF;
+    border-bottom: solid 1px #d9d9d9;
+}
+.account  .accountlist .lista{
+	    text-indent: 0.5rem;
+	max-width: 90%;
+}
+.account  .accountlist i{
+	    display: inline-block;
+    vertical-align: middle;
+    transform: scale(2);
+    position: absolute;
+    right: 1rem;
 }
 

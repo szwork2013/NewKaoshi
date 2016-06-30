@@ -29,7 +29,9 @@ commModule
 				GetQuestionData: GetQuestionData,
 				BaseSelect: BaseSelect,
 
-				SaveErrOrColl: SaveErrOrColl, //存储错题，收藏
+				SaveErrOrColl: SaveErrOrColl, //存储错题
+				CollectQuestion:CollectQuestion,//收藏
+				CancelCollect:CancelCollect,//取消收藏
 				UpdatePaperStatus: UpdatePaperStatus, //修改试卷状态
 				DeletPaperHistory: DeletPaperHistory
 			}
@@ -305,6 +307,21 @@ commModule
 					q.resolve(res);
 				})
 				return q.promise
+			}
+			//收藏
+			function CollectQuestion(item){
+				var userinfo=JSON.parse(localStorage.getItem("userInfo"));
+				database.OpenTransaction(function(tx) {
+					database.SaveOrUpdateUerRoleTable(tx, 'tb_UserQuestions', ["PaperID","QuestionID", "UserID", "Type","IsSync"], [item.paperId,item.id,userinfo.id,'1','0'], "PaperID=? and QuestionID=?", [item.paperId,item.id]);
+				})
+			}
+			//取消收藏
+			function CancelCollect(item){
+				var q = $q.defer();
+				SqliteServ.deletehis('tb_UserQuestions', 'PaperID=? and QuestionID=?', [item.paperId,item.id]).then(function(response) {
+					q.resolve(response)
+				})
+				return q.promise;
 			}
 
 			function BaseUpdate(tablename, field, param, condition, cparam) {

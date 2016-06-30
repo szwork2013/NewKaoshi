@@ -24,6 +24,7 @@ libraryModule
 				NextTest: NextTest, //下一题
 				Back: Back, //返回
 				ShowAnswer: ShowAnswer, //显示答案
+				Conllect:Conllect,//收藏与取消收藏
 				ExercisesAgain:ExercisesAgain,//重新开始
 				ResultCard:ResultCard//
 
@@ -323,10 +324,13 @@ libraryModule
 				SelectAnswer(currentIndex);
 			}
 			function Conllect(bool) {
+				var item = $rootScope.currentpaper.questionlist[currentIndex];
 				if (bool) {
 					serverdata.btnStatus = 2;
+					DataServ.CollectQuestion(item);
 				} else {
 					serverdata.btnStatus = 1;
+					DataServ.CancelCollect(item);
 				}
 			}
 			function ExercisesAgain(){

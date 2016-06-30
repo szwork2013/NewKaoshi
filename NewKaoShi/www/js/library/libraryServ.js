@@ -17,6 +17,7 @@ libraryModule
 			}
 			//初始化试卷列表
 			function InitData(id) {
+				
 				id = '4028188154ce38b40154ce3cc6690002'
 				DataServ.BaseSelect('select * from tb_Papers where ExamTypeID=?', [id]).then(function(data) {
 					if (data && data.length > 0) {
@@ -35,10 +36,11 @@ libraryModule
 			}
 
 			function GoPaperDetail(id) {
+				var userInfo=JSON.parse(localStorage.getItem("userInfo"));
 				DataServ.GetPaperData(id).then(function(data) {
 					if (data) {
 						if (data[0].Status == "1") {
-							if ($rootScope.userInfo == null) {
+							if (userInfo == null) {
 								CommFunServ.ShowConfirm("提示", "请登录账户").then(function(res){
 									if(res){
 										$state.go('login');
@@ -47,7 +49,7 @@ libraryModule
 								//跳入登录页面
 								return;
 							}
-							if ($rootScope.userInfo.isVip == false) {
+							if (userInfo.isVIP == '0') {
 								CommFunServ.ShowAlert("提示", "当前账户不是vip，请购买");
 								return;
 							}

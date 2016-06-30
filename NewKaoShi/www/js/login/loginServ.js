@@ -20,6 +20,7 @@ loginModule
 				//测试删除
 				localStorage.removeItem("examTypeList");
 				localStorage.removeItem("examTypeId");
+				localStorage.removeItem("userInfo");
 				$rootScope.userInfo=localStorage.getItem("userInfo");
 				var str = localStorage.getItem("examTypeList");
 				var id= localStorage.getItem("examTypeId"); //当前进入分类id

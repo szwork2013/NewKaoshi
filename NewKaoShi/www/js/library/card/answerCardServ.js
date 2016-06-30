@@ -22,8 +22,10 @@ libraryModule
 						if(data[0].Content==null || data[0].Content==''){
 							serverdata.hasdoNum=0
 						}else{
+							if(data[0].Content && data[0].Content!="null"){
 							var arr = eval("(" + data[0].Content + ")");
 							serverdata.hasdoNum = arr.length;
+							}
 						}
 					}
 				})

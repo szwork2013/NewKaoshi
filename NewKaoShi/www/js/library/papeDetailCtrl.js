@@ -3,8 +3,9 @@ libraryModule
 		function($scope, $rootScope, PaperDetailServ, $state) {
 			$scope.Start = Start;
 			$scope.BackLibrary = BackLibrary;
-			$scope.$on("$ionicView.enter",function(){
-				$scope.serverdata=PaperDetailServ.GetServerData();
+			$scope.serverdata=PaperDetailServ.GetServerData();
+			$scope.$on("$ionicView.loaded",function(){
+				
 				PaperDetailServ.InitData();
 			})
 			function Start(type) {

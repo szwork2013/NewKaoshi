@@ -7,11 +7,13 @@ libraryModule
 		$scope.HideMenu = HideMenu;//隐藏分类
 		$scope.ChangepaperDetail=ChangepaperDetail;//选择新的资格考试
 		$scope.GoExamType=GoExamType;//选择分类
-		$scope.$on("$ionicView.enter", function() {
+		$scope.$on("$ionicView.loaded", function() {
 			$scope.isShow = 0;
-			SetHeight();
 			$scope.serverdata=LibraryServ.GetServerData();
 			LibraryServ.InitData($rootScope.examTypeID);
+		})
+		$scope.$on("$ionicView.enter", function() {
+			SetHeight();
 		})
 		//设置滑动高度
 		function SetHeight(){

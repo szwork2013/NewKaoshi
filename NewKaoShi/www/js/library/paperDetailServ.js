@@ -92,6 +92,7 @@ libraryModule
 						DataServ.UpdatePaperStatus(data[0].paperId);
 
 					} else {
+						CommFunServ.ShowAlert("提示","试题下载失败!")
 						//提示加载失败(未完成)
 					}
 				},function(err){

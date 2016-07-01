@@ -76,6 +76,7 @@ libraryModule
 			//计算单选多选分数
 			function GetScore(index, item,paperid) {
 			
+			if(item.answer){
 				var rightarr = $rootScope.currentpaper.questionlist[index].answer.split(""); //正确答案
 				var answerarr = item.answer.split("|");; //回答答案
 				if (rightarr.length != answerarr.length) {
@@ -120,6 +121,12 @@ libraryModule
 					SaveErrorQuestion(paperid,item.id);
 					$rootScope.currentpaper.questionlist[index].isRight = 0;
 					return 0;
+				}
+				return 0;
+				}else if(item.code){
+					serverdata.rightcount++;
+					$rootScope.currentpaper.questionlist[index].isRight = 1;
+					return item.code;
 				}
 				return 0;
 			}

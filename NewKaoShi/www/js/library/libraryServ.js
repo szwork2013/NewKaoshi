@@ -23,9 +23,10 @@ libraryModule
 					if (data && data.length > 0) {
 						var len = data.length;
 						for (var i = 0; i < len; i++) {
-							var datea = new Date(data[i].UpdateTime.replace(/-/g, "/"));
+							//var datea = new Date(data[i].UpdateTime.replace(/-/g, "/"));
 							//data[i].UpdateTime=CommFunServ.format(datea,"yyyy-MM-dd hh:mm:ss");
-							data[i].UpdateTime = datea;
+							data[i].UpdateTime = data[i].UpdateTime.replace(/:/g,"");
+							data[i].UpdateTime = data[i].UpdateTime.replace(/\s*/g, "");
 						}
 
 						serverdata.paperlist = data;

@@ -222,7 +222,25 @@ libraryModule
 			//简答题评估分数
 			function Estimate(index, score) {
 				//存储答案分数
-				$rootScope.currentpaper.questionlist[parentindex].hasdo = true;
+				var item=$rootScope.currentpaper.questionlist[index];
+				item.hasdo=true;
+				//答案是否存在，修改答案
+				if ($rootScope.currentpaper.answerContent == null) {
+					$rootScope.currentpaper.answerContent = new Array();
+				}
+				var length = $rootScope.currentpaper.answerContent.length;
+				for (var j = 0; j < length; j++) {
+					if ($rootScope.currentpaper.answerContent[j].id == item.id) {
+						$rootScope.currentpaper.answerContent[j].code = score;
+						return;
+					}
+				}
+				//添加答案
+				var answeritem = {
+					id: item.id,
+					code: score
+				}
+				$rootScope.currentpaper.answerContent.push(answeritem);
 			}
 			//上一题
 			function LastTest() {

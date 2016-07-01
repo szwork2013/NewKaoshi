@@ -9,6 +9,9 @@ function($scope,KaoshiServ,$stateParams){
 		$scope.Back=Back;
 		$scope.Estimate=Estimate;//确定评估
 		$scope.serverdata=KaoshiServ.GetServerData();
+		$scope.question={
+			Scroe:''
+		}
 		$scope.$on("$ionicView.loaded",function(){
 			KaoshiServ.InitList($stateParams.history);
 		})
@@ -21,7 +24,8 @@ function($scope,KaoshiServ,$stateParams){
 		}
 		//评估
 		function Estimate(index){
-			KaoshiServ.Estimate(index,$scope.questionScroe);
+			var code=$scope.question.Scroe;
+			KaoshiServ.Estimate(index,code);
 		}
 		//上一题
 		function LastTest(){

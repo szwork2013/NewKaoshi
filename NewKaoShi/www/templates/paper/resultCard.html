@@ -21,7 +21,8 @@
 		</div>
 		<div class="content">
 			<div ng-repeat="items in currentpaper.questiontitle" >
-				<span class="itemtitle" ng-class="{'instance':items.pq_key}">{{items.questionContent}}</span>
+					<span class="itemtitle" ng-class="{'instance':items.pq_key}" ng-if="!items.pq_key">{{items.questionContent}}</span>
+				<span class="itemtitle" ng-class="{'instance':items.pq_key}" ng-if="items.pq_key">{{items.c_key}}</span>
 				<a ng-repeat="item in currentpaper.questionlist" class="answer"  ng-if="item.pq_key==items.q_key" ng-click="GoExercise(item.q_key)">
 					<span ng-class="{'rightAnswer':item.isRight==1,'wrongAnswer':item.isRight==0,'noAnswer':item.isRight==2}">{{item.c_key}}</span>
 				</a>

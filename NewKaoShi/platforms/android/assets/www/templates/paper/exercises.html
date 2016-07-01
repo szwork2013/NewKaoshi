@@ -3,7 +3,7 @@
 		<button class="button button-icon ion-ios-arrow-back" ng-click="Back()">
 		</button>
 		<span class="title"> {{serverdata.title}}</span>
-		<button class="button  button-icon ion-ios-keypad-outline  " ng-click="ExerciseMenu()" >
+		<button class="button  button-icon ion-ios-keypad-outline" ng-click="ExerciseMenu()" ng-if="serverdata.currentType!='2'" >
 		</button>
 	</ion-header-bar>
 	<ion-content class="kaoshi">
@@ -15,7 +15,7 @@
 				<choice-Question ng-if="items.questionType=='checking' || items.questionType=='singleChoice'">
 
 				</choice-Question>
-				<multiplechoice-Question ng-if="items.questionType=='mutepliChoice'">
+				<multiplechoice-Question ng-if="items.questionType=='multipleChoice'">
 
 				</multiplechoice-Question>
 				<case-Question ng-if="items.questionType==2">

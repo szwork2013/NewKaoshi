@@ -1,6 +1,6 @@
 commModule
-	.factory('CommFunServ', ['$timeout', '$cordovaAppVersion', '$q', '$rootScope','$cordovaFile','$cordovaFileTransfer',
-		function($timeout, $cordovaAppVersion, $q, $rootScope,$cordovaFile,$cordovaFileTransfer) {
+	.factory('CommFunServ', ['$timeout', '$q', '$rootScope','$cordovaFile','$cordovaFileTransfer','$ionicPopup',
+		function($timeout, $q, $rootScope,$cordovaFile,$cordovaFileTransfer,$ionicPopup) {
 			var server = {
 				InitData: InitData,
 				CheckInit: CheckInit,

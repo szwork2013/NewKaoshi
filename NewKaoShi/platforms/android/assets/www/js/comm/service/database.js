@@ -30,6 +30,10 @@ var DataBase = function() {
 		table_Projects: 'tb_History',
 		//Roles项目角色,Departments设计部门ID
 		Projects: ["ID", "PaperID", "UserID", "Time", "Soure", "Content","Type","IsEnd","IsSync"],
+		//广告表
+		table_Advertisement: 'tb_Advertisement',
+		//
+		Advertisement: ["ID", "adType", "picID", "validTime", "invalidTime", "price","detail","CONTENT","buyurl"],
 		}
 }
 DataBase.prototype = {
@@ -86,6 +90,10 @@ DataBase.prototype = {
 			"app_flow_no": "not null"
 		});
 		this.CreateTable(tx, this.options.table_Projects, this.options.Projects, {
+			"ID": "primary key",
+			"app_flow_no": "not null"
+		});
+		this.CreateTable(tx, this.options.table_Advertisement, this.options.Advertisement, {
 			"ID": "primary key",
 			"app_flow_no": "not null"
 		});

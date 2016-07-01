@@ -19,11 +19,11 @@
 			</div>
 			<ion-scroll id="linrary_scroll">
 				<div class="testcontent">
-					<a ng-repeat="paper in serverdata.paperlist track by paper.PaperID|orderBy:paper.UpdateTime" class="row row-wrap paperitem" ng-if="paper.PaperTypeID==selectindex" ng-click="GoPaperDetail(paper.PaperID)">
+					<div ng-repeat="paper in serverdata.paperlist track by paper.PaperID|orderBy:paper.UpdateTime" class="row row-wrap paperitem" ng-if="paper.PaperTypeID==selectindex" ng-click="GoPaperDetail(paper.PaperID)">
 						<div class="col col-80">
 							<span class="papername">{{paper.PaperContent}}</span>
-							<span class="papernumber"><span class="number">{{paper.UserCount}}</span> 人做过</span>
-							<span class="papertime"  >{{paper.UpdateTime}}</span>
+							<span class="papernumber textblock"><span class="number">{{paper.UserCount}}</span> 人做过
+							</span><span class="papertime textblock"  >{{paper.UpdateTime}}</span>
 						</div>
 						<div class="col col-20">
 							<span class="haveupdate" ng-if="paper.Status==3">有更新</span>
@@ -31,7 +31,7 @@
 							<span class="havevip" ng-if="paper.Status==1">VIP</span>
 							<span class="havedownload" ng-if="paper.Status==0">免费</span>
 						</div>
-					</a>
+					</div>
 				</div>
 			</ion-scroll>
 		</div>

@@ -1,13 +1,14 @@
 loginModule
-	.factory('LoginServ', ['DataServ', '$state','$rootScope','CommFunServ',
-		function(DataServ, $state,$rootScope,CommFunServ) {
+	.factory('LoginServ', ['DataServ', '$state','$rootScope','CommFunServ','$q',
+		function(DataServ, $state,$rootScope,CommFunServ,$q) {
 			var serverdata={
 				registererr:''
 			}
 			var server = {
 				InitAppData: InitAppData,//初始化数据库
 				GoInit:GoInit,//从引导页进入应用
-				Login:Login//登录
+				Login:Login,//登录
+				Register:Register
 			}
 			return server;
 
@@ -17,9 +18,10 @@ loginModule
 
 			function GoInit() {
 				//测试删除
-				//localStorage.removeItem("examTypeList");
-//localStorage.removeItem("examTypeId");
-
+				localStorage.removeItem("examTypeList");
+				localStorage.removeItem("examTypeId");
+				localStorage.removeItem("userInfo");
+				$rootScope.userInfo=localStorage.getItem("userInfo");
 				var str = localStorage.getItem("examTypeList");
 				var id= localStorage.getItem("examTypeId"); //当前进入分类id
 				DataServ.PostExamTypes();
@@ -38,37 +40,48 @@ loginModule
 			function Login(name,pwd){
 				DataServ.PostLogin(name,pwd).then(function(res){
 					$rootScope.isLogin = true;
+					localStorage.setItem("userInfo",JSON.stringify(res))
 					$state.go('tab.home');
 				},function(err){
 					CommFunServ.ShowAlert('提示','登录失败,'+err)
 				})
 			}
 			function Register(name,nickname,pwd,conpassword,email,isConfirm){
+				var q=$q.defer();
 				if(name==null || name==''){
-					serverdata.registererr('请填写邮箱');
+					serverdata.registererr='请填写邮箱';
 					CommFunServ.RefreshData(serverdata);
-					return;
+					return q.promise;
 				}
 				if(nickname==null || nickname==''){
-					serverdata.registererr('请填写昵称');
+					serverdata.registererr='请填写昵称';
 					CommFunServ.RefreshData(serverdata);
-					return;
+					q.reject()
+					return q.promise;
 				}
 				if(pwd!=conpassword){
-					serverdata.registererr('确认密码与密码不符');
+					serverdata.registererr='确认密码与密码不符';
 					CommFunServ.RefreshData(serverdata);
-					return;
+					q.reject()
+					return q.promise;
 				}
 				if(!isConfirm){
-					serverdata.registererr('请阅读用户协议');
+					serverdata.registererr='请阅读用户协议';
 					CommFunServ.RefreshData(serverdata);
-					return;
+					q.reject()
+					return q.promise;
 				}
-				DataServ.PostRegister(name,nickname,pwd,email).then(function(){
-					
+				DataServ.PostRegister(name,nickname,pwd,email).then(function(data){
+					CommFunServ.ShowAlert("提示","注册成功!")
+					q.resolve(data);
+					//设置userinfo
+					//$rootScope.userInfo=
+					//跳转页面
 				},function(err){
-					
+					serverdata.registererr=err;
+					q.reject(err)
 				});
+				return q.promise;
 			}
 		}
 	])

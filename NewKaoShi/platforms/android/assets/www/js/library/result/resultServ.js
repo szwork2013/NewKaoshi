@@ -51,7 +51,8 @@ libraryModule
 					$rootScope.currentpaper.questionlist[i].isRight = 0;
 					for (var j = 0; j < length; j++) {
 						if ($rootScope.currentpaper.questionlist[i].id == $rootScope.currentpaper.answerContent[j].id) {
-							score += parseInt(GetScore(i, $rootScope.currentpaper.answerContent[j].answer));
+							var paperid=$rootScope.currentpaper.questionlist[i].paperId;
+							score += parseInt(GetScore(i, $rootScope.currentpaper.answerContent[j],paperid));
 							continue;
 						}
 					}
@@ -73,10 +74,10 @@ libraryModule
 				CommFunServ.RefreshData(serverdata);
 			}
 			//计算单选多选分数
-			function GetScore(index, answer) {
+			function GetScore(index, item,paperid) {
 			
 				var rightarr = $rootScope.currentpaper.questionlist[index].answer.split(""); //正确答案
-				var answerarr = answer.split("|");; //回答答案
+				var answerarr = item.answer.split("|");; //回答答案
 				if (rightarr.length != answerarr.length) {
 					$rootScope.currentpaper.questionlist[index].isRight = 0;
 					return 0; //选多或选少不得分
@@ -116,6 +117,7 @@ libraryModule
 					$rootScope.currentpaper.questionlist[index].isRight = 1;
 					return $rootScope.currentpaper.questionlist[index].soure;
 				} else {
+					SaveErrorQuestion(paperid,item.id);
 					$rootScope.currentpaper.questionlist[index].isRight = 0;
 					return 0;
 				}
@@ -141,7 +143,9 @@ libraryModule
 
 			function CheckAnswer() {
 				Destory();
-				$state.go('resultCard');
+				$state.go('resultCard',{
+					type:0
+				});
 			}
 
 			function GoPaperDeatail() {
@@ -161,6 +165,17 @@ libraryModule
 					});
 				});
 				
+			}
+			function SaveErrorQuestion(paperid,id){
+				var userid=$rootScope.userInfo!=null?$rootScope.userInfo.UserID:"";
+				var data=[{
+					PaperID:paperid,
+					QuestionID:id,
+					UserID:userid,
+					Type:0,//错题
+					IsSync:0//未同步
+				}]
+				DataServ.SaveErrOrColl(data);
 			}
 
 			function Destory() {

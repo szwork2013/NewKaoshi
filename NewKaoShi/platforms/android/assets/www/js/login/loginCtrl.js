@@ -18,11 +18,21 @@ loginModule
 			$scope.Login = Login;
 			$scope.BackAccount = BackAccount;
 			$scope.Register = Register;
-
+			$scope.loginData={
+				name:'',
+				password:''
+			}
+			$scope.registeData={
+				name:'',
+				nickname:'',
+				password:'',
+				conpassword:'',
+				confirm:false
+			}
 			//登陆
 			function Login() {
 				//请求登陆，未完成
-				var name = $scope.loginData.account;
+				var name = $scope.loginData.name;
 				var pwd = $scope.loginData.password;
 				LoginServ.Login(name, pwd);
 				$rootScope.isLogin = true;
@@ -46,16 +56,18 @@ loginModule
 			//注册
 			function Register() {
 				
-				if($scope.resmodal){
-					$scope.resmodal.hide();
-				}
-				var name = $scope.loginData.account;
-				var nickname= $scope.loginData.name;
-				var pwd = $scope.loginData.password;
-				var conpassword = $scope.loginData.conpassword;
-				var email = $scope.loginData.account;
-				var isConfirm=$scope.loginData.confim;
-				LoginServ.Register(name,nickname,pwd,conpassword,email,isConfirm);
+				
+				var name = $scope.registeData.name;
+				var nickname= $scope.registeData.nickname;
+				var pwd = $scope.registeData.password;
+				var conpassword = $scope.registeData.conpassword;
+				var email = $scope.registeData.account;
+				var isConfirm=$scope.registeData.confirm;
+				LoginServ.Register(name,nickname,pwd,conpassword,email,isConfirm).then(function(data){
+					if($scope.resmodal){
+						$scope.resmodal.hide();
+					}
+				});
 			}
 			//返回个人信息
 			function BackAccount() {

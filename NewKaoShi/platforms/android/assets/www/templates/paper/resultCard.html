@@ -9,18 +9,21 @@
 		</button>
 		<span class="title"> 答题卡</span>
 		<button class="button  button-clear " ng-click="TestAgain()">
-			<span class='assignment'>重考</span>
+			<span class='assignment' ng-if="serverdata.type==0">重考</span>
 		</button>
 	</ion-header-bar>
 	<ion-content class="answercard">
-		<div class="title">
+		<div class="title" ng-if="serverdata.type==0">
 			总分<span class="number">{{currentpaper.totalScore}}</span>,及格分<span class="number">{{currentpaper.passMark}}</span>,您的得分<span class="number">{{currentpaper.score}}</span>
+		</div>
+		<div class="title" ng-if="serverdata.type==1">
+			总题数<span class="number">{{currentpaper.itemNum}}</span>,已答<span class="number">{{serverdata.hasdocount}}</span>,答对<span class="number">{{serverdata.rightdocount}}</span>
 		</div>
 		<div class="content">
 			<div ng-repeat="items in currentpaper.questiontitle" >
 				<span class="itemtitle" ng-class="{'instance':items.pq_key}">{{items.questionContent}}</span>
 				<a ng-repeat="item in currentpaper.questionlist" class="answer"  ng-if="item.pq_key==items.q_key" ng-click="GoExercise(item.q_key)">
-					<span ng-class="{'rightAnswer':item.isRight==1,'wrongAnswer':item.isRight==0}">{{item.c_key}}</span>
+					<span ng-class="{'rightAnswer':item.isRight==1,'wrongAnswer':item.isRight==0,'noAnswer':item.isRight==2}">{{item.c_key}}</span>
 				</a>
 			</div>
 		</div>

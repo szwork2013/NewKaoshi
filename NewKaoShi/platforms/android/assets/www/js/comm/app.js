@@ -22,6 +22,7 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
     }
   });
   SqliteServ.createDB();
+  //CommFunServ.CreateDir();
   CommFunServ.InitData();
   $rootScope.BackView=function(){
   	if($ionicHistory.viewHistory()){
@@ -138,6 +139,7 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
     })
     .state('tab.error', {
       url: '/error',
+      cache:false,
       views: {
         'tab-error': {
           templateUrl: 'templates/tab-error.html',
@@ -148,6 +150,7 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
 
   .state('tab.search', {
     url: '/search',
+    cache:false,
     views: {
       'tab-search': {
         templateUrl: 'templates/tab-search.html',
@@ -157,6 +160,7 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
   })
    .state('tab.account', {
     url: '/account',
+    cache:false,
     views: {
       'tab-account': {
         templateUrl: 'templates/tab-account.html',
@@ -201,7 +205,7 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
 		})
 		//答案解析
 		.state('resultCard', {
-			url: '/resultCard',
+			url: '/resultCard/:type',
 			cache: false,
 			templateUrl: 'templates/paper/resultCard.html',
 			controller: 'ResultCardCtrl'

@@ -13,7 +13,9 @@ function($scope,ErrorServ,$rootScope){
 			ErrorServ.Destory();
 		})
 		function ChangeShow(bool) {
-			$scope.isError = bool;
+			if($scope.isError!=bool){
+				$scope.isError = bool;
+			}
 		}
 		function ChangeShowItem(index) {
 			ErrorServ.ChangeShowItem(index);

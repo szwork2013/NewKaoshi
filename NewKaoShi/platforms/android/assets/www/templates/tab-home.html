@@ -13,21 +13,21 @@
 			</ion-slide>
 		</ion-slide-box>
 		<div class="row row-wrap itemtitle">
-			<a class="col col-25" ng-class="{'selected':selectindex==0}" ng-click="SelectItem(0)">
+			<a class="col col-25" ng-class="{'selected':serverdata.selectindex==0}" ng-click="SelectItem(0)">
 				<span>全部</span>
 			</a>
-			<a class="col col-25" ng-class="{'selected':selectindex==1}" ng-click="SelectItem(1)">
+			<a class="col col-25" ng-class="{'selected':serverdata.selectindex==1}" ng-click="SelectItem(1)">
 				<span>全科</span>
 			</a>
-			<a class="col col-25" ng-class="{'selected':selectindex==2}" ng-click="SelectItem(2)">
+			<a class="col col-25" ng-class="{'selected':serverdata.selectindex==2}" ng-click="SelectItem(2)">
 				<span>单科</span>
 			</a>
-			<a class="col col-25" ng-class="{'selected':selectindex==3}" ng-click="SelectItem(3)">
+			<a class="col col-25" ng-class="{'selected':serverdata.selectindex==3}" ng-click="SelectItem(3)">
 				<span>软件vip</span>
 			</a>
 		</div>
 		<ion-scroll id="items_Content" >
-				<div  ng-repeat="item in itemlist track by item.id" class="row row-wrap itemcontent" ng-if="selectindex==0 || (selectindex==item.type) ">
+				<div  ng-repeat="item in itemlist track by item.id" class="row row-wrap itemcontent" ng-if="serverdata.selectindex==0 || (serverdata.selectindex==item.type)" ng-click="GoBuy(item.src)">
 					<div class="col col-20">
 						<img ng-src="{{::item.Img}}">
 					</div>

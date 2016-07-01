@@ -1,19 +1,20 @@
 commModule
 	.factory("DataServ", ['$http', '$q', 'SqliteServ',
 		function($http, $q, SqliteServ) {
-			var baseurl='http://p14600968p.imwork.net/kaohaodian/api/';
+			var baseurl = 'http://p14600968p.imwork.net/kaohaodian/api/';
 			var database;
 			var server = {
-				InitDataBase:InitDataBase,
-				
-				PostExamTypes:PostExamTypes,//请求考试类型
-				PostExamPaper:PostExamPaper,//请求试卷
-				PostQuestions:PostQuestions,//请求试题
-				PostLogin:PostLogin,//登录
-				PostRegister:PostRegister,//注册
-				PostQuestionPic:PostQuestionPic,//请求图片
-				
-				
+				InitDataBase: InitDataBase,
+
+				PostExamTypes: PostExamTypes, //请求考试类型
+				PostExamPaper: PostExamPaper, //请求试卷
+				PostQuestions: PostQuestions, //请求试题
+				PostLogin: PostLogin, //登录
+				PostRegister: PostRegister, //注册
+				PostQuestionPic: PostQuestionPic, //请求图片
+				PostUpdatePsd:PostUpdatePsd,//修改密码
+				PostUpdateVip:PostUpdateVip,//注册VIP
+
 				MarkExamEnd: MarkExamEnd, //更改试卷考试状态
 				BaseUpdate: BaseUpdate,
 				BaseSaveUpdate: BaseSaveUpdate,
@@ -22,25 +23,29 @@ commModule
 				GetPaperData: GetPaperData,
 				GetHistoy: GetHistoy,
 				GetPaperQuestions: GetPaperQuestions,
-				GetErrorData:GetErrorData,
-				GetCollectData:GetCollectData,
-				GetExamName:GetExamName,
-				GetQuestionData:GetQuestionData,
-				BaseSelect:BaseSelect,
-				
-				UpdatePaperStatus:UpdatePaperStatus,//修改试卷状态
-				DeletPaperHistory:DeletPaperHistory
+				GetErrorData: GetErrorData,
+				GetCollectData: GetCollectData,
+				GetExamName: GetExamName,
+				GetQuestionData: GetQuestionData,
+				BaseSelect: BaseSelect,
+
+				SaveErrOrColl: SaveErrOrColl, //存储错题
+				CollectQuestion:CollectQuestion,//收藏
+				CancelCollect:CancelCollect,//取消收藏
+				UpdatePaperStatus: UpdatePaperStatus, //修改试卷状态
+				DeletPaperHistory: DeletPaperHistory
 			}
 			return server;
-			function InitDataBase(){
-				if(database==null){
-					database=new DataBase();
+
+			function InitDataBase() {
+				if (database == null) {
+					database = new DataBase();
 				}
-				if(database.db==null){
-					database.OpenTransaction(function(tx){
+				if (database.db == null) {
+					database.OpenTransaction(function(tx) {
 						database.InitDB(tx);
 					})
-					
+
 				}
 			}
 			/*
@@ -48,15 +53,15 @@ commModule
 			 */
 			//获取所有数据（考试类型、试卷）
 			function PostExamTypes() {
-				var q=$q.defer();
+				var q = $q.defer();
 				/*var parma={
 					reqTimestamp: Date.parse(new Date()),
 					reqCode:'khd_app',
 					reqSign:''
 				}
 				parma.reqSign=MD5(parma.reqTimestamp+parma.reqCode+'0123456789qwertyuiop');*/
-				BasePost('getExamTypes.do').then(function(response){
-					if(response.status=="success"){
+				BasePost('getExamTypes.do').then(function(response) {
+					if (response.status == "success") {
 						SaveExamType(response.data);
 					}
 					q.resolve(response);
@@ -64,20 +69,20 @@ commModule
 				return q.promise;
 			}
 			//获取试卷
-			function PostExamPaper(typeid){
-				var q=$q.defer();
-				var parma={
+			function PostExamPaper(typeid) {
+				var q = $q.defer();
+				var parma = {
 					//examTypeId:typeid
-					examTypeId:'4028188154ce38b40154ce3cc6690002'
+					examTypeId: '4028188154ce38b40154ce3cc6690002'
 				}
-				BasePost('getExamPapers.do').then(function(response){
-					if(response.status=="success"){
+				BasePost('getExamPapers.do').then(function(response) {
+					if (response.status == "success") {
 						SavePaper(response.data)
 						q.resolve(response);
-					}else{
-						console.log("请求试卷失败:"+response.msg)
+					} else {
+						console.log("请求试卷失败:" + response.msg)
 					}
-					
+
 				})
 				return q.promise;
 			}
@@ -87,72 +92,113 @@ commModule
 			}
 			//试卷id，获取试题
 			function PostQuestions(paperid) {
-				var q=$q.defer();
-				var parma={
-					paperId:paperid
+				var q = $q.defer();
+				var parma = {
+					paperId: paperid
 				}
-				BasePost('getExamQuestionsByPaper.do',parma).then(function(response){
-					if(response.status=="success"){
+				BasePost('getExamQuestionsByPaper.do', parma).then(function(response) {
+					if (response.status == "success") {
 						SaveQuestion(response.data)
 						q.resolve(response.data);
-					}else{
-						console.log("请求试题失败:"+response.msg)
+					} else {
+						q.reject(response.msg)
+						console.log("请求试题失败:" + response.msg)
 					}
-					
+
 				})
 				return q.promise;
 			}
-			function PostLogin(name,pwd){
-				var q=$q.defer();
-				var parma={
-					name:name,
-					pwd:pwd
+
+			function PostLogin(name, pwd) {
+				var q = $q.defer();
+				var parma = {
+					name: name,
+					pwd: pwd
 				}
-				BasePost('validateUser.do',parma).then(function(response){
-					if(response.status=="success"){
+				BasePost('validateUser.do', parma).then(function(response) {
+					if (response.status == "success") {
 						SaveAccount(response.data)
 						q.resolve(response.data);
-					}else{
+					} else {
 						q.reject(response.msg);
 					}
-					
+
 				})
 				return q.promise;
 			}
-			function PostRegister(name,nickname,pwd,email){
-				var q=$q.defer();
-				var parma={
-					name:name,
-					pwd:pwd,
-					nickName:nickname,
-					email:email
+
+			function PostRegister(name, nickname, pwd, email) {
+				var q = $q.defer();
+				var parma = {
+					name: name,
+					pwd: pwd,
+					nickName: nickname,
+					email: email
 				}
-				BasePost('validateUser.do',parma).then(function(response){
-					if(response.status=="success"){
-						SaveAccount(response.data)
-						q.resolve(response.data);
-					}else{
+				BasePost('userRegister.do', parma).then(function(response) {
+					if (response.status == "success") {
+						q.resolve(response);
+					} else {
 						q.reject(response.msg);
 					}
-					
+
 				})
 				return q.promise;
 			}
 			//请求图片
-			function PostQuestionPic(placeid){
-				var q=$q.defer();
-				var parma={
-					placeId:placeid
+			function PostQuestionPic(placeid) {
+				var q = $q.defer();
+				var parma = {
+					placeId: placeid
 				}
-				BasePost('getQuestionPic.do',parma).then(function(response){
-					if(response.status=="success"){
+				BasePost('getQuestionPic.do', parma).then(function(response) {
+					if (response.status == "success") {
 						//SaveAccount(response.data)
 						console.log(response.data)
 						q.resolve(response.data);
-					}else{
+					} else {
 						q.reject(response.msg);
 					}
-					
+
+				})
+				return q.promise;
+			}
+			function PostUpdatePsd(oldpsd,newpsd){
+				var q = $q.defer();
+				var userinfo=JSON.parse(localStorage.getItem("userInfo"));
+				var parma = {
+					userId: userinfo.id,
+					newPwd:newpsd,
+					oldPwd:oldpsd
+				}
+				BasePost('changeUserPwd.do', parma).then(function(response) {
+					if (response.status == "success") {
+						//SaveAccount(response.data)
+						console.log(response.data)
+						q.resolve(response.data);
+					} else {
+						q.reject(response.msg);
+					}
+
+				})
+				return q.promise;
+			}
+			function PostUpdateVip(num){
+				var q = $q.defer();
+				var userinfo=JSON.parse(localStorage.getItem("userInfo"));
+				var parma = {
+					id: userinfo.id,
+					activationCode:num
+				}
+				BasePost('relateActivationCode.do', parma).then(function(response) {
+					if (response.status == "success") {
+						//SaveAccount(response.data)
+						console.log(response.data)
+						q.resolve(response.data);
+					} else {
+						q.reject(response.msg);
+					}
+
 				})
 				return q.promise;
 			}
@@ -161,14 +207,14 @@ commModule
 				var q = $q.defer();
 				$http({
 					method: 'POST',
-					url: baseurl+url,
+					url: baseurl + url,
 					params: parma,
 					headers: {
 						'Content-Type': 'application/x-www-form-urlencoded:charset=utf-8'
 					}
 				}).success(function(response) {
 					q.resolve(response);
-				}).error(function(error){
+				}).error(function(error) {
 					q.reject(error)
 				});
 				return q.promise;
@@ -196,12 +242,30 @@ commModule
 			}
 			//存储试卷数据
 			function SavePaper(data) {
-				database.OpenTransaction(function(tx){
-					var len = data.length;
-					for (var i = 0; i < len; i++) {
-						database.SaveOrUpdateTable(tx, 'tb_Papers', ["PaperID", "PaperContent", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "Status", "PassMark", "UpLoaderID", "TotalTime", "Year", "ContainQuestionTypes", "CreateTime", "CreatorID", "UpdateTime", "UpdaterID"], [data[i].id, data[i].name, data[i].examTypeId, data[i].paperTypeId, data[i].totalScore, data[i].itemNum, data[i].useCount, data[i].isVIP, data[i].passmark, data[i].uploaderId, data[i].totalTime, data[i].year, data[i].containQustionTypes, data[i].createTime, data[i].creator, data[i].updateTime, data[i].uploaderId], "PaperID", [data[i].id]);
+				SqliteServ.selectsql("select * from tb_Papers").then(function(jsondata) {
+					if (jsondata && jsondata.length > 0) {
+						var length = jsondata.length;
+						var len = data.length;
+						for (var j = 0; j < length; j++) {
+							for (var k = 0; k < len; k++) {
+								if (data[k].id == jsondata[j].PaperID) {
+									if (data[k].updateTime != jsondata[j].UpdateTime) {
+										data[k].Status = "3";
+									} else if (jsondata[j].Status == "2") {
+										data[k].Status = "2";
+									}
+								}
+							}
+						}
 					}
+					database.OpenTransaction(function(tx) {
+						var lena = data.length;
+						for (var i = 0; i < lena; i++) {
+							database.SaveOrUpdateTable(tx, 'tb_Papers', ["PaperID", "PaperContent", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "Status", "PassMark", "UpLoaderID", "TotalTime", "Year", "ContainQuestionTypes", "CreateTime", "CreatorID", "UpdateTime", "UpdaterID"], [data[i].id, data[i].name, data[i].examTypeId, data[i].paperTypeId, data[i].totalScore, data[i].itemNum, data[i].useCount, data[i].isVIP, data[i].passmark, data[i].uploaderId, data[i].totalTime, data[i].year, data[i].containQustionTypes, data[i].createTime, data[i].creator, data[i].updateTime, data[i].uploaderId], "PaperID=?", [data[i].id]);
+						}
+					})
 				})
+
 			}
 			//存储试题数据
 			function SaveQuestion(data) {
@@ -217,14 +281,15 @@ commModule
 				database.OpenTransaction(function(tx) {
 					var len = data.length;
 					for (var i = 0; i < len; i++) {
-						database.SaveOrUpdateTable(tx, 'tb_UserQuestions', ["ID", "QuestionID", "UserID", "Type", "IsSync"], [data[i].ID, data[i].QuestionID, data[i].UserID, data[i].Type, data[i].IsSync], "ID=?", [data[i].ID]);
+						database.SaveOrUpdateUerRoleTable(tx, 'tb_UserQuestions', ["PaperID", "QuestionID", "UserID", "Type", "IsSync"], [data[i].PaperID, data[i].QuestionID, data[i].UserID, data[i].Type, data[i].IsSync], "PaperID=? and QuestionID=?", [data[i].PaperID, data[i].QuestionID]);
 					}
 				})
 			}
+
 			function MarkExamEnd(paperid) {
 				database.OpenTransaction(function(tx) {
-						database.SaveOrUpdateUerRoleTable(tx, 'tb_History', ["IsEnd"], [1], "PaperID=? and Type=?", [paperid, 0]);
-					})
+					database.SaveOrUpdateUerRoleTable(tx, 'tb_History', ["IsEnd"], [1], "PaperID=? and Type=?", [paperid, 0]);
+				})
 			}
 			//存储用户信息
 			function SaveAccount(data) {
@@ -235,13 +300,30 @@ commModule
 					}
 				})
 			}
-			function UpdatePaperStatus(id){
-				var q=$q.defer();
-				SqliteServ.update('tb_Papers',['Status'],[2],"PaperID=?",[id]).then(function(res){
+
+			function UpdatePaperStatus(id) {
+				var q = $q.defer();
+				SqliteServ.update('tb_Papers', ['Status'], ['2'], "PaperID=?", [id]).then(function(res) {
 					q.resolve(res);
 				})
 				return q.promise
 			}
+			//收藏
+			function CollectQuestion(item){
+				var userinfo=JSON.parse(localStorage.getItem("userInfo"));
+				database.OpenTransaction(function(tx) {
+					database.SaveOrUpdateUerRoleTable(tx, 'tb_UserQuestions', ["PaperID","QuestionID", "UserID", "Type","IsSync"], [item.paperId,item.id,userinfo.id,'1','0'], "PaperID=? and QuestionID=?", [item.paperId,item.id]);
+				})
+			}
+			//取消收藏
+			function CancelCollect(item){
+				var q = $q.defer();
+				SqliteServ.deletehis('tb_UserQuestions', 'PaperID=? and QuestionID=?', [item.paperId,item.id]).then(function(response) {
+					q.resolve(response)
+				})
+				return q.promise;
+			}
+
 			function BaseUpdate(tablename, field, param, condition, cparam) {
 				var q = $q.defer();
 				SqliteServ.update(tablename, field, param, condition, cparam).then(function(res) {
@@ -251,7 +333,7 @@ commModule
 			}
 
 			function BaseSaveUpdate(tablename, field, param, condition, cparam) {
-				
+
 				var q = $q.defer();
 				SqliteServ.saveOrupadte(tablename, field, param, condition, cparam).then(function(res) {
 					q.resolve(res);
@@ -307,7 +389,7 @@ commModule
 			//用于错题
 			function GetErrorData() {
 				var q = $q.defer();
-				SqliteServ.selectsql('select *,count(QuestionID) as rows from tb_UserQuestions join tb_Papers on tb_UserQuestions.PaperID = tb_Papers.PaperID where  Type=? group by tb_UserQuestions.PaperID', ['0']).then(function(data) {
+				SqliteServ.selectsql('select *,count(QuestionID) as rows from tb_UserQuestions join tb_Papers on tb_UserQuestions.PaperID = tb_Papers.PaperID where  Type=? group by tb_UserQuestions.PaperID', [0]).then(function(data) {
 					q.resolve(data)
 				})
 				return q.promise;
@@ -321,7 +403,7 @@ commModule
 				return q.promise;
 			}
 			//获取考试类型
-			function GetExamName(){
+			function GetExamName() {
 				var q = $q.defer();
 				SqliteServ.selectsql('select * from tb_ExamTypes where ExamTypeID in (select ExamTypeID from tb_UserQuestions join tb_Papers on tb_UserQuestions.PaperID = tb_Papers.PaperID group by tb_Papers.ExamTypeID)', []).then(function(data) {
 					q.resolve(data)
@@ -329,14 +411,15 @@ commModule
 				return q.promise;
 			}
 			//获取试题
-			function GetQuestionData(paperid,type){
+			function GetQuestionData(paperid, type) {
 				var q = $q.defer();
-				SqliteServ.selectsql('select * from tb_Question where id in (select QuestionID from tb_UserQuestions where PaperID=? and Type=?)', [paperid,type]).then(function(data) {
+				SqliteServ.selectsql('select * from tb_Question where id in (select QuestionID from tb_UserQuestions where PaperID=? and Type=?)', [paperid, type]).then(function(data) {
 					q.resolve(data)
 				})
 				return q.promise;
 			}
-			function BaseSelect(sql,parma){
+
+			function BaseSelect(sql, parma) {
 				var q = $q.defer();
 				SqliteServ.selectsql(sql, parma).then(function(data) {
 					q.resolve(data)
@@ -346,9 +429,9 @@ commModule
 			/*
 			 * 
 			 */
-			function DeletPaperHistory(paperid){
-				var q=$q.defer();
-				SqliteServ.deletehis('tb_History', 'PaperID=? and Type=? and IsEnd=?', [paperid,0,1]).then(function(response){
+			function DeletPaperHistory(paperid) {
+				var q = $q.defer();
+				SqliteServ.deletehis('tb_History', 'PaperID=? and Type=? and IsEnd=?', [paperid, 0, 1]).then(function(response) {
 					q.resolve(response)
 				})
 				return q.promise;

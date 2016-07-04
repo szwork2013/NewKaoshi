@@ -112,10 +112,13 @@ libraryModule
 				for (var i = 0; i < len; i++) {
 					data[i].questionContent=AssmblePicUrl(data[i].questionContent);
 					if (data[i].answer != null && data[i].answer != '') {
+					
 						//组装图片
 						data[i].optionContent=AssmblePicUrl(data[i].optionContent);
-						
+												
 						data[i].optionContent = JSON.parse(data[i].optionContent); //eval("(" + + ")");
+						data[i].answer=AssmblePicUrl(data[i].answer);
+						data[i].analysis=AssmblePicUrl(data[i].analysis);
 						//组装选项
 						$rootScope.currentpaper.questionlist.push(data[i]);
 					} else {

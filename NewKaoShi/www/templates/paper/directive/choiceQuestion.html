@@ -1,6 +1,7 @@
 <!--简答题-->
 <div>
-	<span class="title content" ng-bind-html="items.questionContent"></span>
+	<div class="title content" ng-bind-html="items.questionContent">
+	</div>
 	<div class="list content">
 		<span ng-repeat="(key,item) in items.optionContent" class="item" style="white-space: normal;" ng-click="SelectAnswer($parent.$index,$index)">
 			<input type="radio" name="{{items.id}}"  ng-checked='items.answerArr[$index]'/>

@@ -155,7 +155,7 @@ libraryModule
 						for (var k in str) {
 							var replacestr = url + 'getQuestionPic.do?placeId=' + str[k].substr(2, str[k].length - 3);
 							var replacea = str[k];
-							var img="<img ng-src='"+replacestr+"'src='"+replacestr+ "'/>";
+							var img="<img ng-src='"+replacestr+"' src='"+replacestr+ "'/>";
 							data = data.replace(replacea, img);
 						}
 					}

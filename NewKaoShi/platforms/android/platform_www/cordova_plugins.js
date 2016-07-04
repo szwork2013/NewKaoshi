@@ -1,6 +1,14 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
+        "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
+        "id": "cordova-plugin-app-version.AppVersionPlugin",
+        "pluginId": "cordova-plugin-app-version",
+        "clobbers": [
+            "cordova.getAppVersion"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-file/www/DirectoryEntry.js",
         "id": "cordova-plugin-file.DirectoryEntry",
         "pluginId": "cordova-plugin-file",
@@ -188,23 +196,15 @@ module.exports = [
         "clobbers": [
             "window.FileTransfer"
         ]
-    },
-    {
-        "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
-        "id": "cordova-plugin-app-version.AppVersionPlugin",
-        "pluginId": "cordova-plugin-app-version",
-        "clobbers": [
-            "cordova.getAppVersion"
-        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
+    "cordova-plugin-app-version": "0.1.8",
     "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-file": "4.2.0",
-    "cordova-plugin-file-transfer": "1.5.2-dev",
-    "cordova-plugin-app-version": "0.1.8"
+    "cordova-plugin-file-transfer": "1.5.1"
 }
 // BOTTOM OF METADATA
 });

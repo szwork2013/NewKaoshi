@@ -6602,21 +6602,6 @@ angular.module('ngCordova.plugins.sqlite', [])
         });
         return q.promise;
       },
-       insetexecute: function (tx, query, binding) {
-        var q = $q.defer();
-          tx.executeSql(query, binding, function (tx, result) {
-              q.resolve(result);
-            },
-            function (transaction, error) {
-              q.reject(error);
-            });
-        return q.promise;
-      },
-      transactionOpen:function(db,callback){
-      	 db.transaction(function (tx) {
-      	 	callback(tx);
-      	 });
-      },
 
       insertCollection: function (db, query, bindings) {
         var q = $q.defer();

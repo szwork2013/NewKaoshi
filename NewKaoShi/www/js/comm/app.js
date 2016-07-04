@@ -21,9 +21,9 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
       StatusBar.styleDefault();
     }
   });
+  //创建数据库
   SqliteServ.createDB();
-  //CommFunServ.CreateDir();
-  CommFunServ.InitData();
+ 
   $rootScope.BackView=function(){
   	if($ionicHistory.viewHistory()){
   		$ionicHistory.goBack();

@@ -74,6 +74,7 @@ libraryModule
 					})
 				}
 			}
+
 			function PostPaperQuestion(type) {
 				//显示加载
 				$ionicLoading.show({
@@ -84,6 +85,7 @@ libraryModule
 					$ionicLoading.hide(); //隐藏加载
 					if (data && data.length > 0) {
 						//请求图片
+						DownLoadPic(data);
 						//CommFunServ.Download()
 						//DataServ.PostQuestionPic("0f5ac1d4c612408ab9cbb4912f3be38d")
 						//组装试题数据
@@ -92,12 +94,12 @@ libraryModule
 						DataServ.UpdatePaperStatus(data[0].paperId);
 
 					} else {
-						CommFunServ.ShowAlert("提示","试题下载失败!")
-						//提示加载失败(未完成)
+						CommFunServ.ShowAlert("提示", "试题下载失败!")
+							//提示加载失败(未完成)
 					}
-				},function(err){
+				}, function(err) {
 					$ionicLoading.hide(); //隐藏加载
-					CommFunServ.ShowAlert('提示','加载试题失败!')
+					CommFunServ.ShowAlert('提示', '加载试题失败!')
 				});
 			}
 			//组装试题数据
@@ -139,6 +141,41 @@ libraryModule
 						history: serverdata.haveExercise,
 						type: 0
 					})
+				}
+			}
+
+			function DownLoadPic(data) {
+				if (data && data.length > 0) {
+					var piclist = new Array();
+					for (var key in data) {
+						var questionContent = data[key].questionContent;
+						var optionContent = data[key].optionContent;
+						if (questionContent) {
+							var str = questionContent.match(/{:\w*}/g);
+							if (str) {
+								piclist.push(str);
+							}
+						}
+						if (optionContent) {
+							var stro = optionContent.match(/{:\w*}/g);
+							if (stro) {
+								piclist.push(stro);
+							}
+						}
+					}
+					DownLoad(piclist);
+				}
+			}
+
+			function DownLoad(piclist) {
+				if (piclist && piclist.length > 0) {
+					CommFunServ.Download(piclist[piclist.length - 1]).then(function(data) {
+						if (adata && typeof(adata) != 'string') {
+							console.log(adata.nativeURL)
+						}
+						piclist.unshift();
+						DownLoad(piclist);
+					});
 				}
 			}
 		}

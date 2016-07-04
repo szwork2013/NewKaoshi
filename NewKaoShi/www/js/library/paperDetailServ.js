@@ -74,6 +74,7 @@ libraryModule
 					})
 				}
 			}
+
 			function PostPaperQuestion(type) {
 				//显示加载
 				$ionicLoading.show({
@@ -83,7 +84,9 @@ libraryModule
 				DataServ.PostQuestions($rootScope.currentpaper.paperID).then(function(data) {
 					$ionicLoading.hide(); //隐藏加载
 					if (data && data.length > 0) {
-						//请求图片
+
+						//存储数据库
+						DataServ.SaveQuestion(data);
 						//CommFunServ.Download()
 						//DataServ.PostQuestionPic("0f5ac1d4c612408ab9cbb4912f3be38d")
 						//组装试题数据
@@ -92,25 +95,27 @@ libraryModule
 						DataServ.UpdatePaperStatus(data[0].paperId);
 
 					} else {
-						CommFunServ.ShowAlert("提示","试题下载失败!")
-						//提示加载失败(未完成)
+						CommFunServ.ShowAlert("提示", "试题下载失败!")
+							//提示加载失败(未完成)
 					}
-				},function(err){
+				}, function(err) {
 					$ionicLoading.hide(); //隐藏加载
-					CommFunServ.ShowAlert('提示','加载试题失败!')
+					CommFunServ.ShowAlert('提示', '加载试题失败!')
 				});
 			}
 			//组装试题数据
 			function AssmbleQuestionData(data, type) {
-
 				var len = data.length;
 				$rootScope.currentpaper.questionlist = []; //试题列表
 				$rootScope.currentpaper.questiontitle = []; //标题列表
 				$rootScope.currentpaper.answerContent = null; //答案列表
 				for (var i = 0; i < len; i++) {
+					data[i].questionContent=AssmblePicUrl(data[i].questionContent);
 					if (data[i].answer != null && data[i].answer != '') {
+						//组装图片
+						data[i].optionContent=AssmblePicUrl(data[i].optionContent);
+						
 						data[i].optionContent = JSON.parse(data[i].optionContent); //eval("(" + + ")");
-
 						//组装选项
 						$rootScope.currentpaper.questionlist.push(data[i]);
 					} else {
@@ -139,6 +144,34 @@ libraryModule
 						history: serverdata.haveExercise,
 						type: 0
 					})
+				}
+			}
+
+			function AssmblePicUrl(data) {
+				if (data) {
+					var str = data.match(/{:\w*}/g);
+					if (str) {
+						var url = DataServ.GetBaseUrl();
+						for (var k in str) {
+							var replacestr = url + 'getQuestionPic.do?placeId=' + str[k].substr(2, str[k].length - 3);
+							var replacea = str[k];
+							var img="<img ng-src='"+replacestr+"'/>";
+							data = data.replace(replacea, img);
+						}
+					}
+				}
+				return data;
+			}
+
+			function DownLoad(piclist) {
+				if (piclist && piclist.length > 0) {
+					CommFunServ.Download(piclist[piclist.length - 1]).then(function(data) {
+						if (adata && typeof(adata) != 'string') {
+							console.log(adata.nativeURL)
+						}
+						piclist.unshift();
+						DownLoad(piclist);
+					});
 				}
 			}
 		}

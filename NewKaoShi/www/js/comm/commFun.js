@@ -1,6 +1,6 @@
 commModule
-	.factory('CommFunServ', ['$timeout', '$q', '$rootScope','$cordovaFile','$cordovaFileTransfer','$ionicPopup',
-		function($timeout, $q, $rootScope,$cordovaFile,$cordovaFileTransfer,$ionicPopup) {
+	.factory('CommFunServ', ['$timeout', '$q', '$rootScope', '$cordovaFileTransfer', '$cordovaFile', '$ionicPopup',
+		function($timeout, $q, $rootScope, $cordovaFileTransfer, $cordovaFile, $ionicPopup) {
 			var server = {
 				InitData: InitData,
 				CheckInit: CheckInit,
@@ -11,15 +11,14 @@ commModule
 				GetValueIndex: GetValueIndex,
 				GetKeyIndex: GetKeyIndex,
 				ShowConfirm: ShowConfirm, //确认框
-				ShowAlert: ShowAlert,//提示框
-				JsonSort:JsonSort,
+				ShowAlert: ShowAlert, //提示框
+				JsonSort: JsonSort,
 				format: format,
-				secondFormat: secondFormat,//设置时间格式
-				ShowTime:ShowTime,
-				
-				CreateDir:CreateDir,//创建目录
-				Download:Download//下载
-				
+				secondFormat: secondFormat, //设置时间格式
+				ShowTime: ShowTime,
+
+				CreateDir: CreateDir, //创建目录
+				Download: Download //下载
 
 			}
 			return server;
@@ -130,14 +129,18 @@ commModule
 				});
 				return q.promise;
 			}
-			function JsonSort(jsondata){
-				var arr=new Array();
-				if(jsondata){
-					for(var item in jsondata){
-						arr.push({key:item,value:jsondata[item]})
+
+			function JsonSort(jsondata) {
+				var arr = new Array();
+				if (jsondata) {
+					for (var item in jsondata) {
+						arr.push({
+							key: item,
+							value: jsondata[item]
+						})
 					}
 				}
-				
+
 				return arr.sort();
 			}
 			//拼凑考试已用时间
@@ -203,51 +206,77 @@ commModule
 				//format = format.substring(0,format.length-3);
 				return format;
 			};
-			function CreateDir() {
-				$cordovaFile.getFreeDiskSpace()
-					.then(function(success) {
-						$cordovaFile.checkDir(cordova.file.externalRootDirectory, "KaoHaoDian")
-							.then(function(success) {
 
-							}, function(error) {
-								$cordovaFile.createDir(cordova.file.externalRootDirectory, "KaoHaoDian", false)
-									.then(function(success) {
-										// success
-									}, function(error) {
-										ShowAlert("提示", "文件创建失败,清理内存重试");
-									});
-							});
-					}, function(error) {
-						ShowAlert("提示", "无内存空间")
-					});
+			function CheckPlatform() {
+				//平台、设备和操作系统
+				var system = {
+					win: false,
+					mac: false,
+					xll: false
+				};
+				//检测平台
+				var p = navigator.platform;
+				system.win = p.indexOf("Win") == 0;
+				system.mac = p.indexOf("Mac") == 0;
+				system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
+				//跳转语句
+				if (system.win || system.mac) { //转向后台登陆页面
+					return true;
+				} else if (system.x11) {
+					return false;
+				}
 			}
 
-			function Download(url) {
+			function CreateDir() {
+				if (!CheckPlatform()) {
+					$cordovaFile.getFreeDiskSpace()
+						.then(function(success) {
+							$cordovaFile.checkDir(cordova.file.externalRootDirectory, "KaoHaoDian")
+								.then(function(success) {
+
+								}, function(error) {
+									$cordovaFile.createDir(cordova.file.externalRootDirectory, "KaoHaoDian", false)
+										.then(function(success) {
+											// success
+										}, function(error) {
+											ShowAlert("提示", "文件创建失败,清理内存重试");
+										});
+								});
+						}, function(error) {
+							ShowAlert("提示", "无内存空间")
+						});
+				}
+			}
+			//一般下载
+			function Download(name) {
 				var q = $q.defer();
 				if (!CheckPlatform()) {
-					var fileName = "";
-					if (url.indexOf("=") == -1) {
-						var filesurl = url.split('/');
-						fileName = filesurl[filesurl.length - 1];
-					} else {
-						var filesurl = url.split('=');
-						fileName = filesurl[filesurl.length - 1];
-					}
+					var fileName = name + '.png';
+					var url = "http://p14600968p.imwork.net/kaohaodian/api/getQuestionPic.do?placeId=" + name
+						/*if (url.indexOf("=") == -1) {
+							var filesurl = url.split('/');
+							fileName = filesurl[filesurl.length - 1];
+						} else {
+							var filesurl = url.split('=');
+							fileName = filesurl[filesurl.length - 1];
+						}*/
 					var targetPath = cordova.file.externalRootDirectory + "KaoHaoDian/" + fileName;
 					var trustHosts = true;
 					var options = {};
 					$cordovaFile.checkFile(cordova.file.externalRootDirectory + "KaoHaoDian/", fileName)
 						.then(function(success) {
 							q.resolve(success)
+							console.log('success=' + success)
 						}, function(error) {
 							$cordovaFileTransfer.download(url, targetPath, options, trustHosts)
 								.then(function(result) {
+									//console.log('result=' + result)
 									q.resolve(result);
 								}, function(err) {
 									q.reject(err);
 								}, function(progress) {
 									downloadProgress = (progress.loaded / progress.total) * 100;
-									q.resolve(downloadProgress);
+									q.resolve(downloadProgress.toString());
 								});
 						});
 				}

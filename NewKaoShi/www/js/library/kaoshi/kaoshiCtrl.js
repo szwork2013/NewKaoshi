@@ -1,6 +1,6 @@
 libraryModule
-.controller('KaoshiCtrl',['$scope','KaoshiServ','$stateParams',
-function($scope,KaoshiServ,$stateParams){
+.controller('KaoshiCtrl',['$scope','KaoshiServ','$stateParams','$timeout',
+function($scope,KaoshiServ,$stateParams,$timeout){
 		$scope.slideHasChanged=slideHasChanged;
 		$scope.SelectAnswer = SelectAnswer;//单项选择答案
 		$scope.LastTest=LastTest;
@@ -15,6 +15,15 @@ function($scope,KaoshiServ,$stateParams){
 		$scope.$on("$ionicView.loaded",function(){
 			KaoshiServ.InitList($stateParams.history);
 		})
+		$scope.$on("$ionicView.enter",function(){
+				SetHight();
+		})
+		function SetHight(){
+			var doc=document.getElementsByClassName("kaoshi");
+			var ele=doc[0].childNodes[0];
+			var height=document.documentElement.clientHeight-86;
+			ele.style.cssText="height:"+height+'px';
+		}
 		function slideHasChanged(index){
 			KaoshiServ.slideHasChanged(index);
 		}

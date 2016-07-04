@@ -113,6 +113,7 @@ libraryModule
 						serverdata.isShowTitle = true;
 					}
 				}
+				
 				var len = $rootScope.currentpaper.questiontitle.length;
 				for (var i = 0; i < len; i++) {
 					if ($rootScope.currentpaper.questiontitle[i].q_key == item.pq_key) {

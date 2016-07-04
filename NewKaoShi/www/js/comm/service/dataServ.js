@@ -215,7 +215,7 @@ commModule
 					method: 'POST',
 					url: baseurl + url,
 					params: parma,
-					timeout:10000,//请求超时10秒
+					timeout:20000,//请求超时10秒
 					headers: {
 						'Content-Type': 'application/x-www-form-urlencoded:charset=utf-8'
 					}

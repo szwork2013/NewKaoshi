@@ -264,7 +264,7 @@ commModule
 					database.OpenTransaction(function(tx) {
 						var lena = data.length;
 						for (var i = 0; i < lena; i++) {
-							database.SaveOrUpdateTable(tx, 'tb_Papers', ["PaperID", "PaperContent", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "Status", "PassMark", "UpLoaderID", "TotalTime", "Year", "ContainQuestionTypes", "CreateTime", "CreatorID", "UpdateTime", "UpdaterID"], [data[i].id, data[i].name, data[i].examTypeId, data[i].paperTypeId, data[i].totalScore, data[i].itemNum, data[i].useCount, data[i].isVIP, data[i].passmark, data[i].uploaderId, data[i].totalTime, data[i].year, data[i].containQustionTypes, data[i].createTime, data[i].creator, data[i].updateTime, data[i].uploaderId], "PaperID=?", [data[i].id]);
+							database.SaveOrUpdateUerRoleTable(tx, 'tb_Papers', ["PaperID", "PaperContent", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "Status", "PassMark", "UpLoaderID", "TotalTime", "Year", "ContainQuestionTypes", "CreateTime", "CreatorID", "UpdateTime", "UpdaterID"], [data[i].id, data[i].name, data[i].examTypeId, data[i].paperTypeId, data[i].totalScore, data[i].itemNum, data[i].useCount, data[i].isVIP, data[i].passmark, data[i].uploaderId, data[i].totalTime, data[i].year, data[i].containQustionTypes, data[i].createTime, data[i].creator, data[i].updateTime, data[i].uploaderId], "PaperID=?", [data[i].id]);
 						}
 					})
 				})

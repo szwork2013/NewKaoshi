@@ -33,13 +33,12 @@ libraryModule
 						$rootScope.currentpaper.answerContent = [];
 					}
 					GetResult();
-					ShowTime();
-				})
+					})
 				}else{
 					GetResult();
-					ShowTime();
 				}
-				
+				serverdata.time =CommFunServ.ShowTime( $rootScope.currentpaper.rtime);
+				CommFunServ.RefreshData(serverdata);
 			}
 			//计算结果
 			function GetResult() {
@@ -76,6 +75,7 @@ libraryModule
 			//计算单选多选分数
 			function GetScore(index, item,paperid) {
 			
+			if(item.answer){
 				var rightarr = $rootScope.currentpaper.questionlist[index].answer.split(""); //正确答案
 				var answerarr = item.answer.split("|");; //回答答案
 				if (rightarr.length != answerarr.length) {
@@ -122,25 +122,13 @@ libraryModule
 					return 0;
 				}
 				return 0;
-			}
-			//拼凑考试已用时间
-			function ShowTime() {
-				var time = $rootScope.currentpaper.rtime;
-				var hour = parseInt(time / 3600);
-				var minute = parseInt(time % 3600 / 60);
-				var second = time % 60;
-				var str = "";
-				if (hour > 0) {
-					str = hour + "小时"
+				}else if(item.code){
+					serverdata.rightcount++;
+					$rootScope.currentpaper.questionlist[index].isRight = 1;
+					return item.code;
 				}
-				if (minute > 0) {
-					str = str + minute + "分"
-				}
-				str = str + second + "秒";
-				serverdata.time = str;
-				CommFunServ.RefreshData(serverdata);
+				return 0;
 			}
-
 			function CheckAnswer() {
 				Destory();
 				$state.go('resultCard',{

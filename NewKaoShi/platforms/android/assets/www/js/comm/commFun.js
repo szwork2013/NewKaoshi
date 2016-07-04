@@ -15,6 +15,7 @@ commModule
 				JsonSort:JsonSort,
 				format: format,
 				secondFormat: secondFormat,//设置时间格式
+				ShowTime:ShowTime,
 				
 				CreateDir:CreateDir,//创建目录
 				Download:Download//下载
@@ -138,6 +139,21 @@ commModule
 				}
 				
 				return arr.sort();
+			}
+			//拼凑考试已用时间
+			function ShowTime(time) {
+				var hour = parseInt(time / 3600);
+				var minute = parseInt(time % 3600 / 60);
+				var second = time % 60;
+				var str = "";
+				if (hour > 0) {
+					str = hour + "小时"
+				}
+				if (minute > 0) {
+					str = str + minute + "分钟"
+				}
+				str = str + second + "秒";
+				return str;
 			}
 			//时间格式化
 			function format(_date, format) {

@@ -22,28 +22,14 @@ libraryModule
 						if(data[0].Content==null || data[0].Content==''){
 							serverdata.hasdoNum=0
 						}else{
+							if(data[0].Content && data[0].Content!="null"){
 							var arr = eval("(" + data[0].Content + ")");
 							serverdata.hasdoNum = arr.length;
+							}
 						}
 					}
 				})
-				ShowTime();
-			}
-			//拼凑考试已用时间
-			function ShowTime() {
-				var time = $rootScope.currentpaper.rtime;
-				var hour = parseInt(time / 3600);
-				var minute = parseInt(time % 3600 / 60);
-				var second = time % 60;
-				var str = "";
-				if (hour > 0) {
-					str = hour + "小时"
-				}
-				if (minute > 0) {
-					str = str + minute + "分钟"
-				}
-				str = str + second + "秒";
-				serverdata.time = str;
+				serverdata.time =CommFunServ.ShowTime( $rootScope.currentpaper.rtime);
 				CommFunServ.RefreshData(serverdata);
 			}
 			//确定交卷

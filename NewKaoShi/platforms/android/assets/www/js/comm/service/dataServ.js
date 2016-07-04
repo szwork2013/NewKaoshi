@@ -105,6 +105,8 @@ commModule
 						console.log("请求试题失败:" + response.msg)
 					}
 
+				},function(err){
+					q.reject(err);
 				})
 				return q.promise;
 			}
@@ -209,6 +211,7 @@ commModule
 					method: 'POST',
 					url: baseurl + url,
 					params: parma,
+					timeout:10000,//请求超时10秒
 					headers: {
 						'Content-Type': 'application/x-www-form-urlencoded:charset=utf-8'
 					}
@@ -261,7 +264,7 @@ commModule
 					database.OpenTransaction(function(tx) {
 						var lena = data.length;
 						for (var i = 0; i < lena; i++) {
-							database.SaveOrUpdateTable(tx, 'tb_Papers', ["PaperID", "PaperContent", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "Status", "PassMark", "UpLoaderID", "TotalTime", "Year", "ContainQuestionTypes", "CreateTime", "CreatorID", "UpdateTime", "UpdaterID"], [data[i].id, data[i].name, data[i].examTypeId, data[i].paperTypeId, data[i].totalScore, data[i].itemNum, data[i].useCount, data[i].isVIP, data[i].passmark, data[i].uploaderId, data[i].totalTime, data[i].year, data[i].containQustionTypes, data[i].createTime, data[i].creator, data[i].updateTime, data[i].uploaderId], "PaperID=?", [data[i].id]);
+							database.SaveOrUpdateUerRoleTable(tx, 'tb_Papers', ["PaperID", "PaperContent", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "Status", "PassMark", "UpLoaderID", "TotalTime", "Year", "ContainQuestionTypes", "CreateTime", "CreatorID", "UpdateTime", "UpdaterID"], [data[i].id, data[i].name, data[i].examTypeId, data[i].paperTypeId, data[i].totalScore, data[i].itemNum, data[i].useCount, data[i].isVIP, data[i].passmark, data[i].uploaderId, data[i].totalTime, data[i].year, data[i].containQustionTypes, data[i].createTime, data[i].creator, data[i].updateTime, data[i].uploaderId], "PaperID=?", [data[i].id]);
 						}
 					})
 				})
@@ -311,8 +314,12 @@ commModule
 			//收藏
 			function CollectQuestion(item){
 				var userinfo=JSON.parse(localStorage.getItem("userInfo"));
+				var userid='';
+				if(userinfo && userinfo.id){
+					userid=userinfo.id
+				}
 				database.OpenTransaction(function(tx) {
-					database.SaveOrUpdateUerRoleTable(tx, 'tb_UserQuestions', ["PaperID","QuestionID", "UserID", "Type","IsSync"], [item.paperId,item.id,userinfo.id,'1','0'], "PaperID=? and QuestionID=?", [item.paperId,item.id]);
+					database.SaveOrUpdateUerRoleTable(tx, 'tb_UserQuestions', ["PaperID","QuestionID", "UserID", "Type","IsSync"], [item.paperId,item.id,userid,'1','0'], "PaperID=? and QuestionID=?", [item.paperId,item.id]);
 				})
 			}
 			//取消收藏

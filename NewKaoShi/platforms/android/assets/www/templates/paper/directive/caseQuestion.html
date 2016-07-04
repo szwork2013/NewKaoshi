@@ -1,10 +1,10 @@
 <!--简答题-->
 <div>
-	<span class="title content">{{items.c_key}}.{{items.questionContent}}</span>
+	<span class="title content">{{items.questionContent}}</span>
 	<button class="button button-full button-assertive inputbtn" ng-mode='isShowInput=false' ng-click="isShowInput=!isShowInput">自我评估</button>
 	<div class="inputdiv" ng-show='isShowInput'>
 		<span>评估分数</span>
-		<input  type="text" placeholder="请填写分数" ng-mode="questionScroe" class="inputSrcoe"/>
+		<input  type="text" placeholder="请填写分数" ng-model="question.Scroe" class="inputSrcoe"/>
 		<button class="button button-small button-assertive" ng-click="Estimate($parent.$index)">确定评估</button>
 	</div>
 	

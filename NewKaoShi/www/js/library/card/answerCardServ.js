@@ -29,23 +29,7 @@ libraryModule
 						}
 					}
 				})
-				ShowTime();
-			}
-			//拼凑考试已用时间
-			function ShowTime() {
-				var time = $rootScope.currentpaper.rtime;
-				var hour = parseInt(time / 3600);
-				var minute = parseInt(time % 3600 / 60);
-				var second = time % 60;
-				var str = "";
-				if (hour > 0) {
-					str = hour + "小时"
-				}
-				if (minute > 0) {
-					str = str + minute + "分钟"
-				}
-				str = str + second + "秒";
-				serverdata.time = str;
+				serverdata.time =CommFunServ.ShowTime( $rootScope.currentpaper.rtime);
 				CommFunServ.RefreshData(serverdata);
 			}
 			//确定交卷

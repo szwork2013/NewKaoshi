@@ -1,8 +1,7 @@
 libraryModule
-	.factory('PaperDetailServ', ['$state', '$rootScope', 'DataServ', '$ionicLoading', '$timeout', 'CommFunServ','$q',
+	.factory('PaperDetailServ', ['$state', '$rootScope', 'DataServ', '$ionicLoading', '$timeout', 'CommFunServ', '$q',
 
-		function($state, $rootScope, DataServ, $ionicLoading, $timeout, CommFunServ,$q) {
-
+		function($state, $rootScope, DataServ, $ionicLoading, $timeout, CommFunServ, $q) {
 			var serverdata = {
 				paperdetail: null, //试卷详情
 				haveExercise: false, //是否有练习历史
@@ -109,39 +108,22 @@ libraryModule
 				$rootScope.currentpaper.questionlist = []; //试题列表
 				$rootScope.currentpaper.questiontitle = []; //标题列表
 				$rootScope.currentpaper.answerContent = null; //答案列表
-				var count=0;
 				for (var i = 0; i < len; i++) {
-					AssmblePicUrl(data[i].questionContent).then(function(adata) {
-						data[i].questionContent = adata;
-						if (data[i].answer != null && data[i].answer != '') {
-							//组装图片
-							AssmblePicUrl(data[i].optionContent).then(function(bdata) {
-								data[i].optionContent = bdata;
-								data[i].optionContent = JSON.parse(data[i].optionContent); //eval("(" + + ")");
-								AssmblePicUrl(data[i].answer).then(function(cdata) {
-									data[i].answer = cdata;
-									AssmblePicUrl(data[i].analysis).then(function(ddata) {
-										data[i].analysis = ddata;
-										//组装选项
-										$rootScope.currentpaper.questionlist.push(data[i]);
-										count++;
-										if(count>=len){
-											//跳转到试题
-											GoExam(type);
-										}
-									})
-								})
-
-							});
-
-						} else {
-							$rootScope.currentpaper.questiontitle.push(data[i]);
-							//跳转到试题
-							GoExam(type);
-						}
-					})
-
+					data[i].questionContent = AssmblePicUrl(data[i].id,data[i].questionContent,"questionContent")
+					if (data[i].answer != null && data[i].answer != '') {
+						//组装图片
+						data[i].optionContent = AssmblePicUrl(data[i].id,data[i].optionContent,"optionContent");
+						data[i].optionContent = JSON.parse(data[i].optionContent); //eval("(" + + ")");
+						data[i].answer = AssmblePicUrl(data[i].id,data[i].answer,"answer");
+						data[i].analysis = AssmblePicUrl(data[i].id,data[i].analysis,"analysis");
+						//组装选项
+						$rootScope.currentpaper.questionlist.push(data[i]);
+					} else {
+						$rootScope.currentpaper.questiontitle.push(data[i]);
+					}
 				}
+				//跳转到试题
+				GoExam(type);		
 			}
 			//返回题库
 			function BackLibrary() {
@@ -165,32 +147,34 @@ libraryModule
 				}
 			}
 
-			function AssmblePicUrl(data) {
-				var q = $q.defer();
+			function AssmblePicUrl(id,data,type) {
 				if (data) {
 					var str = data.match(/{:\w*}/g);
 					if (str) {
+						if()
 						var url = DataServ.GetBaseUrl();
 						for (var k in str) {
 							var replacestr = url + 'getQuestionPic.do?placeId=' + str[k].substr(2, str[k].length - 3);
 							var replacea = str[k];
 							var img = "<img ng-src='" + replacestr + "' src='" + replacestr + "'/>";
-							CommFunServ.Download(url).then(function(adata) {
-								if (adata && typeof(adata) != 'string') {
-									replacestr = adata.nativeURL;
-									img = "<img ng-src='" + replacestr + "' src='" + replacestr + "'/>";
-									data = data.replace(replacea, img);
-									q.resolve(data);
-								}
-							}, function(err) {
-								data = data.replace(replacea, img);
-								q.resolve(data);
-							});
-							//data = data.replace(replacea, img);
+							data = data.replace(replacea, img);
 						}
 					}
 				}
-				return q.promise;
+				return data;
+			}
+			function DownLoad() {
+				CommFunServ.Download(url).then(function(adata) {
+					if (adata && typeof(adata) != 'string') {
+						replacestr = adata.nativeURL;
+						img = "<img ng-src='" + replacestr + "' src='" + replacestr + "'/>";
+						data = data.replace(replacea, img);
+						q.resolve(data);
+					}
+				}, function(err) {
+					data = data.replace(replacea, img);
+					q.resolve(data);
+				});
 			}
 		}
 	])

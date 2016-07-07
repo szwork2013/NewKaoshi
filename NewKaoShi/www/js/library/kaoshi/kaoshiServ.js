@@ -113,7 +113,10 @@ libraryModule
 						serverdata.isShowTitle = true;
 					}
 				}
-				
+				/*item.questionContent = AssmblePicUrl(item.id, item.questionContent, "questionContent")
+				item.optionContent = JSON.parse(AssmblePicUrl(item.id, JSON.stringify(item.optionContent), "optionContent"));
+				item.answer = AssmblePicUrl(item.id, item.answer, "answer")
+				item.analysis = AssmblePicUrl(item.id, item.analysis, "analysis")*/
 				var len = $rootScope.currentpaper.questiontitle.length;
 				for (var i = 0; i < len; i++) {
 					if ($rootScope.currentpaper.questiontitle[i].q_key == item.pq_key) {

@@ -1,10 +1,11 @@
 <!--简答题-->
-<div>
-	<span class="title content" ng-bind-html="items.questionContent"></span>
+<div style="height:100%;">
+	<div class="title content" ng-bind-html="items.questionContent">
+	</div>
 	<div class="list content">
 		<span ng-repeat="(key,item) in items.optionContent" class="item" style="white-space: normal;" ng-click="SelectAnswer($parent.$index,$index)">
 			<input type="radio" name="{{items.id}}"  ng-checked='items.answerArr[$index]'/>
-			<span ng-class="{'havechecked':(items.rightAnswer[$index] && (serverdata.showAnswer || serverdata.isShowAnswer))}">{{key}}.{{item}}</span>
+			<span ng-class="{'havechecked':(items.rightAnswer[$index] && (serverdata.showAnswer || serverdata.isShowAnswer))}" ng-bind-html="item"></span>
 		</span>
 	</div>
 </div>

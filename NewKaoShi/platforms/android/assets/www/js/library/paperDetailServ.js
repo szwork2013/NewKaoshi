@@ -2,7 +2,7 @@ libraryModule
 	.factory('PaperDetailServ', ['$state', '$rootScope', 'DataServ', '$ionicLoading', '$timeout', 'CommFunServ',
 
 		function($state, $rootScope, DataServ, $ionicLoading, $timeout, CommFunServ) {
-
+			var downlist = null;
 			var serverdata = {
 				paperdetail: null, //试卷详情
 				haveExercise: false, //是否有练习历史
@@ -68,6 +68,7 @@ libraryModule
 						if (data && data.length > 0) {
 							//组装试题数据
 							AssmbleQuestionData(data, type);
+							CommFunServ.DownLoadPic();
 						} else { //数据库无数据
 							PostPaperQuestion(type);
 						}
@@ -84,14 +85,17 @@ libraryModule
 				DataServ.PostQuestions($rootScope.currentpaper.paperID).then(function(data) {
 					$ionicLoading.hide(); //隐藏加载
 					if (data && data.length > 0) {
-						//请求图片
-						DownLoadPic(data);
+
+						//存储数据库
+						DataServ.SaveQuestion(data);
 						//CommFunServ.Download()
 						//DataServ.PostQuestionPic("0f5ac1d4c612408ab9cbb4912f3be38d")
 						//组装试题数据
 						AssmbleQuestionData(data, type);
 						//修改试卷状态
 						DataServ.UpdatePaperStatus(data[0].paperId);
+						//开始下载图片
+						CommFunServ.DownLoadPic();
 
 					} else {
 						CommFunServ.ShowAlert("提示", "试题下载失败!")
@@ -104,15 +108,18 @@ libraryModule
 			}
 			//组装试题数据
 			function AssmbleQuestionData(data, type) {
-
 				var len = data.length;
 				$rootScope.currentpaper.questionlist = []; //试题列表
 				$rootScope.currentpaper.questiontitle = []; //标题列表
 				$rootScope.currentpaper.answerContent = null; //答案列表
 				for (var i = 0; i < len; i++) {
+					data[i].questionContent = AssmblePicUrl(data[i].id, data[i].questionContent, "questionContent")
 					if (data[i].answer != null && data[i].answer != '') {
+						//组装图片
+						data[i].optionContent = AssmblePicUrl(data[i].id, data[i].optionContent, "optionContent");
 						data[i].optionContent = JSON.parse(data[i].optionContent); //eval("(" + + ")");
-
+						data[i].answer = AssmblePicUrl(data[i].id, data[i].answer, "answer");
+						data[i].analysis = AssmblePicUrl(data[i].id, data[i].analysis, "analysis");
 						//组装选项
 						$rootScope.currentpaper.questionlist.push(data[i]);
 					} else {
@@ -144,39 +151,35 @@ libraryModule
 				}
 			}
 
-			function DownLoadPic(data) {
-				if (data && data.length > 0) {
-					var piclist = new Array();
-					for (var key in data) {
-						var questionContent = data[key].questionContent;
-						var optionContent = data[key].optionContent;
-						if (questionContent) {
-							var str = questionContent.match(/{:\w*}/g);
-							if (str) {
-								piclist.push(str);
+			function AssmblePicUrl(id, data, type) {
+				if (data) {
+					var str = data.match(/{:\w*}/g);
+					if (str) {
+						var url = DataServ.GetBaseUrl();
+						for (var k in str) {
+							var replacestr = url + 'getQuestionPic.do?placeId=' + str[k].substr(2, str[k].length - 3);
+							var replacea = str[k];
+							var downstr = url + 'downloadQuestionPic.do?placeId=' + str[k].substr(2, str[k].length - 3);
+							var img = "<img ng-src='" + replacestr + "' src='" + replacestr + "'/>";
+							if (downlist == null) {
+								downlist = new Array();
 							}
-						}
-						if (optionContent) {
-							var stro = optionContent.match(/{:\w*}/g);
-							if (stro) {
-								piclist.push(stro);
+							data = data.replace(replacea, img);
+							var param = {
+								id: id,
+								type: type,
+								imgtool: data,
+								url: replacestr,
+								downurl: downstr
 							}
+							downlist.push(param);
+							localStorage.setItem("DownList",JSON.stringify(downlist));
 						}
 					}
-					DownLoad(piclist);
 				}
+				return data;
 			}
 
-			function DownLoad(piclist) {
-				if (piclist && piclist.length > 0) {
-					CommFunServ.Download(piclist[piclist.length - 1]).then(function(data) {
-						if (adata && typeof(adata) != 'string') {
-							console.log(adata.nativeURL)
-						}
-						piclist.unshift();
-						DownLoad(piclist);
-					});
-				}
-			}
+			
 		}
 	])

@@ -5,7 +5,8 @@ commModule
 			var database;
 			var server = {
 				InitDataBase: InitDataBase,
-
+				GetBaseUrl:GetBaseUrl,
+	
 				PostExamTypes: PostExamTypes, //请求考试类型
 				PostExamPaper: PostExamPaper, //请求试卷
 				PostQuestions: PostQuestions, //请求试题
@@ -28,7 +29,8 @@ commModule
 				GetExamName: GetExamName,
 				GetQuestionData: GetQuestionData,
 				BaseSelect: BaseSelect,
-
+				
+				SaveQuestion:SaveQuestion,
 				SaveErrOrColl: SaveErrOrColl, //存储错题
 				CollectQuestion:CollectQuestion,//收藏
 				CancelCollect:CancelCollect,//取消收藏
@@ -47,6 +49,9 @@ commModule
 					})
 
 				}
+			}
+			function GetBaseUrl(){
+				return baseurl;
 			}
 			/*
 			 * 服务器数据请求
@@ -98,7 +103,6 @@ commModule
 				}
 				BasePost('getExamQuestionsByPaper.do', parma).then(function(response) {
 					if (response.status == "success") {
-						SaveQuestion(response.data)
 						q.resolve(response.data);
 					} else {
 						q.reject(response.msg)
@@ -211,7 +215,7 @@ commModule
 					method: 'POST',
 					url: baseurl + url,
 					params: parma,
-					timeout:10000,//请求超时10秒
+					timeout:20000,//请求超时10秒
 					headers: {
 						'Content-Type': 'application/x-www-form-urlencoded:charset=utf-8'
 					}

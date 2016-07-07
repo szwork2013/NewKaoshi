@@ -1,6 +1,6 @@
 commModule
-	.factory('CommFunServ', ['$timeout', '$q', '$rootScope', '$cordovaFileTransfer', '$cordovaFile', '$ionicPopup',
-		function($timeout, $q, $rootScope, $cordovaFileTransfer, $cordovaFile, $ionicPopup) {
+	.factory('CommFunServ', ['$timeout', '$q', '$rootScope', '$cordovaFileTransfer', '$cordovaFile', '$ionicPopup','DataServ',
+		function($timeout, $q, $rootScope, $cordovaFileTransfer, $cordovaFile, $ionicPopup,DataServ) {
 			var server = {
 				InitData: InitData,
 				CheckInit: CheckInit,
@@ -18,6 +18,7 @@ commModule
 				ShowTime: ShowTime,
 
 				CreateDir: CreateDir, //创建目录
+				DownLoadPic:DownLoadPic,
 				Download: Download //下载
 
 			}
@@ -247,36 +248,59 @@ commModule
 						});
 				}
 			}
+			function DownLoadPic() {
+				var str=localStorage.getItem("DownList")
+				if(str){
+				var downlist=JSON.parse(str);
+				if (downlist && downlist.length > 0) {
+					Download(downlist[0].downurl).then(function(adata) {
+						if (adata && typeof(adata) != 'string') {
+							console.log(adata);
+							var newRegExp = new RegExp(downlist[0].url.replace("?","."), 'g');  
+							downlist[0].imgtool = downlist[0].imgtool.replace(newRegExp, adata.nativeURL);
+							DataServ.BaseSaveUpdate('tb_Question', [downlist[0].type], [downlist[0].imgtool], "id=?", [downlist[0].id]).then(function(data) {
+								downlist.shift();
+								localStorage.setItem("DownList",JSON.stringify(downlist));
+								DownLoadPic();
+							})
+
+						}
+					}, function(err) {
+
+					});
+				}
+				}
+			}
 			//一般下载
-			function Download(name) {
+			function Download(url) {
 				var q = $q.defer();
 				if (!CheckPlatform()) {
-					var fileName = name + '.png';
-					var url = "http://p14600968p.imwork.net/kaohaodian/api/getQuestionPic.do?placeId=" + name
-						/*if (url.indexOf("=") == -1) {
+						if (url.indexOf("=") == -1) {
 							var filesurl = url.split('/');
 							fileName = filesurl[filesurl.length - 1];
 						} else {
 							var filesurl = url.split('=');
 							fileName = filesurl[filesurl.length - 1];
-						}*/
+						}
 					var targetPath = cordova.file.externalRootDirectory + "KaoHaoDian/" + fileName;
 					var trustHosts = true;
 					var options = {};
 					$cordovaFile.checkFile(cordova.file.externalRootDirectory + "KaoHaoDian/", fileName)
 						.then(function(success) {
 							q.resolve(success)
-							console.log('success=' + success)
 						}, function(error) {
 							$cordovaFileTransfer.download(url, targetPath, options, trustHosts)
 								.then(function(result) {
-									//console.log('result=' + result)
+									console.log('result=' + result)
 									q.resolve(result);
 								}, function(err) {
 									q.reject(err);
 								}, function(progress) {
-									downloadProgress = (progress.loaded / progress.total) * 100;
-									q.resolve(downloadProgress.toString());
+									console.log(progress)
+									if(progress.total!=0){
+										downloadProgress = (progress.loaded / progress.total) * 100;
+										q.resolve(downloadProgress.toString());
+									}
 								});
 						});
 				}

@@ -10,8 +10,9 @@
 	<ion-content class="kaoshi">
 		<ion-slide-box on-slide-changed="slideHasChanged($index)" >
 			<ion-slide ng-repeat="items in currentpaper.questionlist" style="width: 100%">
-				<span ng-repeat="title in serverdata.titleContent" ng-show="serverdata.isShowTitle" class="bigtitle">
-					{{title.questionContent}}
+	
+				<span ng-repeat="title in serverdata.titleContent" ng-show="serverdata.isShowTitle" class="bigtitle" ng-bind-html="title.questionContent">
+					
 				</span>
 				<choice-Question ng-if="items.questionType=='checking' || items.questionType=='singleChoice'">
 

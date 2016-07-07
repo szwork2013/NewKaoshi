@@ -33,6 +33,7 @@ loginModule
 				}, function(err) {
 					Go();
 				});
+				Go();
 				function Go() {
 					if (str && id) {
 						$rootScope.currentList = JSON.parse(str);

@@ -284,19 +284,22 @@ commModule
 						}
 					var targetPath = cordova.file.externalRootDirectory + "KaoHaoDian/" + fileName;
 					var trustHosts = true;
-					var options = {};
+					var options = {
+						"varify.reqTimestamp": Date.parse(new Date()),
+						"varify.reqCode":'khd_app',
+						"varify.reqSign":''
+					};
+					options["varify.reqSign"]=MD5("reqCode="+options["varify.reqCode"]+"&reqTimestamp="+options["varify.reqTimestamp"]+"&salt=0123456789qwertyuiop");
 					$cordovaFile.checkFile(cordova.file.externalRootDirectory + "KaoHaoDian/", fileName)
 						.then(function(success) {
 							q.resolve(success)
 						}, function(error) {
 							$cordovaFileTransfer.download(url, targetPath, options, trustHosts)
 								.then(function(result) {
-									console.log('result=' + result)
 									q.resolve(result);
 								}, function(err) {
 									q.reject(err);
 								}, function(progress) {
-									console.log(progress)
 									if(progress.total!=0){
 										downloadProgress = (progress.loaded / progress.total) * 100;
 										q.resolve(downloadProgress.toString());

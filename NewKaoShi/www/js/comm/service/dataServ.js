@@ -2,6 +2,7 @@ commModule
 	.factory("DataServ", ['$http', '$q', 'SqliteServ',
 		function($http, $q, SqliteServ) {
 			var baseurl = 'http://p14600968p.imwork.net/kaohaodian/api/';
+			//var baseurl = 'http://ngxjs8a108.vicp.net/kaohaodian/api/';
 			var database;
 			var server = {
 				InitDataBase: InitDataBase,
@@ -35,7 +36,8 @@ commModule
 				CollectQuestion:CollectQuestion,//收藏
 				CancelCollect:CancelCollect,//取消收藏
 				UpdatePaperStatus: UpdatePaperStatus, //修改试卷状态
-				DeletPaperHistory: DeletPaperHistory
+				DeletPaperHistory: DeletPaperHistory,
+				DeletKaoShiHis:DeletKaoShiHis
 			}
 			return server;
 
@@ -59,12 +61,7 @@ commModule
 			//获取所有数据（考试类型、试卷）
 			function PostExamTypes() {
 				var q = $q.defer();
-				/*var parma={
-					reqTimestamp: Date.parse(new Date()),
-					reqCode:'khd_app',
-					reqSign:''
-				}
-				parma.reqSign=MD5(parma.reqTimestamp+parma.reqCode+'0123456789qwertyuiop');*/
+				
 				BasePost('getExamTypes.do').then(function(response) {
 					if (response.status == "success") {
 						SaveExamType(response.data);
@@ -211,11 +208,25 @@ commModule
 
 			function BasePost(url, parma) {
 				var q = $q.defer();
+				var data={
+					"varify.reqTimestamp": Date.parse(new Date()),
+					"varify.reqCode":'khd_app',
+					"varify.reqSign":''
+				}
+				data["varify.reqSign"]=MD5("reqCode="+data["varify.reqCode"]+"&reqTimestamp="+data["varify.reqTimestamp"]+"&salt=0123456789qwertyuiop");
+				var d=JSON.stringify(parma)
+				if(parma==null){
+					parma=data;
+				}else{
+					var str=(JSON.stringify(parma)+JSON.stringify(data)).replace(/}{/,',');
+					parma=JSON.parse(str);
+				}
+				
 				$http({
 					method: 'POST',
 					url: baseurl + url,
 					params: parma,
-					timeout:20000,//请求超时10秒
+					timeout:10000,//请求超时10秒
 					headers: {
 						'Content-Type': 'application/x-www-form-urlencoded:charset=utf-8'
 					}
@@ -447,6 +458,12 @@ commModule
 				})
 				return q.promise;
 			}
-
+			function DeletKaoShiHis(paperid){
+				var q = $q.defer();
+				SqliteServ.deletehis('tb_History', 'PaperID=?', [paperid]).then(function(response) {
+					q.resolve(response)
+				})
+				return q.promise;
+			}
 		}
 	])

@@ -146,7 +146,7 @@ libraryModule
 				PaperDetailServ.Start(0);
 				$rootScope.currentpaper.answerContent = null;
 				//删除历史数据
-				DataServ.DeletKaoshiHis($rootScope.currentpaper.paperID).then(function(data) {
+				DataServ.DeletKaoShiHis($rootScope.currentpaper.paperID).then(function(data) {
 					$state.go('kaoshi', {
 						history: false
 					});

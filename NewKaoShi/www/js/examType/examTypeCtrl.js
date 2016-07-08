@@ -4,7 +4,7 @@ classifyModule
 			$scope.ShowChildren=ShowChildren;
 			$scope.ShowParent = ShowParent;
 			$scope.serverdata = ExamTypeServ.GetServerData();
-			$scope.$on('$ionicView.enter', function() {
+			$scope.$on('$ionicView.loaded', function() {
 				if ($stateParams.type == 0) {
 					$scope.isShowBack = false;
 				} else {

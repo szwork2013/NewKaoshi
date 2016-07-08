@@ -1,6 +1,6 @@
 loginModule
-	.factory('LoginServ', ['DataServ', '$state', '$rootScope', 'CommFunServ', '$q',
-		function(DataServ, $state, $rootScope, CommFunServ, $q) {
+	.factory('LoginServ', ['DataServ', '$state', '$rootScope', 'CommFunServ', '$q','$ionicLoading',
+		function(DataServ, $state, $rootScope, CommFunServ, $q,$ionicLoading) {
 			var serverdata = {
 				registererr: ''
 			}
@@ -18,35 +18,36 @@ loginModule
 
 			function GoInit() {
 				//测试删除
-				localStorage.removeItem("examTypeList");
-				localStorage.removeItem("examTypeId");
-				localStorage.removeItem("userInfo");
-				 //创建目录
-  				CommFunServ.CreateDir();
-  				CommFunServ.InitData();
-  				
+				//localStorage.removeItem("examTypeList");
+				//localStorage.removeItem("examTypeId");
+				//localStorage.removeItem("userInfo");
+				//创建目录
+				CommFunServ.CreateDir();
+				CommFunServ.InitData();
+
 				$rootScope.userInfo = localStorage.getItem("userInfo");
 				var str = localStorage.getItem("examTypeList");
 				var id = localStorage.getItem("examTypeId"); //当前进入分类id
-				DataServ.PostExamTypes().then(function(res) {
-					Go();
-				}, function(err) {
-					Go();
-				});
 				Go();
 				function Go() {
 					if (str && id) {
+						DataServ.PostExamTypes();
 						$rootScope.currentList = JSON.parse(str);
 						$state.go('tab.home');
 						$rootScope.examTypeID = id;
 						DataServ.PostExamPaper(id);
 					} else { //第一次进入
-						$state.go('examType', {
-							type: 0
-						});
+						$ionicLoading.show({
+							template: '加载中...'
+						})
+						DataServ.PostExamTypes().then(function(res) {
+							$ionicLoading.hide(); //隐藏加载
+							$state.go('examType', {
+								type: 0
+							});
+						}, function(err) {});
 					}
 				}
-
 			}
 
 			function Login(name, pwd) {

@@ -14,9 +14,13 @@ libraryModule
 			
 			$scope.ExercisesAgain=ExercisesAgain;//重新开始
 			$scope.ResultCard=ResultCard;//答题卡
-			$scope.$on("$ionicView.enter", function() {
-				$scope.serverdata = ExerciseServ.GetServerData();
+			$scope.serverdata = ExerciseServ.GetServerData();
+			$scope.$on("$ionicView.loaded", function() {
+				
 				ExerciseServ.InitList($stateParams);
+			})
+			$scope.$on("$ionicView.enter",function(){
+				
 			})
 
 			function slideHasChanged(index) {

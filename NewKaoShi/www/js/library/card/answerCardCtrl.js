@@ -3,7 +3,7 @@ libraryModule
 		function($scope, AnswerCardServ) {
 			$scope.ConfirmAssignment = ConfirmAssignment;
 			$scope.serverdata = AnswerCardServ.GetServerData();
-			$scope.$on('$ionicView.enter', function() {
+			$scope.$on('$ionicView.loaded', function() {
 				AnswerCardServ.InitData();
 			})
 

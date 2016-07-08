@@ -1,14 +1,14 @@
 <ion-view>
-	<ion-header-bar align-title="center">
+	<ion-header-bar align-title="center" class="bluebg">
 
-		<span class="title"> 我的</span>
+		<span class="title whhitefont"> 我的</span>
 
 	</ion-header-bar>
 	<ion-content class="account">
 
 		<div class="list head">
 			<div ng-show="!serverdata.isLogin">
-				<button class="button button-full button-small button-assertive" ng-click="GoLogin()">还未登录,请登录</button>
+				<button class="button button-full button-small bluebg whhitefont" ng-click="GoLogin()">还未登录,请登录</button>
 			</div>
 			<div class="item item-icon-right " ng-show="serverdata.isLogin">
 				<img ng-src="img/user.png" class="headimg" />

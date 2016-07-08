@@ -40,12 +40,12 @@ loginModule
 						$ionicLoading.show({
 							template: '加载中...'
 						})
-						DataServ.PostExamTypes().then(function(res) {
+						//DataServ.PostExamTypes().then(function(res) {
 							$ionicLoading.hide(); //隐藏加载
 							$state.go('examType', {
 								type: 0
 							});
-						}, function(err) {});
+						//}, function(err) {});
 					}
 				}
 			}

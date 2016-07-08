@@ -22,7 +22,6 @@ libraryModule
 			$scope.$on("$ionicView.enter",function(){
 				
 			})
-
 			function slideHasChanged(index) {
 				ExerciseServ.slideHasChanged(index);
 			}

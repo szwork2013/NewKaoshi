@@ -3,7 +3,7 @@
 	text-align: right;
 	border-bottom-left-radius:0.5rem;
 	border-top-left-radius: 0.5rem;
-	border:solid 1px #ff6666;
+	border:solid 1px #3b66b4;
 }
 .collecta{
 	margin-left: -2px;
@@ -14,18 +14,18 @@
 	border-bottom-right-radius: 0.5rem;
 	border-top-right-radius:0.5rem;
 	margin-left: -5px;
-	border:solid 1px #ff6666;
+	border:solid 1px #3b66b4;
 }
 .yellowtitle{
 	
     width: 5rem;
-    background-color: #ff6666;
+    background-color: #3b66b4;
     color: #FFFFFF;
     line-height: 2.2rem;
 }
 .whitetitle{
     width: 5rem;
-	color: #ff6666;
+	color: #3b66b4;
 	line-height: 2.2rem;
 }
 .error{

@@ -108,8 +108,8 @@
 	border-bottom: solid 2px #D9D9D9;
 }
 .library .title .selected{
-	border-color: #EF473A;
-	color: #EF473A;
+	border-color: #3b66b4;
+	color: #3b66b4;
 }
 .library .testcontent {
 	
@@ -127,9 +127,6 @@
 	font-size: 0.6rem;
     width: 40%;
     color: #999999;
-}
-.library .testcontent .papernumber .number{
-	color:#EF473A
 }
 .library .testcontent .papertime{
 	 font-size: 0.6rem;
@@ -157,7 +154,6 @@
 .library .testcontent .havevip{
 	display: block;
     font-size: 0.7rem;
-    color: #EF473A;
     text-align: center;
     margin-top: 1rem;
 }
@@ -197,9 +193,6 @@
 	text-align: center;
 	line-height: 3rem;
 }
-.detail .title .startbtn  .startspan{
-		background-color: #ff6666;
-}
 .detail .title .startbtn  .continuespan{
 		background-color: #B2B2B2;
 }
@@ -215,7 +208,6 @@
 	color: #999999;
 }
 .detail .paperparma .number{
-	color: #E42112;
 	float: left;
 }
 .detail .introduce{
@@ -228,9 +220,6 @@
 	display: block;
 	color: #999999;
 	line-height: 2rem;
-}
-.detail .introduce .examstype{
-	color:#E42112;
 }
 .assignment{
 	line-height: 2rem;

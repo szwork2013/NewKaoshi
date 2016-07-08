@@ -4,7 +4,7 @@
 		<span class="title whhitefont"> 我的</span>
 
 	</ion-header-bar>
-	<ion-content class="account">
+	<ion-content class="account grayfont">
 
 		<div class="list head">
 			<div ng-show="!serverdata.isLogin">
@@ -30,30 +30,30 @@
 			</div>
 		</div>
 		<div class="list content">
-			<div class="item item-icon-left item-icon-right contentoption" ng-click="ChangeTest()">
+			<div class="item item-icon-left item-icon-right contentoption grayfont" ng-click="ChangeTest()">
 				<i class="icon ion-ios-loop "></i>
 				<span>切换考试</span>
 				<i class="icon ion-ios-arrow-forward"></i>
 			</div>
-			<div class="item item-icon-left item-icon-right contentoption" ng-model='downlistshow' ng-init="downlistshow=false" ng-click="downlistshow=!downlistshow">
+			<div class="item item-icon-left item-icon-right contentoption grayfont" ng-model='downlistshow' ng-init="downlistshow=false" ng-click="downlistshow=!downlistshow">
 				<i class="icon ion-ios-download-outline"></i>
 				<span>我的下载</span>
 				<i class="icon" ng-class="{'ion-ios-arrow-forward':!downlistshow,'ion-ios-arrow-down':downlistshow}"></i>
 			</div>
-			<div ng-show="downlistshow" ng-repeat="item in serverdata.downlist" class="accountlist" ng-click="GoDetail(item.PaperID)">
+			<div ng-show="downlistshow" ng-repeat="item in serverdata.downlist grayfont" class="accountlist" ng-click="GoDetail(item.PaperID)">
 				<span class="lista textblock">{{item.PaperContent}}
 				</span><i class="redo icon ion-ios-arrow-forward"></i>
 			</div>
-			<div class="item item-icon-left item-icon-right contentoption" ng-model='lastlistshow' ng-init="lastlistshow=false" ng-click="lastlistshow=!lastlistshow">
+			<div class="item item-icon-left item-icon-right contentoption grayfont" ng-model='lastlistshow' ng-init="lastlistshow=false" ng-click="lastlistshow=!lastlistshow">
 				<i class="icon ion-ios-list-outline"></i>
 				<span>最近练习</span>
 				<i class="icon" ng-class="{'ion-ios-arrow-forward':!lastlistshow,'ion-ios-arrow-down':lastlistshow}"></i>
 			</div>
-			<div ng-show="lastlistshow" ng-repeat="item in serverdata.lastlist" class="accountlist" ng-click="GoDetail(item.PaperID)">
+			<div ng-show="lastlistshow" ng-repeat="item in serverdata.lastlist" class="accountlist grayfont" ng-click="GoDetail(item.PaperID)">
 				<span class="lista textblock">{{item.PaperContent}}
 			</span><i class="redo icon ion-ios-arrow-forward" ></i>
 			</div>
-			<div class="item item-icon-left item-icon-right contentoption" ng-model='testlistshow' ng-init="testlistshow=false" ng-click="testlistshow=!testlistshow">
+			<div class="item item-icon-left item-icon-right contentoption grayfont" ng-model='testlistshow' ng-init="testlistshow=false" ng-click="testlistshow=!testlistshow">
 				<i class="icon ion-ios-alarm-outline"></i>
 				<span>模拟考试</span>
 				<i class="icon" ng-class="{'ion-ios-arrow-forward':!testlistshow,'ion-ios-arrow-down':testlistshow}"></i>

@@ -4,15 +4,15 @@
 	描述：考试答案解析
 -->
 	<ion-view >
-	<ion-header-bar align-title="center">
-		<button class="button button-icon ion-ios-arrow-back" ng-click="BackView()">
+	<ion-header-bar align-title="center" class="bluebg">
+		<button class="button button-icon ion-ios-arrow-back whhitefont" ng-click="BackView()">
 		</button>
-		<span class="title"> 答题卡</span>
+		<span class="title whhitefont"> 答题卡</span>
 		<button class="button  button-clear " ng-click="TestAgain()">
-			<span class='assignment' ng-if="serverdata.type==0">重考</span>
+			<span class='assignment whhitefont' ng-if="serverdata.type==0">重考</span>
 		</button>
 	</ion-header-bar>
-	<ion-content class="answercard">
+	<ion-content class="answercard grayfont">
 		<div class="title" ng-if="serverdata.type==0">
 			总分<span class="number">{{currentpaper.totalScore}}</span>,及格分<span class="number">{{currentpaper.passMark}}</span>,您的得分<span class="number">{{currentpaper.score}}</span>
 		</div>

@@ -1,12 +1,12 @@
 <ion-view>
-	<ion-header-bar align-title="center">
-		<button class="button button-icon ion-ios-arrow-back" ng-click="Back()">
+	<ion-header-bar align-title="center" class="bluebg">
+		<button class="button button-icon ion-ios-arrow-back whhitefont" ng-click="Back()">
 		</button>
-		<span class="title"> {{serverdata.title}}</span>
-		<button class="button  button-icon ion-ios-keypad-outline" ng-click="ExerciseMenu()" ng-if="serverdata.currentType!='2'" >
+		<span class="title whhitefont"> {{serverdata.title}}</span>
+		<button class="button  button-icon ion-ios-keypad-outline whhitefont" ng-click="ExerciseMenu()" ng-if="serverdata.currentType!='2'" >
 		</button>
 	</ion-header-bar>
-	<ion-content class="kaoshi">
+	<ion-content class="kaoshi grayfont">
 		<ion-slide-box on-slide-changed="slideHasChanged($index)">
 			<ion-slide ng-repeat="items in currentpaper.questionlist">
 				<span ng-repeat="title in serverdata.titleContent" ng-show="serverdata.isShowTitle" class="bigtitle">
@@ -39,9 +39,9 @@
 	</ion-content>
 	<ion-footer-bar>
 		<button class="button button-icon ion-ios-undo-outline" ng-click="LastTest()"></button>
-		<span ng-if="!serverdata.showAnswer" class="title" ng-click="ShowAnswer()">答案解析</span>
-		<span ng-if="serverdata.btnStatus==1 && serverdata.showAnswer" class="title" ng-click="Conllect(true)">收藏</span>
-		<span ng-if="serverdata.btnStatus==2 && serverdata.showAnswer" class="title" ng-click="Conllect(false)">取消收藏</span>
+		<span ng-if="!serverdata.showAnswer" class="title grayfont" ng-click="ShowAnswer()">答案解析</span>
+		<span ng-if="serverdata.btnStatus==1 && serverdata.showAnswer" class="title grayfont" ng-click="Conllect(true)">收藏</span>
+		<span ng-if="serverdata.btnStatus==2 && serverdata.showAnswer" class="title grayfont" ng-click="Conllect(false)">取消收藏</span>
 		<button class="button button-icon ion-ios-redo-outline" ng-click="NextTest()"></button>
 	</ion-footer-bar>
 </ion-view>

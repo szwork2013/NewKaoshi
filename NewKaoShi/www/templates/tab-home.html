@@ -4,7 +4,7 @@
 		<span class="title whhitefont" > 考好点教育</span>
 		
 	</ion-header-bar>
-	<ion-content class="home" scroll=false>
+	<ion-content class="home grayfont" scroll=false>
 		<ion-slide-box class="slide-box" auto-play="true" slide-interval="5000">
 			<ion-slide ng-repeat="item in slideboxes">
 				<a class="slideitem">
@@ -13,16 +13,16 @@
 			</ion-slide>
 		</ion-slide-box>
 		<div class="row row-wrap itemtitle">
-			<a class="col col-25" ng-class="{'selected':serverdata.selectindex==0}" ng-click="SelectItem(0)">
+			<a class="col col-25 grayfont" ng-class="{'selected':serverdata.selectindex==0}" ng-click="SelectItem(0)">
 				<span ng-class="{'selected':serverdata.selectindex==0}">全部</span>
 			</a>
-			<a class="col col-25" ng-class="{'selected':serverdata.selectindex==1}" ng-click="SelectItem(1)">
+			<a class="col col-25 grayfont" ng-class="{'selected':serverdata.selectindex==1}" ng-click="SelectItem(1)">
 				<span ng-class="{'selected':serverdata.selectindex==1}">全科</span>
 			</a>
-			<a class="col col-25" ng-class="{'selected':serverdata.selectindex==2}" ng-click="SelectItem(2)">
+			<a class="col col-25 grayfont" ng-class="{'selected':serverdata.selectindex==2}" ng-click="SelectItem(2)">
 				<span ng-class="{'selected':serverdata.selectindex==2}">单科</span>
 			</a>
-			<a class="col col-25" ng-class="{'selected':serverdata.selectindex==3}" ng-click="SelectItem(3)">
+			<a class="col col-25 grayfont" ng-class="{'selected':serverdata.selectindex==3}" ng-click="SelectItem(3)">
 				<span ng-class="{'selected':serverdata.selectindex==3}">软件vip</span>
 			</a>
 		</div>

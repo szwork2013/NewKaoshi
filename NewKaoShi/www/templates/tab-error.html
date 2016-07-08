@@ -5,7 +5,7 @@
 	 		<a class="collecta"><span class="collecttitle" ng-class="{'yellowtitle':!isError,'whitetitle':isError}" ng-click="ChangeShow(false)">我的收藏</span></a>
 	 	</div>
 	 </ion-header-bar>
-	<ion-content class="error">
+	<ion-content class="error grayfont">
 		<div>
 			<div ng-repeat="items in serverdata.paperlist" ng-if="(isError && items.listtype==0) || (!isError && items.listtype==1)" class="itemb">
 				<div class="itemMain"  ng-click="ChangeShowItem($index)" >
@@ -16,7 +16,7 @@
 				<div ng-show="items.isShow"  ng-repeat="item in items.errorlist"  class="itemDetail">
 						<span class="errorpaper textblock">{{item.paperName}}
 						</span><span class="errorcount textblock">{{item.count}}
-						</span><span class="redo" ng-click="TestAgain(item.paperID,items.listtype)"> 重做</span>
+						</span><span class="redo bluebg" ng-click="TestAgain(item.paperID,items.listtype)"> 重做</span>
 				</div>
 			</div>
 		</div>

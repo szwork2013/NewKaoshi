@@ -1,9 +1,9 @@
 <ion-modal-view >
-	 <ion-header-bar>
-	 	<button class="button button-icon button-clear ion-ios-arrow-back button-light" ng-click="BackView()"></button>
-	 	<span class="title">用户注册</span>
+	 <ion-header-bar class="bluebg">
+	 	<button class="button button-icon button-clear ion-ios-arrow-back button-light whhitefont" ng-click="BackView()"></button>
+	 	<span class="title whhitefont">用户注册</span>
 	 </ion-header-bar>
-	<ion-content class="login">
+	<ion-content class="login grayfont">
 		<form name="loginForm" >
 			<div class="content">
 				<div >
@@ -26,7 +26,7 @@
 					<span style="color: red;font-size: 0.8rem;" >{{servedata.registererr}}</span>
 				</div>
 				<div class="subbtn">
-					<button ng-click="Register()" class="button button-full button-assertive" type="submit" ng-disabled="loginForm.name.$error.required||loginForm.nickname.$error.required||loginForm.password.$error.required||loginForm.conpassword.$error.required">注册</button>
+					<button ng-click="Register()" class="button button-full bluebg whhitefont" type="submit" ng-disabled="loginForm.name.$error.required||loginForm.nickname.$error.required||loginForm.password.$error.required||loginForm.conpassword.$error.required">注册</button>
 				</div>
 			</div>
 		</form>

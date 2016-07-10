@@ -18,6 +18,7 @@ loginModule
 			$scope.Login = Login;
 			$scope.BackAccount = BackAccount;
 			$scope.Register = Register;
+			$scope.BackLogin=BackLogin;
 			$scope.loginData={
 				name:'',
 				password:''
@@ -68,6 +69,12 @@ loginModule
 						$scope.resmodal.hide();
 					}
 				});
+			}
+			//返回
+			function BackLogin(){
+				if($scope.resmodal){
+					$scope.resmodal.hide();
+				}
 			}
 			//返回个人信息
 			function BackAccount() {

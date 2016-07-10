@@ -40,7 +40,7 @@
 				<span>我的下载</span>
 				<i class="icon" ng-class="{'ion-ios-arrow-forward':!downlistshow,'ion-ios-arrow-down':downlistshow}"></i>
 			</div>
-			<div ng-show="downlistshow" ng-repeat="item in serverdata.downlist grayfont" class="accountlist" ng-click="GoDetail(item.PaperID)">
+			<div ng-show="downlistshow" ng-repeat="item in serverdata.downlist" class="accountlist  grayfont"  ng-click="GoDetail(item.PaperID)">
 				<span class="lista textblock">{{item.PaperContent}}
 				</span><i class="redo icon ion-ios-arrow-forward"></i>
 			</div>

@@ -424,7 +424,6 @@
 	line-height: 2rem;
 }
 .resultScode .resulttime{
-	color: #4bb227;
 	line-height: 2.5rem;
 }
 .resultScode .rightrate{
@@ -448,7 +447,6 @@
 }
 .resultScode  .wrongno{
 	display:inline-block;
-	color: #4bb227;
 	margin-left: 0.5rem;
 	font-size: 0.8rem;
 }
@@ -460,11 +458,8 @@
 	line-height: 2rem;
 	
 }
-.answerbtn{
-	background-color: #ff6666;
-}
 .againbtn{
-	background-color: #ff8a00;
+	background-color: #ff6666;
 }
 /*.resultScode .resultbg{
 	background-image: url("../img/ben.png");

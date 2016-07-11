@@ -13,31 +13,26 @@
 	<ion-content>
 		<div class="bar bar-header item-input-inset">
 			<label class="item-input-wrapper">
-        <i class="icon  ion-ios-search-strong placeholder-icon" ng-click="search(searchName)"></i>
-        <input type="search" placeholder="请输入关键字" ng-model="searchName">
+        <i class="icon  ion-ios-search-strong placeholder-icon" ng-click="Change()"></i>
+        <input type="search" placeholder="请输入关键字" ng-model="data.searchName" ng-change="Change()">
     	</label>
 		</div>
-		<div class="testcontent" ng-show="false">
-  			<a ng-repeat="paper in papers track by paper.id" class="row row-wrap paperitem" ng-show="paper.testType==selectindex" ng-click="GoPaperDetail()">
-  				<div class="col col-80">
-  					<span class="papername">
-  						{{paper.Name}}
-  					</span>
-  					<span class="papernumber">
-  						<span class="number">
-  						{{paper.Number}}
-  						</span>
-  						人做过
-  					</span>
-  					<span class="papertime">{{paper.Updatetime}}</span>
-  				</div>
-  				<div class="col col-20">
-  						<span class="haveupdate" ng-show="paper.IsUpdate==1">有更新</span>
-  						<span class="havedownload" ng-show="paper.IsUpdate==0 && paper.IsDownload==0">已下载</span>
-  						<span class="havevip" ng-show="paper.IsUpdate==0 && paper.IsDownload==1 && paper.vipType==0">VIP</span>
-  						<span class="havedownload" ng-show="paper.IsUpdate==0 && paper.IsDownload==1 && paper.vipType==1">免费</span>
-  				</div>
-  			</a>
+		<div class="library grayfont" >
+  			<div class="testcontent">
+					<div ng-repeat="paper in serverdata.papers" class="row row-wrap paperitem" ng-click="GoPaperDetail(paper.PaperID)">
+						<div class="col col-80">
+							<span class="papername">{{paper.PaperContent}}</span>
+							<span class="papernumber textblock"><span class="bluefont">{{paper.UserCount}}</span> 人做过
+							</span><span class="papertime textblock"  >{{paper.UpdateTime}}</span>
+						</div>
+						<div class="col col-20">
+							<span class="haveupdate" ng-if="paper.Status==3">有更新</span>
+							<span class="havedownload" ng-if="paper.Status==2">已下载</span>
+							<span class="havevip redfont" ng-if="paper.Status==1">VIP</span>
+							<span class="havedownload" ng-if="paper.Status==0">免费</span>
+						</div>
+					</div>
+				</div>
   		</div>
 	</ion-content>
 </ion-view>

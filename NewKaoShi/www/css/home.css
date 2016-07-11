@@ -2,6 +2,9 @@
 .home{
 	
 }
+.homehead{
+	border-bottom-width: 0px;
+}
 .home .row,.home .col{
 	margin: 0px;
 	padding: 0px;
@@ -28,6 +31,7 @@
 }
 .home .itemcontent{
 	margin: 10px 0px;
+	border-bottom: solid 1px #EFE5E5;
 }
 .home .itemcontent img{
 	width: 80%;

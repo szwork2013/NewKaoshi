@@ -3,7 +3,8 @@
 		<button class="button button-icon ion-ios-arrow-back whhitefont" ng-click="Back()">
 		</button>
 		<span class="title whhitefont"> {{serverdata.title}}</span>
-		<button class="button  button-icon ion-ios-keypad-outline whhitefont" ng-click="ExerciseMenu()" ng-if="serverdata.currentType!='2'" >
+		<button class="button button-clear" ng-click="ResultCard()" ng-if="serverdata.currentType!='2'" >
+			<span class='assignment whhitefont'>答题卡</span>
 		</button>
 	</ion-header-bar>
 	<ion-content class="kaoshi grayfont">

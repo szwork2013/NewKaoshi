@@ -81,6 +81,9 @@
 .bluebg{
 	background-color: #3b66b4;
 }
+.redbg{
+	background-color: #ff6666;
+}
 .whhitefont{
 	color: #FFFFFF;
 }
@@ -90,7 +93,11 @@
 .grayfont{
 	color: #666666;
 }
+.redfont{
+	color: #ff6666;
+}
 .whhitefont:hover{
 	color: #FFFFFF;
 }
+
 

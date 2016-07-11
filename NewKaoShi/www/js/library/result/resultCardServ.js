@@ -143,17 +143,32 @@ libraryModule
 			}
 			//重新考试
 			function TestAgain() {
-				//提示是否重新考试
-				CommFunServ.ShowConfirm("提示", "是否重新考试").then(function(res) {
-					if (res) {
-						
-						$rootScope.currentpaper.answerContent = null;
-						//删除历史数据
-						DataServ.DeletKaoShiHis($rootScope.currentpaper.paperID).then(function(data) {
-							PaperDetailServ.Start(0);
-						});
-					}
-				})
+				if (serverdata.type == 0) {
+					//提示是否重新考试
+					CommFunServ.ShowConfirm("提示", "是否重新考试").then(function(res) {
+						if (res) {
+
+							$rootScope.currentpaper.answerContent = null;
+							//删除历史数据
+							DataServ.DeletKaoShiHis($rootScope.currentpaper.paperID).then(function(data) {
+								PaperDetailServ.Start(0);
+							});
+						}
+					})
+				} else {
+					//提示是否重新考试
+					CommFunServ.ShowConfirm("提示", "是否重新练习").then(function(res) {
+						if (res) {
+
+							$rootScope.currentpaper.answerContent = null;
+							//删除历史数据
+							DataServ.DeletPaperHistory($rootScope.currentpaper.paperID).then(function(data) {
+								//提示是否重新考试
+								PaperDetailServ.Start(1);
+							});
+						}
+					})
+				}
 
 			}
 			//销毁

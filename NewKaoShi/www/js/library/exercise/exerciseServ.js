@@ -1,10 +1,10 @@
 libraryModule
-	.factory('ExerciseServ', ['$rootScope', 'DataServ', 'CommFunServ', '$ionicSlideBoxDelegate', '$state','PaperDetailServ',
-		function($rootScope, DataServ, CommFunServ, $ionicSlideBoxDelegate, $state,PaperDetailServ) {
-			 
+	.factory('ExerciseServ', ['$rootScope', 'DataServ', 'CommFunServ', '$ionicSlideBoxDelegate', '$state', 'PaperDetailServ',
+		function($rootScope, DataServ, CommFunServ, $ionicSlideBoxDelegate, $state, PaperDetailServ) {
+
 			var currentIndex; //当前试题索引
 			var serverdata = {
-				currentType:0,//currentType=0试卷，currentType=1错题与收藏
+				currentType: 0, //currentType=0试卷，currentType=1错题与收藏
 				isShowAnswer: false, //是否值显示解析，在考试答案解析用true
 				isShowTitle: false, //是否显示大题标题
 				titleContent: null, //当前大题内容
@@ -24,9 +24,9 @@ libraryModule
 				NextTest: NextTest, //下一题
 				Back: Back, //返回
 				ShowAnswer: ShowAnswer, //显示答案
-				Conllect:Conllect,//收藏与取消收藏
-				ExercisesAgain:ExercisesAgain,//重新开始
-				ResultCard:ResultCard//
+				Conllect: Conllect, //收藏与取消收藏
+				ExercisesAgain: ExercisesAgain, //重新开始
+				ResultCard: ResultCard //
 
 			}
 			return server;
@@ -99,7 +99,7 @@ libraryModule
 			}
 			//组装历史记录
 			function AssmbleList() {
-				if($rootScope.currentpaper.answerContent==null || ($rootScope.currentpaper.answerContent && $rootScope.currentpaper.answerContent.length<=0)){
+				if ($rootScope.currentpaper.answerContent == null || ($rootScope.currentpaper.answerContent && $rootScope.currentpaper.answerContent.length <= 0)) {
 					return;
 				}
 				var len = $rootScope.currentpaper.answerContent.length;
@@ -236,7 +236,7 @@ libraryModule
 					if (item.answerArr[i]) {
 						var value = '';
 						if (item.questionType == 'checking') {
-							value= CommFunServ.GetValue(item.optionContent, i);
+							value = CommFunServ.GetValue(item.optionContent, i);
 						} else {
 							value = CommFunServ.GetKey(item.optionContent, i);
 						}
@@ -295,7 +295,7 @@ libraryModule
 				if (serverdata.currentType == '0') {
 					//保存历史
 					SaveHistory();
-						//返回试卷详细
+					//返回试卷详细
 					$state.go('paperDetail');
 				} else if (serverdata.currentType == '1') {
 					//返回错误列表
@@ -305,24 +305,27 @@ libraryModule
 					$state.go('resultCard');
 				}
 			}
-			function SaveHistory(){
-				var paperid=$rootScope.currentpaper.paperID;
-					var content = JSON.stringify($rootScope.currentpaper.answerContent);
-					DataServ.BaseSaveUpdate('tb_History', ["PaperID", "UserID", "Time", "Soure", "Content", "Type", "IsEnd", "IsSync"], [paperid, '', 0, 0, content, 1, 0, false],'PaperID=? and Type=?',[paperid,1]).then(function(res) {
 
-					})
+			function SaveHistory() {
+				var paperid = $rootScope.currentpaper.paperID;
+				var content = JSON.stringify($rootScope.currentpaper.answerContent);
+				DataServ.BaseSaveUpdate('tb_History', ["PaperID", "UserID", "Time", "Soure", "Content", "Type", "IsEnd", "IsSync"], [paperid, '', 0, 0, content, 1, 0, false], 'PaperID=? and Type=?', [paperid, 1]).then(function(res) {
+
+				})
 			}
-			function SaveError(){
-				
+
+			function SaveError() {
+
 			}
 			//显示答案
 			function ShowAnswer() {
 				var item = $rootScope.currentpaper.questionlist[currentIndex];
-				if(item.questionType == 'multipleChoice'){
+				if (item.questionType == 'multipleChoice') {
 					item.hasdo = true;
 				}
 				SelectAnswer(currentIndex);
 			}
+
 			function Conllect(bool) {
 				var item = $rootScope.currentpaper.questionlist[currentIndex];
 				if (bool) {
@@ -333,25 +336,31 @@ libraryModule
 					DataServ.CancelCollect(item);
 				}
 			}
-			function ExercisesAgain(){
+
+			function ExercisesAgain() {
+
 				//提示是否重新考试
-				PaperDetailServ.Start(1);
-				serverdata.isShowAnswer = false;
-				serverdata.showAnswer = false;
-				$rootScope.currentpaper.answerContent = null;
-				//删除历史数据
-				DataServ.DeletPaperHistory($rootScope.currentpaper.paperID).then(function(data) {
-					$state.go('exercise', {
-						history: false
-					});
-				});
+				CommFunServ.ShowConfirm("提示", "是否重新开始!").then(function(res) {
+					if (res) {
+						serverdata.isShowAnswer = false;
+						serverdata.showAnswer = false;
+						$rootScope.currentpaper.answerContent = null;
+						//删除历史数据
+						DataServ.DeletPaperHistory($rootScope.currentpaper.paperID).then(function(data) {
+							//提示是否重新考试
+							PaperDetailServ.Start(1);
+						});
+					}
+				})
 			}
-			function ResultCard(){
+
+			function ResultCard() {
 				SaveHistory();
-				$state.go('resultCard',{
-					type:1
+				$state.go('resultCard', {
+					type: 1
 				});
 			}
+
 			function Destory() {
 				serverdata.isShowAnswer = false; //是否值显示解析，在考试答案解析用true
 				serverdata.isShowTitle = false; //是否显示大题标题

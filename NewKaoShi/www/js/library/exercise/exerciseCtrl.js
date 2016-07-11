@@ -10,9 +10,9 @@ libraryModule
 			$scope.ShowAnswer = ShowAnswer; //查看答案解析
 			$scope.Conllect = Conllect; //说收藏
 			$scope.Back = Back; //返回
-			$scope.ExerciseMenu = ExerciseMenu; //右上角按钮
+			//$scope.ExerciseMenu = ExerciseMenu; //右上角按钮
 			
-			$scope.ExercisesAgain=ExercisesAgain;//重新开始
+			//$scope.ExercisesAgain=ExercisesAgain;//重新开始
 			$scope.ResultCard=ResultCard;//答题卡
 			$scope.serverdata = ExerciseServ.GetServerData();
 			$scope.$on("$ionicView.loaded", function() {
@@ -52,7 +52,7 @@ libraryModule
 				ExerciseServ.Conllect(bool);
 			}
 
-			function ExerciseMenu($event) {
+			/*function ExerciseMenu($event) {
 				$ionicModal.fromTemplateUrl('templates/paper/modal.html', {
 					scope: $scope,
 					animation: 'slide-in-right'
@@ -70,10 +70,10 @@ libraryModule
 			function ExercisesAgain(){
 				ExerciseServ.ExercisesAgain();
 				HideExerciseMenu();
-			}
+			}*/
 			function ResultCard(){
 				ExerciseServ.ResultCard();
-				HideExerciseMenu();
+				//HideExerciseMenu();
 			}
 
 		}

@@ -147,13 +147,11 @@ libraryModule
 					if (res) {
 						Destory();
 						//提示是否重新考试
-						PaperDetailServ.Start(0);
+						
 						$rootScope.currentpaper.answerContent = null;
 						//删除历史数据
 						DataServ.DeletPaperHistory($rootScope.currentpaper.paperID).then(function(data) {
-							$state.go('kaoshi', {
-								history: false
-							});
+							PaperDetailServ.Start(0);
 						});
 					}
 				})

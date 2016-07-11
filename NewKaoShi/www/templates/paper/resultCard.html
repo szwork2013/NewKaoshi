@@ -10,6 +10,7 @@
 		<span class="title whhitefont"> 答题卡</span>
 		<button class="button  button-clear " ng-click="TestAgain()">
 			<span class='assignment whhitefont' ng-if="serverdata.type==0">重考</span>
+			<span class='assignment whhitefont' ng-if="serverdata.type==1">重新开始</span>
 		</button>
 	</ion-header-bar>
 	<ion-content class="answercard grayfont">

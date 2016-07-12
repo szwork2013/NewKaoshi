@@ -4,17 +4,17 @@
 	描述：考试类型
 -->
 <ion-view >
-	<ion-header-bar align-title="center" >
-		<button class="button button-icon ion-ios-arrow-back" ng-click="ShowParent()" ng-show="isShowBack || currentList.id!=0">
+	<ion-header-bar align-title="center" class=" bluebg">
+		<button class="button button-icon ion-ios-arrow-back whhitefont" ng-click="ShowParent()" ng-show="isShowBack || currentList.id!=0">
 		</button>
-		<span class="title"> {{currentList.name}}</span>
+		<span class="title whhitefont"> {{currentList.name}}</span>
 		
 	</ion-header-bar>
 	
-	<ion-content class="ioncontent">
+	<ion-content class="ioncontent grayfont">
 		<ion-list>
 			<ion-item ng-repeat="item in currentList.children track by item.ExamTypeID" class="typeitem">
-				<a class="button button-full icon-right ion-chevron-right typeitema" ng-click="ShowChildren(item.ExamTypeID,item.ExamTypeName)">
+				<a class="button button-full icon-right ion-chevron-right typeitema grayfont" ng-click="ShowChildren(item.ExamTypeID,item.ExamTypeName)">
 					<span class="itemMain">
 						{{::item.ExamTypeName}}
 					</span>

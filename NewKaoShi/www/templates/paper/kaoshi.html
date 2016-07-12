@@ -9,7 +9,7 @@
 	</ion-header-bar>
 	<ion-content class="kaoshi grayfont">
 		<ion-slide-box on-slide-changed="slideHasChanged($index)" >
-			<ion-slide ng-repeat="items in currentpaper.questionlist" style="width: 100%">
+			<ion-slide ng-repeat="items in currentpaper.questionlist" style="width: 100%;overflow: scroll;">
 	
 				<span ng-repeat="title in serverdata.titleContent" ng-show="serverdata.isShowTitle" class="bigtitle" ng-bind-html="title.questionContent">
 					

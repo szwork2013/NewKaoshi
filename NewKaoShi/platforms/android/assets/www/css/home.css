@@ -2,6 +2,9 @@
 .home{
 	
 }
+.homehead{
+	border-bottom-width: 0px;
+}
 .home .row,.home .col{
 	margin: 0px;
 	padding: 0px;
@@ -20,14 +23,15 @@
 	text-align: center;
 }
 .home .itemtitle a{
-	border-bottom: solid 1px #999999;
+	border-bottom: solid 2px #999999;
 }
 .home .itemtitle .selected{
-	border-color: #EF473A;
-	color: #EF473A;
+	border-color: #3b66b4;
+	color: #3b66b4;
 }
 .home .itemcontent{
 	margin: 10px 0px;
+	border-bottom: solid 1px #EFE5E5;
 }
 .home .itemcontent img{
 	width: 80%;
@@ -42,15 +46,14 @@
 }
 .home .itemcontent .itemprice{
 	font-size: 1.1rem;
-	color: #E42112;
 	display: block;
     float: left;
 }
 .home .itemcontent .buytype{
 	font-size: 0.8rem;
-    color: #E42112;
     display: block;
     float: right;
+    margin-right: 0.5rem;
     border: solid 1px;
     border-radius: 3px;
 }

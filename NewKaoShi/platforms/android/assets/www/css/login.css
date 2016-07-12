@@ -1,6 +1,5 @@
 * {
 	font-family: "微软雅黑";
-	color: #666666;
 	font-size: 0.8rem;
 }
 .textblock{
@@ -75,3 +74,30 @@
 	color: #999999;
 	font-size: 0.6rem;
 }
+
+/*
+ * 全局属性设置
+ */
+.bluebg{
+	background-color: #3b66b4;
+}
+.redbg{
+	background-color: #ff6666;
+}
+.whhitefont{
+	color: #FFFFFF;
+}
+.bluefont{
+	color: #3b66b4;
+}
+.grayfont{
+	color: #666666;
+}
+.redfont{
+	color: #ff6666;
+}
+.whhitefont:hover{
+	color: #FFFFFF;
+}
+
+

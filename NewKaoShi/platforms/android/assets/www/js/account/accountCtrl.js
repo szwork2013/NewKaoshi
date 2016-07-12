@@ -11,6 +11,9 @@ accountModule
 			
 			$scope.ChangeTest=ChangeTest;//切换考试
 			$scope.GoDetail=GoDetail;
+			
+			$scope.SyncHistory=SyncHistory;
+			$scope.SyncError=SyncError;
 			//修改密码信息
 			$scope.psd={
 				oldpsd:'',
@@ -80,6 +83,12 @@ accountModule
 			}
 			function GoDetail(paperid){
 				AccountServ.GoDetail(paperid);
+			}
+			function SyncHistory(){
+				AccountServ.SyncHistory();
+			}
+			function SyncError(){
+				AccountServ.SyncError();
 			}
 
 		}

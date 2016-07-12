@@ -11,7 +11,7 @@ libraryModule
 				InitData: InitData,
 				GoExercise: GoExercise,
 				TestAgain: TestAgain,
-				Destory:Destory
+				Destory: Destory
 			}
 			return server;
 
@@ -22,7 +22,7 @@ libraryModule
 			function InitData(type) {
 				serverdata.type = type;
 				if (type == 1) {
-					serverdata.rightdocount=0;
+					serverdata.rightdocount = 0;
 					ResultCount();
 				}
 				CommFunServ.RefreshData(serverdata);
@@ -45,21 +45,22 @@ libraryModule
 							}
 						}
 					}
-				}else{
+				} else {
 					var lena = $rootScope.currentpaper.questionlist.length;
-					serverdata.hasdocount=0;
-					serverdata.rightdocount=0;
-					for(var k=0;k<lena;k++){
-						$rootScope.currentpaper.questionlist[k].isRight=0;
+					serverdata.hasdocount = 0;
+					serverdata.rightdocount = 0;
+					for (var k = 0; k < lena; k++) {
+						$rootScope.currentpaper.questionlist[k].isRight = 0;
 					}
-					
+
 				}
 				CommFunServ.RefreshData(serverdata);
 
 			}
-			function RightCount(index, item,paperid){
+
+			function RightCount(index, item, paperid) {
 				var rightarr = $rootScope.currentpaper.questionlist[index].answer.split(""); //正确答案
-				var answerarr = item.answer.split("");//回答答案
+				var answerarr = item.answer.split(""); //回答答案
 				if (rightarr.length != answerarr.length) {
 					$rootScope.currentpaper.questionlist[index].isRight = 0;
 					return; //选多或选少不得分
@@ -69,7 +70,7 @@ libraryModule
 					var count = 0; //匹配个数
 					switch ($rootScope.currentpaper.questionlist[index].questionType) {
 						case 'checking':
-							if (rightarr[0] ==answerarr[0]) {
+							if (rightarr[0] == answerarr[0]) {
 								count++;
 							}
 							break;
@@ -96,7 +97,7 @@ libraryModule
 				if (count == len) {
 					serverdata.rightdocount++;
 					$rootScope.currentpaper.questionlist[index].isRight = 1;
-				}else{
+				} else {
 					$rootScope.currentpaper.questionlist[index].isRight = 0;
 				}
 			}
@@ -142,20 +143,38 @@ libraryModule
 			}
 			//重新考试
 			function TestAgain() {
-				//提示是否重新考试
-				PaperDetailServ.Start(0);
-				$rootScope.currentpaper.answerContent = null;
-				//删除历史数据
-				DataServ.DeletKaoshiHis($rootScope.currentpaper.paperID).then(function(data) {
-					$state.go('kaoshi', {
-						history: false
-					});
-				});
+				if (serverdata.type == 0) {
+					//提示是否重新考试
+					CommFunServ.ShowConfirm("提示", "是否重新考试").then(function(res) {
+						if (res) {
+
+							$rootScope.currentpaper.answerContent = null;
+							//删除历史数据
+							DataServ.DeletKaoShiHis($rootScope.currentpaper.paperID).then(function(data) {
+								PaperDetailServ.Start(0);
+							});
+						}
+					})
+				} else {
+					//提示是否重新考试
+					CommFunServ.ShowConfirm("提示", "是否重新练习").then(function(res) {
+						if (res) {
+
+							$rootScope.currentpaper.answerContent = null;
+							//删除历史数据
+							DataServ.DeletPaperHistory($rootScope.currentpaper.paperID).then(function(data) {
+								//提示是否重新考试
+								PaperDetailServ.Start(1);
+							});
+						}
+					})
+				}
+
 			}
 			//销毁
-			function Destory(){
-				serverdata.hasdocount=0;
-				serverdata.rightdocount=0;
+			function Destory() {
+				serverdata.hasdocount = 0;
+				serverdata.rightdocount = 0;
 			}
 		}
 	])

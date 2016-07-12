@@ -1,20 +1,20 @@
 <ion-view>
-	<ion-header-bar align-title="center">
-		<span class="title">公共基础</span>
-		<button class="button  button-icon ion-ios-keypad-outline  " ng-click="TragetMenu()" >
+	<ion-header-bar align-title="center" class="bluebg">
+		<span class="title whhitefont" >公共基础</span>
+		<button class="button  button-icon ion-ios-keypad-outline  whhitefont" ng-click="TragetMenu()" >
 		</button>
 	</ion-header-bar>
-	<ion-content class="library" scroll=false>
+	<ion-content class="library grayfont" scroll=false>
 		<div>
 			<div class="row row-wrap title">
-				<a class="col col-33" ng-class="{'selected':selectindex=='LastExam'}" ng-click="ChangeType('LastExam')">
-					<span>历年真题</span>
+				<a class="col col-33 grayfont" ng-class="{'selected':selectindex=='LastExam'}" ng-click="ChangeType('LastExam')">
+					<span ng-class="{'selected':selectindex=='LastExam'}">历年真题</span>
 				</a>
-				<a class="col col-33" ng-class="{'selected':selectindex=='PracticeTest'}" ng-click="ChangeType('PracticeTest')">
-					<span>模拟试题</span>
+				<a class="col col-33 grayfont" ng-class="{'selected':selectindex=='PracticeTest'}" ng-click="ChangeType('PracticeTest')">
+					<span ng-class="{'selected':selectindex=='PracticeTest'}">模拟试题</span>
 				</a>
-				<a class="col col-33" ng-class="{'selected':selectindex=='Practice'}" ng-click="ChangeType('Practice')">
-					<span>章节练习</span>
+				<a class="col col-33 grayfont" ng-class="{'selected':selectindex=='Practice'}" ng-click="ChangeType('Practice')">
+					<span ng-class="{'selected':selectindex=='Practice'}">章节练习</span>
 				</a>
 			</div>
 			<ion-scroll id="linrary_scroll">
@@ -22,13 +22,13 @@
 					<div ng-repeat="paper in serverdata.paperlist track by paper.PaperID|orderBy:paper.UpdateTime" class="row row-wrap paperitem" ng-if="paper.PaperTypeID==selectindex" ng-click="GoPaperDetail(paper.PaperID)">
 						<div class="col col-80">
 							<span class="papername">{{paper.PaperContent}}</span>
-							<span class="papernumber textblock"><span class="number">{{paper.UserCount}}</span> 人做过
+							<span class="papernumber textblock"><span class="bluefont">{{paper.UserCount}}</span> 人做过
 							</span><span class="papertime textblock"  >{{paper.UpdateTime}}</span>
 						</div>
 						<div class="col col-20">
 							<span class="haveupdate" ng-if="paper.Status==3">有更新</span>
 							<span class="havedownload" ng-if="paper.Status==2">已下载</span>
-							<span class="havevip" ng-if="paper.Status==1">VIP</span>
+							<span class="havevip redfont" ng-if="paper.Status==1">VIP</span>
 							<span class="havedownload" ng-if="paper.Status==0">免费</span>
 						</div>
 					</div>

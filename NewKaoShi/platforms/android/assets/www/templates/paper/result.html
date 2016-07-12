@@ -1,10 +1,10 @@
 <ion-view>
-	<ion-header-bar align-title="center">
-		<button class="button button-icon ion-ios-arrow-back" ng-click="GoPaperDeatail()">
+	<ion-header-bar align-title="center" class="bluebg">
+		<button class="button button-icon ion-ios-arrow-back whhitefont" ng-click="GoPaperDeatail()">
 		</button>
-		<span class="title">考试成绩</span>
+		<span class="title whhitefont">考试成绩</span>
 	</ion-header-bar>
-	<ion-content class="resultScode">
+	<ion-content class="resultScode grayfont">
 		<div class="code resultbottom">
 			<span class="rightbig block">交卷得分：{{currentpaper.score}}</span>
 			<span class="alerttext">{{serverdata.scoretext}}</span>
@@ -14,18 +14,18 @@
 				<span class="resulttimetext">答题时间</span>
 				<span class="totaltime">总时间：{{currentpaper.totalTime}}</span>
 			</div>
-			<span class="resulttime resultbottom block">{{serverdata.time}}</span>
+			<span class="resulttime resultbottom block bluefont">{{serverdata.time}}</span>
 			<span class="resulttimetext resultbottom block">正确率</span>
 			<span class="rightrate resultbottom block">{{serverdata.rate}}%</span>
 			<div class="resultbottom resuleno">
 				<span class="totalno">总题数：{{currentpaper.itemNum}}</span>
 				<span class="rightno">答对：{{serverdata.rightcount}}</span>
-				<span class="wrongno">答错：{{serverdata.wrongcount}}</span>
+				<span class="wrongno bluefont">答错：{{serverdata.wrongcount}}</span>
 			</div>
 		</div>
 	</ion-content>
 	<ion-footer-bar>
 		<a class="resultbtn againbtn" ng-click="TestAgain()">重新考试</a>
-		<a class="resultbtn answerbtn" ng-click="CheckAnswer()">查看答案及解析</a>
+		<a class="resultbtn bluebg" ng-click="CheckAnswer()">查看答案及解析</a>
 	</ion-footer-bar>
 </ion-view>

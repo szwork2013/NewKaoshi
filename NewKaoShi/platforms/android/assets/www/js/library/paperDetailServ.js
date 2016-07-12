@@ -58,13 +58,16 @@ libraryModule
 			}
 			//开始考试、练习
 			function Start(type) {
+				//显示加载
+				$ionicLoading.show({
+						template: '加载试题中...'
+					})
 				//试卷内容有更新
 				if ($rootScope.currentpaper && $rootScope.currentpaper.status == "3") {
 					PostPaperQuestion(type);
 				} else {
 					//获取试卷所有试题
 					DataServ.GetPaperQuestions($rootScope.currentpaper.paperID).then(function(data) {
-
 						if (data && data.length > 0) {
 							//组装试题数据
 							AssmbleQuestionData(data, type);
@@ -77,13 +80,9 @@ libraryModule
 			}
 
 			function PostPaperQuestion(type) {
-				//显示加载
-				$ionicLoading.show({
-						template: '加载试题中...'
-					})
 					//请求服务器数据
 				DataServ.PostQuestions($rootScope.currentpaper.paperID).then(function(data) {
-					$ionicLoading.hide(); //隐藏加载
+					
 					if (data && data.length > 0) {
 
 						//存储数据库
@@ -111,7 +110,7 @@ libraryModule
 				var len = data.length;
 				$rootScope.currentpaper.questionlist = []; //试题列表
 				$rootScope.currentpaper.questiontitle = []; //标题列表
-				$rootScope.currentpaper.answerContent = null; //答案列表
+				$rootScope.currentpaper.answerContent = []; //答案列表
 				for (var i = 0; i < len; i++) {
 					data[i].questionContent = AssmblePicUrl(data[i].id, data[i].questionContent, "questionContent")
 					if (data[i].answer != null && data[i].answer != '') {
@@ -135,6 +134,7 @@ libraryModule
 			}
 			//跳转到试题
 			function GoExam(type) {
+				$ionicLoading.hide(); //隐藏加载
 				if (type == 0) {
 					if (serverdata.isEnd) { //上一次考试已确认交卷
 						$state.go('result')

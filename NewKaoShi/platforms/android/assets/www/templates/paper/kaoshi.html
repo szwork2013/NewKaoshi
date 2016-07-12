@@ -1,15 +1,15 @@
 <ion-view>
-	<ion-header-bar align-title="center">
-		<button class="button button-icon ion-ios-arrow-back" ng-click="Back()">
+	<ion-header-bar align-title="center" class="bluebg">
+		<button class="button button-icon ion-ios-arrow-back whhitefont" ng-click="Back()">
 		</button>
-		<span class="title"> {{serverdata.title}}</span>
+		<span class="title whhitefont"> {{serverdata.title}}</span>
 		<button class="button  button-clear " ng-click="Assignment()">
-			<span class='assignment'>交卷</span>
+			<span class='assignment whhitefont'>交卷</span>
 		</button>
 	</ion-header-bar>
-	<ion-content class="kaoshi">
+	<ion-content class="kaoshi grayfont">
 		<ion-slide-box on-slide-changed="slideHasChanged($index)" >
-			<ion-slide ng-repeat="items in currentpaper.questionlist" style="width: 100%">
+			<ion-slide ng-repeat="items in currentpaper.questionlist" style="width: 100%;overflow: scroll;">
 	
 				<span ng-repeat="title in serverdata.titleContent" ng-show="serverdata.isShowTitle" class="bigtitle" ng-bind-html="title.questionContent">
 					
@@ -28,7 +28,7 @@
 	</ion-content>
 	<ion-footer-bar>
 		<button class="button button-icon ion-ios-undo-outline" ng-click="LastTest()"></button>
-		<span  class="title">{{serverdata.rtime}}</span>
+		<span  class="title grayfont">{{serverdata.rtime}}</span>
 		<button class="button button-icon ion-ios-redo-outline" ng-click="NextTest()"></button>
 	</ion-footer-bar>
 </ion-view>

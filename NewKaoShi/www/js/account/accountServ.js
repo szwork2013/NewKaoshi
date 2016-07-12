@@ -15,7 +15,9 @@ function($state,DataServ,CommFunServ,LibraryServ,$q){
 		ChangeTest:ChangeTest,
 		GoDetail:GoDetail,
 		UpdatePsd:UpdatePsd,//修改密码
-		UpdateVip:UpdateVip//注册vip
+		UpdateVip:UpdateVip,//注册vip
+		SyncHistory:SyncHistory,//同步数据
+		SyncError:SyncError//同步错题收藏
 	}
 	return server;
 	function GetServerData(){
@@ -87,5 +89,15 @@ function($state,DataServ,CommFunServ,LibraryServ,$q){
 			q.reject();
 		})
 		return q.promise;
+	}
+	function SyncHistory(){
+		DataServ.BaseSelect("select * from tb_History where IsSync=?",["0"]).then(function(adata){
+				
+		})
+	}
+	function SyncError(){
+		DataServ.BaseSelect("select * from tb_UserQuestions where IsSync=?",["0"]).then(function(data){
+			
+		})
 	}
 }])

@@ -196,6 +196,15 @@ module.exports = [
         "clobbers": [
             "window.FileTransfer"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+        "id": "cordova-plugin-inappbrowser.inappbrowser",
+        "pluginId": "cordova-plugin-inappbrowser",
+        "clobbers": [
+            "cordova.InAppBrowser.open",
+            "window.open"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -204,7 +213,8 @@ module.exports.metadata =
     "cordova-plugin-app-version": "0.1.8",
     "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-file": "4.2.0",
-    "cordova-plugin-file-transfer": "1.5.1"
+    "cordova-plugin-file-transfer": "1.5.1",
+    "cordova-plugin-inappbrowser": "1.4.0"
 }
 // BOTTOM OF METADATA
 });

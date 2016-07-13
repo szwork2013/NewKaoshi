@@ -71,7 +71,7 @@ angular.module('NewKaoShi', ['ionic','ngCordova','LoginModule','ClassifyModule',
 		}, 101);
 })
 
-.config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+.config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider,$cordovaInAppBrowserProvider) {
 	/*$ionicConfigProvider配置Android和iOS界面配置*/
 			$ionicConfigProvider.platform.ios.tabs.style('standard');
 			$ionicConfigProvider.platform.ios.tabs.position('bottom');

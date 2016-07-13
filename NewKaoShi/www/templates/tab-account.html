@@ -10,7 +10,7 @@
 			<div ng-show="!serverdata.isLogin">
 				<button class="button button-full button-small bluebg whhitefont" ng-click="GoLogin()">还未登录,请登录</button>
 			</div>
-			<div class="item item-icon-right " ng-show="serverdata.isLogin">
+			<div class="item item-icon-right " ng-if="serverdata.isLogin">
 				<img ng-src="img/user.png" class="headimg" />
 				<div class="userdetail">
 				<div>

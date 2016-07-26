@@ -309,7 +309,7 @@ libraryModule
 			function SaveHistory() {
 				var paperid = $rootScope.currentpaper.paperID;
 				var content = JSON.stringify($rootScope.currentpaper.answerContent);
-				DataServ.BaseSaveUpdate('tb_History', ["PaperID", "UserID", "Time", "Soure", "Content", "Type", "IsEnd", "IsSync"], [paperid, '', 0, 0, content, 1, 0, false], 'PaperID=? and Type=?', [paperid, 1]).then(function(res) {
+				DataServ.BaseSaveUpdate('tb_History', ["PaperID", "UserID", "Time", "Soure", "Content", "Type", "IsEnd", "IsSync"], [paperid, '', "0", "0", content, "1", "0", false], 'PaperID=? and Type=?', [paperid, "1"]).then(function(res) {
 
 				})
 			}

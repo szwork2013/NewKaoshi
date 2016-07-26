@@ -27,7 +27,7 @@ libraryModule
 					if (data && data.length > 0) {
 						serverdata.paperdetail = data[0];
 						//获取历史，已下载的试卷才会出现历史记录
-						if (serverdata.paperdetail.IsDownload != 0) {
+						if (serverdata.paperdetail.IsDownload != "0") {
 							CheckHistory();
 						}
 
@@ -43,13 +43,13 @@ libraryModule
 					if (data && data.length > 0) {
 						var len = data.length;
 						for (var i = 0; i < len; i++) {
-							if (data[i].Type == 0) { //存在考试记录
+							if (data[i].Type == "0") { //存在考试记录
 								serverdata.haveKaoshi = true;
-								if (data[i].IsEnd == 1) {
+								if (data[i].IsEnd == "1") {
 									serverdata.isEnd = true;
 								}
 								$rootScope.currentpaper.rtime = data[i].Time;
-							} else if (data[i].Type == 1) { //存在练习记录
+							} else if (data[i].Type == "1") { //存在练习记录
 								serverdata.haveExercise = true;
 							}
 						}

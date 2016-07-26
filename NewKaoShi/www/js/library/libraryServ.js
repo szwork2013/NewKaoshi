@@ -18,7 +18,7 @@ libraryModule
 			//初始化试卷列表
 			function InitData(id) {
 				
-				id = '4028188154ce38b40154ce3cc6690002'
+				//id = '4028188154ce38b40154ce3cc6690002'
 				DataServ.BaseSelect('select * from tb_Papers where ExamTypeID=?', [id]).then(function(data) {
 					if (data && data.length > 0) {
 						var len = data.length;

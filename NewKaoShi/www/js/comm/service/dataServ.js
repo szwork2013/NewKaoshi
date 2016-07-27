@@ -333,8 +333,10 @@ commModule
 				$http({
 					method: 'POST',
 					url: baseurl + url,
-					params: parma,
 					timeout: 10000, //请求超时10秒
+					//params: parma,
+					data:JSON.stringify(parma),
+					timeout:10000,//请求超时10秒
 					headers: {
 						'Content-Type': 'application/x-www-form-urlencoded:charset=utf-8'
 					}
@@ -414,7 +416,7 @@ commModule
 
 			function MarkExamEnd(paperid) {
 				database.OpenTransaction(function(tx) {
-					database.SaveOrUpdateUerRoleTable(tx, 'tb_History', ["IsEnd"], [1], "PaperID=? and Type=?", [paperid, 0]);
+					database.SaveOrUpdateUerRoleTable(tx, 'tb_History', ["IsEnd"], ["1"], "PaperID=? and Type=?", [paperid, 0]);
 				})
 			}
 			//存储用户信息
@@ -561,7 +563,7 @@ commModule
 			 */
 			function DeletPaperHistory(paperid) {
 				var q = $q.defer();
-				SqliteServ.deletehis('tb_History', 'PaperID=? and Type=? and IsEnd=?', [paperid, 0, 1]).then(function(response) {
+				SqliteServ.deletehis('tb_History', 'PaperID=? and Type=? and IsEnd=?', [paperid, "0", "1"]).then(function(response) {
 					q.resolve(response)
 				})
 				return q.promise;

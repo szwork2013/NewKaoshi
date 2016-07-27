@@ -14,6 +14,7 @@ accountModule
 			
 			$scope.SyncHistory=SyncHistory;
 			$scope.SyncError=SyncError;
+			$scope.SyncCollect=SyncCollect;
 			//修改密码信息
 			$scope.psd={
 				oldpsd:'',
@@ -89,6 +90,9 @@ accountModule
 			}
 			function SyncError(){
 				AccountServ.SyncError();
+			}
+			function SyncCollect(){
+				AccountServ.SyncCollect();
 			}
 
 		}

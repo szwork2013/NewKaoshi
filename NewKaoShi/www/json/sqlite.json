@@ -2,8 +2,7 @@
 	{
 		"tableName": "tb_ExamTypes",
 		"tablePrama": ["ExamTypeID", "ExamTypeName", "ParentID"]
-	},
-	{
+	},{
 		"tableName": "tb_Papers",
 		"tablePrama": ["PaperID","PaperContent","ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "Status", "PassMark", "UpLoaderID", "TotalTime", "Year","ContainQuestionTypes","CreateTime","CreatorID","UpdateTime","UpdaterID"]
 	},{
@@ -17,7 +16,7 @@
 		"tablePrama": ["PaperID","QuestionID", "UserID", "Type","IsSync"]
 	},{
 		"tableName": "tb_History",
-		"tablePrama": ["ID", "PaperID", "UserID", "Time", "Soure", "Content","Type","IsEnd","IsSync"]
+		"tablePrama": ["PaperID", "UserID", "Time", "Soure", "Content","Type","IsEnd","IsSync"]
 	},{
 		"tableName": "tb_Advertisement",
 		"tablePrama": ["ID", "adType", "picID", "validTime", "invalidTime", "price","detail","CONTENT","buyurl"]

@@ -6,16 +6,19 @@ commModule
 			var database;
 			var server = {
 				InitDataBase: InitDataBase,
-				GetBaseUrl:GetBaseUrl,
-	
+				GetBaseUrl: GetBaseUrl,
+
 				PostExamTypes: PostExamTypes, //请求考试类型
 				PostExamPaper: PostExamPaper, //请求试卷
 				PostQuestions: PostQuestions, //请求试题
 				PostLogin: PostLogin, //登录
 				PostRegister: PostRegister, //注册
 				PostQuestionPic: PostQuestionPic, //请求图片
-				PostUpdatePsd:PostUpdatePsd,//修改密码
-				PostUpdateVip:PostUpdateVip,//注册VIP
+				PostUpdatePsd: PostUpdatePsd, //修改密码
+				PostUpdateVip: PostUpdateVip, //注册VIP
+				PostSyncHistory:PostSyncHistory,
+				SyncError:SyncError,
+				SyncCollect:SyncCollect,
 
 				MarkExamEnd: MarkExamEnd, //更改试卷考试状态
 				BaseUpdate: BaseUpdate,
@@ -30,29 +33,30 @@ commModule
 				GetExamName: GetExamName,
 				GetQuestionData: GetQuestionData,
 				BaseSelect: BaseSelect,
-				
-				SaveQuestion:SaveQuestion,
+
+				SaveQuestion: SaveQuestion,
 				SaveErrOrColl: SaveErrOrColl, //存储错题
-				CollectQuestion:CollectQuestion,//收藏
-				CancelCollect:CancelCollect,//取消收藏
+				CollectQuestion: CollectQuestion, //收藏
+				CancelCollect: CancelCollect, //取消收藏
 				UpdatePaperStatus: UpdatePaperStatus, //修改试卷状态
 				DeletPaperHistory: DeletPaperHistory,
-				DeletKaoShiHis:DeletKaoShiHis
+				DeletKaoShiHis: DeletKaoShiHis
 			}
 			return server;
 
 			function InitDataBase() {
-				if (database == null) {
+				if(database == null) {
 					database = new DataBase();
 				}
-				if (database.db == null) {
+				if(database.db == null) {
 					database.OpenTransaction(function(tx) {
 						database.InitDB(tx);
 					})
 
 				}
 			}
-			function GetBaseUrl(){
+
+			function GetBaseUrl() {
 				return baseurl;
 			}
 			/*
@@ -61,9 +65,9 @@ commModule
 			//获取所有数据（考试类型、试卷）
 			function PostExamTypes() {
 				var q = $q.defer();
-				
+
 				BasePost('getExamTypes.do').then(function(response) {
-					if (response.status == "success") {
+					if(response.status == "success") {
 						SaveExamType(response.data);
 					}
 					q.resolve(response);
@@ -78,7 +82,7 @@ commModule
 					examTypeId: '4028188154ce38b40154ce3cc6690002'
 				}
 				BasePost('getExamPapers.do').then(function(response) {
-					if (response.status == "success") {
+					if(response.status == "success") {
 						SavePaper(response.data)
 						q.resolve(response);
 					} else {
@@ -96,17 +100,22 @@ commModule
 			function PostQuestions(paperid) {
 				var q = $q.defer();
 				var parma = {
+					userId: "",
 					paperId: paperid
 				}
+				var userinfo = JSON.parse(localStorage.getItem("userInfo"));
+				if(userinfo) {
+					parma.userId = userinfo.id;
+				}
 				BasePost('getExamQuestionsByPaper.do', parma).then(function(response) {
-					if (response.status == "success") {
+					if(response.status == "success") {
 						q.resolve(response.data);
 					} else {
 						q.reject(response.msg)
 						console.log("请求试题失败:" + response.msg)
 					}
 
-				},function(err){
+				}, function(err) {
 					q.reject(err);
 				})
 				return q.promise;
@@ -119,7 +128,7 @@ commModule
 					pwd: pwd
 				}
 				BasePost('validateUser.do', parma).then(function(response) {
-					if (response.status == "success") {
+					if(response.status == "success") {
 						SaveAccount(response.data)
 						q.resolve(response.data);
 					} else {
@@ -139,7 +148,7 @@ commModule
 					email: email
 				}
 				BasePost('userRegister.do', parma).then(function(response) {
-					if (response.status == "success") {
+					if(response.status == "success") {
 						q.resolve(response);
 					} else {
 						q.reject(response.msg);
@@ -155,9 +164,7 @@ commModule
 					placeId: placeid
 				}
 				BasePost('getQuestionPic.do', parma).then(function(response) {
-					if (response.status == "success") {
-						//SaveAccount(response.data)
-						console.log(response.data)
+					if(response.status == "success") {
 						q.resolve(response.data);
 					} else {
 						q.reject(response.msg);
@@ -166,16 +173,42 @@ commModule
 				})
 				return q.promise;
 			}
-			function PostUpdatePsd(oldpsd,newpsd){
+
+			function PostUpdatePsd(oldpsd, newpsd) {
 				var q = $q.defer();
-				var userinfo=JSON.parse(localStorage.getItem("userInfo"));
 				var parma = {
-					userId: userinfo.id,
-					newPwd:newpsd,
-					oldPwd:oldpsd
+					userId: "",
+					newPwd: newpsd,
+					oldPwd: oldpsd
+				}
+				var userinfo = JSON.parse(localStorage.getItem("userInfo"));
+				if(userinfo) {
+					parma.userId = userinfo.id;
 				}
 				BasePost('changeUserPwd.do', parma).then(function(response) {
-					if (response.status == "success") {
+					if(response.status == "success") {
+						//SaveAccount(response.data)
+						q.resolve(response.data);
+					} else {
+						q.reject(response.msg);
+					}
+
+				})
+				return q.promise;
+			}
+
+			function PostUpdateVip(num) {
+				var q = $q.defer();
+				var parma = {
+					id: "",
+					activationCode: num
+				}
+				var userinfo = JSON.parse(localStorage.getItem("userInfo"));
+				if(userinfo) {
+					parma.id = userinfo.id;
+				}
+				BasePost('relateActivationCode.do', parma).then(function(response) {
+					if(response.status == "success") {
 						//SaveAccount(response.data)
 						console.log(response.data)
 						q.resolve(response.data);
@@ -186,17 +219,92 @@ commModule
 				})
 				return q.promise;
 			}
-			function PostUpdateVip(num){
+			//同步历史
+			function PostSyncHistory() {
 				var q = $q.defer();
-				var userinfo=JSON.parse(localStorage.getItem("userInfo"));
-				var parma = {
-					id: userinfo.id,
-					activationCode:num
+				var userinfo = JSON.parse(localStorage.getItem("userInfo"));
+				if(userinfo) {
+					BaseSelect("select * from tb_History where UserID=?", [userinfo.id]).then(function(data) {
+						if(data && data.length > 0) {
+							var str = JSON.stringify(data);
+							var parma = {
+								userHistories: str
+							}
+							BasePost('syncUserHistoryPaper.do', parma).then(function(response) {
+								if(response.status == "success") {
+									q.resolve(response.data);
+								} else {
+									q.reject(response.msg);
+								}
+
+							})
+						}
+					})
+				} else {
+					q.reject()
 				}
-				BasePost('relateActivationCode.do', parma).then(function(response) {
-					if (response.status == "success") {
-						//SaveAccount(response.data)
-						console.log(response.data)
+				return q.promise;
+			}
+			//同步错题
+			function SyncError() {
+				var q = $q.defer();
+				var userinfo = JSON.parse(localStorage.getItem("userInfo"));
+				if(userinfo) {
+					BaseSelect("select * from tb_UserQuestions where UserID=?  and Type=?", [userinfo.id, '1']).then(function(data) {
+						if(data && data.length > 0) {
+							var arr = new Array();
+							for(var i in data) {
+								arr.push(data[i].QuestionID)
+							}
+							PostSyncErrorColl(arr.join(","), "error").then(function(data) {
+								q.resolve(data);
+							}, function(err) {
+								q.reject(err);
+							})
+						}
+					})
+				} else {
+					q.reject()
+				}
+				return q.promise;
+			}
+			//同步收藏
+			function SyncCollect() {
+				var q = $q.defer();
+				var userinfo = JSON.parse(localStorage.getItem("userInfo"));
+				if(userinfo) {
+					BaseSelect("select * from tb_UserQuestions where UserID=? and Type=?", [userinfo.id, '0']).then(function(data) {
+						if(data && data.length > 0) {
+							var arr = new Array();
+							for(var i in data) {
+								arr.push(data[i].QuestionID)
+							}
+							PostSyncErrorColl(arr.join(","), "collection").then(function(data) {
+								q.resolve(data);
+							}, function(err) {
+								q.reject(err);
+							})
+						}
+					})
+				} else {
+					q.reject()
+				}
+				return q.promise;
+			}
+
+			function PostSyncErrorColl(data, type) {
+				var q = $q.defer();
+				var parma = {
+					questionIds: data,
+					userId: "",
+					recordType: type
+				}
+				var userinfo = JSON.parse(localStorage.getItem("userInfo"));
+				if(userinfo) {
+					parma.userId = userinfo.userId;
+				}
+				BasePost('syncUserQuestions.do', parma).then(function(response) {
+					if(response.status == "success") {
 						q.resolve(response.data);
 					} else {
 						q.reject(response.msg);
@@ -208,25 +316,25 @@ commModule
 
 			function BasePost(url, parma) {
 				var q = $q.defer();
-				var data={
+				var data = {
 					"varify.reqTimestamp": Date.parse(new Date()),
-					"varify.reqCode":'khd_app',
-					"varify.reqSign":''
+					"varify.reqCode": 'khd_app',
+					"varify.reqSign": ''
 				}
-				data["varify.reqSign"]=MD5("reqCode="+data["varify.reqCode"]+"&reqTimestamp="+data["varify.reqTimestamp"]+"&salt=0123456789qwertyuiop");
-				var d=JSON.stringify(parma)
-				if(parma==null){
-					parma=data;
-				}else{
-					var str=(JSON.stringify(parma)+JSON.stringify(data)).replace(/}{/,',');
-					parma=JSON.parse(str);
+				data["varify.reqSign"] = MD5("reqCode=" + data["varify.reqCode"] + "&reqTimestamp=" + data["varify.reqTimestamp"] + "&salt=0123456789qwertyuiop");
+				var d = JSON.stringify(parma)
+				if(parma == null) {
+					parma = data;
+				} else {
+					var str = (JSON.stringify(parma) + JSON.stringify(data)).replace(/}{/, ',');
+					parma = JSON.parse(str);
 				}
-				
+
 				$http({
 					method: 'POST',
 					url: baseurl + url,
 					params: parma,
-					timeout:10000,//请求超时10秒
+					timeout: 10000, //请求超时10秒
 					headers: {
 						'Content-Type': 'application/x-www-form-urlencoded:charset=utf-8'
 					}
@@ -253,7 +361,7 @@ commModule
 			function SaveExamType(data) {
 				database.OpenTransaction(function(tx) {
 					var len = data.length;
-					for (var i = 0; i < len; i++) {
+					for(var i = 0; i < len; i++) {
 						database.SaveOrUpdateTable(tx, 'tb_ExamTypes', ["ExamTypeID", "ExamTypeName", "ParentID"], [data[i].id, data[i].name, data[i].pid], "ExamTypeID", [data[i].id]);
 					}
 				})
@@ -261,15 +369,15 @@ commModule
 			//存储试卷数据
 			function SavePaper(data) {
 				SqliteServ.selectsql("select * from tb_Papers").then(function(jsondata) {
-					if (jsondata && jsondata.length > 0) {
+					if(jsondata && jsondata.length > 0) {
 						var length = jsondata.length;
 						var len = data.length;
-						for (var j = 0; j < length; j++) {
-							for (var k = 0; k < len; k++) {
-								if (data[k].id == jsondata[j].PaperID) {
-									if (data[k].updateTime != jsondata[j].UpdateTime) {
+						for(var j = 0; j < length; j++) {
+							for(var k = 0; k < len; k++) {
+								if(data[k].id == jsondata[j].PaperID) {
+									if(data[k].updateTime != jsondata[j].UpdateTime) {
 										data[k].Status = "3";
-									} else if (jsondata[j].Status == "2") {
+									} else if(jsondata[j].Status == "2") {
 										data[k].Status = "2";
 									}
 								}
@@ -278,7 +386,7 @@ commModule
 					}
 					database.OpenTransaction(function(tx) {
 						var lena = data.length;
-						for (var i = 0; i < lena; i++) {
+						for(var i = 0; i < lena; i++) {
 							database.SaveOrUpdateUerRoleTable(tx, 'tb_Papers', ["PaperID", "PaperContent", "ExamTypeID", "PaperTypeID", "TotalScore", "ItemNum", "UserCount", "Status", "PassMark", "UpLoaderID", "TotalTime", "Year", "ContainQuestionTypes", "CreateTime", "CreatorID", "UpdateTime", "UpdaterID"], [data[i].id, data[i].name, data[i].examTypeId, data[i].paperTypeId, data[i].totalScore, data[i].itemNum, data[i].useCount, data[i].isVIP, data[i].passmark, data[i].uploaderId, data[i].totalTime, data[i].year, data[i].containQustionTypes, data[i].createTime, data[i].creator, data[i].updateTime, data[i].uploaderId], "PaperID=?", [data[i].id]);
 						}
 					})
@@ -289,7 +397,7 @@ commModule
 			function SaveQuestion(data) {
 				database.OpenTransaction(function(tx) {
 					var len = data.length;
-					for (var i = 0; i < len; i++) {
+					for(var i = 0; i < len; i++) {
 						database.SaveOrUpdateTable(tx, 'tb_Question', ["id", "paperId", "c_key", "q_key", "pq_key", "questionContent", "questionIndex", "questionType", "soure", "optionContent", "answer", "analysis", "version"], [data[i].id, data[i].paperId, data[i].c_key, data[i].q_key, data[i].pq_key, data[i].questionContent, data[i].questionIndex, data[i].questionType, data[i].soure, JSON.stringify(data[i].optionContent), data[i].answer, data[i].analysis, data[i].version], "id", [data[i].id]);
 					}
 				})
@@ -298,7 +406,7 @@ commModule
 			function SaveErrOrColl(data) {
 				database.OpenTransaction(function(tx) {
 					var len = data.length;
-					for (var i = 0; i < len; i++) {
+					for(var i = 0; i < len; i++) {
 						database.SaveOrUpdateUerRoleTable(tx, 'tb_UserQuestions', ["PaperID", "QuestionID", "UserID", "Type", "IsSync"], [data[i].PaperID, data[i].QuestionID, data[i].UserID, data[i].Type, data[i].IsSync], "PaperID=? and QuestionID=?", [data[i].PaperID, data[i].QuestionID]);
 					}
 				})
@@ -313,7 +421,7 @@ commModule
 			function SaveAccount(data) {
 				SqliteServ.transaction(function(tx) {
 					var len = data.length;
-					for (var i = 0; i < len; i++) {
+					for(var i = 0; i < len; i++) {
 						SqliteServ.saveOrupadte(tx, 'tb_Account', ["ID", "Name", "NickName", "IsVip", "IsLogin"], [data[i].ID, data[i].Name, data[i].NickName, data[i].IsVip, data[i].IsLogin], "ID=?", [data[i].ID]);
 					}
 				})
@@ -327,20 +435,20 @@ commModule
 				return q.promise
 			}
 			//收藏
-			function CollectQuestion(item){
-				var userinfo=JSON.parse(localStorage.getItem("userInfo"));
-				var userid='';
-				if(userinfo && userinfo.id){
-					userid=userinfo.id
+			function CollectQuestion(item) {
+				var userinfo = JSON.parse(localStorage.getItem("userInfo"));
+				var userid = '';
+				if(userinfo && userinfo.id) {
+					userid = userinfo.id
 				}
 				database.OpenTransaction(function(tx) {
-					database.SaveOrUpdateUerRoleTable(tx, 'tb_UserQuestions', ["PaperID","QuestionID", "UserID", "Type","IsSync"], [item.paperId,item.id,userid,'1','0'], "PaperID=? and QuestionID=?", [item.paperId,item.id]);
+					database.SaveOrUpdateUerRoleTable(tx, 'tb_UserQuestions', ["PaperID", "QuestionID", "UserID", "Type", "IsSync"], [item.paperId, item.id, userid, '1', '0'], "PaperID=? and QuestionID=?", [item.paperId, item.id]);
 				})
 			}
 			//取消收藏
-			function CancelCollect(item){
+			function CancelCollect(item) {
 				var q = $q.defer();
-				SqliteServ.deletehis('tb_UserQuestions', 'PaperID=? and QuestionID=?', [item.paperId,item.id]).then(function(response) {
+				SqliteServ.deletehis('tb_UserQuestions', 'PaperID=? and QuestionID=?', [item.paperId, item.id]).then(function(response) {
 					q.resolve(response)
 				})
 				return q.promise;
@@ -383,7 +491,7 @@ commModule
 			//试卷id，历史类型0考试，1练习，获取试卷历史
 			function GetHistoy(id, type) {
 				var q = $q.defer();
-				if (type == null) {
+				if(type == null) {
 					SqliteServ.select('tb_History', 'PaperID=? ', [id]).then(function(data) {
 						q.resolve(data)
 					})
@@ -458,7 +566,8 @@ commModule
 				})
 				return q.promise;
 			}
-			function DeletKaoShiHis(paperid){
+
+			function DeletKaoShiHis(paperid) {
 				var q = $q.defer();
 				SqliteServ.deletehis('tb_History', 'PaperID=?', [paperid]).then(function(response) {
 					q.resolve(response)
